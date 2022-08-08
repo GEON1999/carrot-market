@@ -36,13 +36,14 @@ export default function Enter() {
           </div>
         </div>
         <form className="mt-4 mb-2">
-          <label className="text-sm text-gray-500">
+          <label className="text-sm text-gray-500" htmlFor={method}>
             {method === "email" ? "Email address" : null}
             {method === "phone" ? "Phone number" : null}
           </label>
           <div>
             {method === "email" ? (
               <input
+                id="email"
                 type="email"
                 required
                 placeholder="
@@ -56,6 +57,7 @@ export default function Enter() {
                   +82
                 </span>
                 <input
+                  id="phone"
                   type="number"
                   required
                   placeholder="Plese enter your number"
@@ -64,7 +66,7 @@ export default function Enter() {
               </div>
             ) : null}
           </div>
-          <button className="mt-6 bg-orange-500 rounded-md w-full py-2 px-3 text-white shadow-sm hover:bg-orange-600 focus:ring-orange-500 focus:ring-2 focus:ring-offset-1 outline-none">
+          <button className="mt-6 bg-orange-500 rounded-md w-full py-2 px-3 text-white shadow-sm hover:bg-orange-600 outline-none">
             {method === "email" ? "Get login link" : null}
             {method === "phone" ? "Get one-time password" : null}
           </button>

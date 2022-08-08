@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 const Upload: NextPage = () => {
   return (
     <div className="px-4 py-12">
-      <div className="flex justify-center px-10 py-16 border-gray-400 border-2 border-dashed rounded-sm text-gray-400 hover:border-orange-400 mb-5 hover:text-orange-500">
+      <div className="flex justify-center w-full py-32 border-gray-400 border-2 border-dashed rounded-sm text-gray-400 hover:border-orange-500 mb-5 hover:text-orange-500">
         <div className="p-4 border-dashed border-gray-500 ">
           <label>
             <svg
@@ -26,31 +26,37 @@ const Upload: NextPage = () => {
         </div>
       </div>
       <div>
-        <label className="mb-1 text-gray-500">Price</label>
+        <label htmlFor="price" className="text-sm text-gray-500">
+          Price
+        </label>
         <div className="relative flex items-center">
-          <div className="absolute  left-1">
+          <div className="absolute  left-1 pointer-events-none">
             <span className=" text-gray-500 text-sm">$</span>
           </div>
           <input
+            id="price"
             type="text"
             placeholder="0.00"
-            className="px-4 border-2 border-gray-300 rounded-md appearance-none w-full focus:ring-2 hover:border-orange-400 hover:border-2 focus:ring-orange-400  focus:outline-none focus:rounded-sm"
+            className="pl-5 border-2 border-gray-300 rounded-md appearance-none w-full hover:border-orange-500 hover:border-2 focus:ring-orange-500  focus:outline-none focus:rounded-sm"
           />
-          <div className="absolute right-2 ">
+          <div className="absolute right-2 text-sm pointer-events-none">
             <span className="text-gray-500">USD</span>
           </div>
         </div>
       </div>
-      <div>
-        <label className="text-gray-500">Description</label>
-        <div className="mt-2">
+      <div className="mt-2">
+        <label className="text-gray-500 text-sm" htmlFor="description">
+          Description
+        </label>
+        <div>
           <textarea
+            id="description"
             rows={4}
-            className="w-full rounded-md border-2 border-gray-300 hover:border-2 hover:border-orange-500 focus:outline-none  focus:ring-2 focus:ring-orange-400"
+            className="w-full rounded-md border-2 border-gray-300 hover:border-orange-500 focus:outline-none focus:ring-orange-500"
           />
         </div>
       </div>
-      <button className="mt-3 w-full bg-orange-500 rounded-md py-1.5 text-white hover:bg-orange-600">
+      <button className="mt-4 bg-orange-500 rounded-md w-full py-2 px-3 text-white shadow-sm hover:bg-orange-600 focus:ring-orange-500 outline-none">
         Upload product
       </button>
     </div>
