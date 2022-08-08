@@ -51,7 +51,7 @@ export default function Enter() {
               />
             ) : null}
             {method === "phone" ? (
-              <div className="flex rounded-sm shadow-sm">
+              <div className="flex rounded-sm shadow-md">
                 <span className="flex items-center justify-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 select-none text-sm">
                   +82
                 </span>
@@ -59,7 +59,7 @@ export default function Enter() {
                   type="number"
                   required
                   placeholder="Plese enter your number"
-                  className="appearance-none border-gray-300 shadow-md w-full border px-3 py-2 placeholder:text-gray-500 placeholder:text-sm rounded-md rounded-l-none   focus:outline-none focus:border-orange-500 focus:ring-orange-500"
+                  className="appearance-none border-gray-300 w-full border px-3 py-2 placeholder:text-gray-500 placeholder:text-sm rounded-md rounded-l-none   focus:outline-none focus:border-orange-500 focus:ring-orange-500"
                 />
               </div>
             ) : null}
