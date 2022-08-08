@@ -37,7 +37,7 @@ const Upload: NextPage = () => {
             id="price"
             type="text"
             placeholder="0.00"
-            className="pl-5 border-2 border-gray-300 rounded-md appearance-none w-full hover:border-orange-500 hover:border-2 focus:ring-orange-500  focus:outline-none focus:rounded-sm"
+            className="pl-5 border-2 border-gray-300 rounded-md appearance-none w-full hover:border-orange-500 hover:border-2 focus:border-orange-500 focus:ring-orange-500  focus:outline-none"
           />
           <div className="absolute right-2 text-sm pointer-events-none">
             <span className="text-gray-500">USD</span>
@@ -52,7 +52,7 @@ const Upload: NextPage = () => {
           <textarea
             id="description"
             rows={4}
-            className="w-full rounded-md border-2 border-gray-300 hover:border-orange-500 focus:outline-none focus:ring-orange-500"
+            className="w-full rounded-md border-2 border-gray-300 hover:border-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
           />
         </div>
       </div>

@@ -69,7 +69,7 @@ const CommunityPostDetail: NextPage = () => {
         <textarea
           rows={4}
           placeholder="Answer this question!"
-          className="w-full rounded-md border-2 border-gray-300 hover:border-orange-500 focus:outline-none focus:ring-orange-500"
+          className="rounded-md border-2 shadow-sm border-gray-300 hover:border-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
         />
         <button className="mt-4 bg-orange-500 rounded-md w-full py-2 px-3 text-white shadow-sm hover:bg-orange-600 focus:ring-orange-500 outline-none">
           Reply
