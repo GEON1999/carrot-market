@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { cls } from "../libs/utils";
 
 export default function Enter() {
   const [method, setMethod] = useState<"email" | "phone">("email");
@@ -15,21 +16,23 @@ export default function Enter() {
           <div className="grid grid-cols-2 mt-3  border-b">
             <button
               onClick={onEmailClick}
-              className={`pb-4 border-b-2 ${
+              className={cls(
+                "pb-4 border-b-2",
                 method === "email"
                   ? " border-orange-400 text-orange-400"
                   : "border-transparent"
-              }`}
+              )}
             >
               Email
             </button>
             <button
               onClick={onPhoneClick}
-              className={`pb-4 border-b-2 ${
+              className={cls(
+                "pb-4 border-b-2",
                 method === "phone"
                   ? " border-orange-400 text-orange-400"
                   : "border-transparent"
-              }`}
+              )}
             >
               Phone
             </button>
