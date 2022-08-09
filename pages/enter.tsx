@@ -48,7 +48,7 @@ export default function Enter() {
                 required
                 placeholder="
                 Please enter your email"
-                className="border-gray-400 shadow-md w-full border placeholder:text-gray-500 placeholder:text-sm rounded-md  px-3 py-2 focus:outline-none focus:border-orange-500 focus:ring-orange-500"
+                className="border-gray-300 shadow-md w-full border placeholder:text-gray-500 placeholder:text-sm rounded-md  px-3 py-2 focus:outline-none focus:border-orange-500 focus:ring-orange-500"
               />
             ) : null}
             {method === "phone" ? (
