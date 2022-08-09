@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Layout from "../../components/layout";
 import ProfileInfo from "../../components/profile";
+import SubmitBtn from "../../components/submitBtn";
 
 const ItemDetail: NextPage = () => {
   return (
@@ -8,12 +9,7 @@ const ItemDetail: NextPage = () => {
       <div className="mx-4">
         <div className="mt-4">
           <div className="h-96 bg-gray-400" />
-          <ProfileInfo
-            mt="3"
-            big
-            name="Steve Jebs"
-            subtitle="View profile →"
-          ></ProfileInfo>
+          <ProfileInfo mt="3" big name="Steve Jebs" subtitle="View profile →" />
           <div className="mt-3 ">
             <h1 className="font-bold text-3xl ">Galaxy S50</h1>
             <p className="mt-3 mb-4 font-semibold text-2xl">$140</p>
@@ -28,9 +24,7 @@ const ItemDetail: NextPage = () => {
               the first motherfucker to get shot. You understand?
             </p>
             <div className="mt-3 flex items-center">
-              <button className="bg-orange-500 flex-1 py-3 rounded-md text-white mr-2 shadow-sm hover:bg-orange-600 focus:ring-orange-700 focus:ring-2  outline-none">
-                Talk to seller
-              </button>
+              <SubmitBtn title="Talk to seller" py="3" mr="2" />
               <button className="py-3 px-3 bg-gray-200 flex justify-center items-center rounded-md text-gray-700 hover:text-red-400 hover:bg-gray-300 focus:ring-gray-400 focus:ring-2  outline-none">
                 <svg
                   className="h-6 w-6 "

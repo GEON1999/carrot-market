@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Layout from "../../components/layout";
+import SubmitBtn from "../../components/submitBtn";
 
 const EditProfile: NextPage = () => {
   return (
@@ -51,9 +52,7 @@ const EditProfile: NextPage = () => {
             />
           </div>
         </div>
-        <button className="mt-4 bg-orange-500 rounded-md w-full py-2 px-3 text-white shadow-sm hover:bg-orange-600 focus:ring-orange-500 outline-none">
-          Edit
-        </button>
+        <SubmitBtn mt="4" title="Edit" />
       </div>
     </Layout>
   );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Layout from "../components/layout";
+import SubmitBtn from "../components/submitBtn";
 import { cls } from "../libs/utils";
 
 export default function Enter() {
@@ -71,10 +72,12 @@ export default function Enter() {
                 </div>
               ) : null}
             </div>
-            <button className="mt-6 bg-orange-500 rounded-md w-full py-2 px-3 text-white shadow-sm hover:bg-orange-600 outline-none">
-              {method === "email" ? "Get login link" : null}
-              {method === "phone" ? "Get one-time password" : null}
-            </button>
+            <SubmitBtn
+              title={
+                method === "email" ? "Get login link" : "Get one-time password"
+              }
+              mt="6"
+            />
           </form>
           <div className="mt-8">
             <div className="relative">

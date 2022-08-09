@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Layout from "../../components/layout";
+import SubmitBtn from "../../components/submitBtn";
 
 const Write: NextPage = () => {
   return (
@@ -11,9 +12,7 @@ const Write: NextPage = () => {
           rows={4}
           placeholder="Ask a question!"
         />
-        <button className="mt-4 bg-orange-500 rounded-md w-full py-2 px-3 text-white shadow-sm hover:bg-orange-600 focus:ring-orange-500 outline-none">
-          Submit
-        </button>
+        <SubmitBtn title="Submit" mt="3" />
       </form>
     </Layout>
   );

@@ -19,7 +19,7 @@ const Live: NextPage = () => {
                 big={false}
                 name="Geon"
                 subtitle="I got eveything you want"
-              ></ProfileInfo>
+              />
             </div>
           </div>
         ))}

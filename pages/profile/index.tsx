@@ -6,11 +6,7 @@ const Profile: NextPage = () => {
   return (
     <Layout title="나의 정보" hasTabBar>
       <div className="px-4 py-2">
-        <ProfileInfo
-          big
-          name="Steave Jobs"
-          subtitle="Edit profile ->"
-        ></ProfileInfo>
+        <ProfileInfo big name="Steave Jobs" subtitle="Edit profile ->" />
         <div className="flex justify-between px-5 my-12">
           <div className="text-sm">
             <div className="w-14 h-14 rounded-full bg-orange-500 flex justify-center items-center text-white mb-2 hover:bg-orange-600">

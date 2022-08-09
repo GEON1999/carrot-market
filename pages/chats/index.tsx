@@ -14,7 +14,7 @@ const Chats: NextPage = () => {
             big
             name="Steve Jobs"
             subtitle="can you discount this?"
-          ></ProfileInfo>
+          />
         ))}
       </div>
     </Layout>

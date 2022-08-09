@@ -12,11 +12,7 @@ const Stream: NextPage = () => {
             <h3 className="font-bold first:text-2xl text-gray-700">
               Come to check this!!
             </h3>
-            <ProfileInfo
-              big
-              name="Geon"
-              subtitle="I got eveything you want"
-            ></ProfileInfo>
+            <ProfileInfo big name="Geon" subtitle="I got eveything you want" />
             <div className="space-y-1">
               <h1 className="font-bold text-xl ">Galaxy S50</h1>
               <p className="font-semibold text-lg">$140</p>

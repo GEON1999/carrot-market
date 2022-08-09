@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Layout from "../../components/layout";
+import SubmitBtn from "../../components/submitBtn";
 
 const Upload: NextPage = () => {
   return (
@@ -58,9 +59,7 @@ const Upload: NextPage = () => {
             />
           </div>
         </div>
-        <button className="mt-4 bg-orange-500 rounded-md w-full py-2 px-3 text-white shadow-sm hover:bg-orange-600 focus:ring-orange-500 outline-none">
-          Upload product
-        </button>
+        <SubmitBtn title="Upload product" mt="4" />
       </div>
     </Layout>
   );

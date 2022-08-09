@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Layout from "../../components/layout";
+import SubmitBtn from "../../components/submitBtn";
 
 const Create: NextPage = () => {
   return (
@@ -22,7 +23,7 @@ const Create: NextPage = () => {
               Price
             </label>
             <div className="relative flex items-center">
-              <div className="absolute  left-1 pointer-events-none">
+              <div className="absolute  left-2 pointer-events-none">
                 <span className=" text-gray-500 text-sm">$</span>
               </div>
               <input
@@ -49,9 +50,7 @@ const Create: NextPage = () => {
             />
           </div>
         </div>
-        <button className="mt-4 bg-orange-500 rounded-md w-full py-2 px-3 text-white shadow-sm hover:bg-orange-600 focus:ring-orange-500 outline-none">
-          Upload product
-        </button>
+        <SubmitBtn title="Upload product" mt="4" />
       </div>
     </Layout>
   );

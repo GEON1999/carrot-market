@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Layout from "../../components/layout";
 import ProfileInfo from "../../components/profile";
+import SubmitBtn from "../../components/submitBtn";
 
 const CommunityPostDetail: NextPage = () => {
   return (
@@ -9,12 +10,7 @@ const CommunityPostDetail: NextPage = () => {
         <span className="bg-gray-100 text-gray-700 px-2.5 py-0.5 rounded-full text-sm">
           동네질문
         </span>
-        <ProfileInfo
-          big
-          py="3"
-          name="Steve Jobs"
-          subtitle="View profile"
-        ></ProfileInfo>
+        <ProfileInfo big py="3" name="Steve Jobs" subtitle="View profile" />
         <div className="border-t border-b-[2px] py-3 space-y-8">
           <div>
             <span className="text-orange-500 font-bold">Q.</span> What is the
@@ -63,7 +59,7 @@ const CommunityPostDetail: NextPage = () => {
             name="Steve Jobs"
             subtitle="2시간 전"
             big={false}
-          ></ProfileInfo>
+          />
         </div>
         <div className="flex flex-col">
           <textarea
@@ -71,9 +67,7 @@ const CommunityPostDetail: NextPage = () => {
             placeholder="Answer this question!"
             className="rounded-md border-2 shadow-sm border-gray-300 hover:border-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
           />
-          <button className="mt-4 bg-orange-500 rounded-md w-full py-2 px-3 text-white shadow-sm hover:bg-orange-600 focus:ring-orange-500 outline-none">
-            Reply
-          </button>
+          <SubmitBtn title="Reply" mt="4" />
         </div>
       </div>
     </Layout>

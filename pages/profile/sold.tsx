@@ -8,7 +8,7 @@ const Sold: NextPage = () => {
       <div className="mx-4">
         {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
           <div key={i} className="py-4 border-b flex justify-between ">
-            <Item title="New iPhone 14" subtitle="Black" price="95"></Item>
+            <Item title="New iPhone 14" subtitle="Black" price="95" />
             <div className="flex items-end space-x-2">
               <div className="flex items-center space-x-0.5">
                 <svg
