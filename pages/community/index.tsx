@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import FixedBtn from "../../components/fixedBtn";
-import Button from "../../components/fixedBtn";
 import Layout from "../../components/layout";
 
 const Community: NextPage = () => {
