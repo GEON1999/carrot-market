@@ -1,0 +1,57 @@
+import type { NextPage } from "next";
+
+const Create: NextPage = () => {
+  return (
+    <div className="px-4 py-12">
+      <div className="space-y-3">
+        <div>
+          <label htmlFor="title" className="text-sm text-gray-500">
+            Title
+          </label>
+          <input
+            id="title"
+            type="text"
+            placeholder="Product title"
+            className="border-2 border-gray-300 rounded-md appearance-none w-full hover:border-orange-500 hover:border-2 focus:border-orange-500 focus:ring-orange-500  focus:outline-none"
+          />
+        </div>
+        <div>
+          <label htmlFor="price" className="text-sm text-gray-500">
+            Price
+          </label>
+          <div className="relative flex items-center">
+            <div className="absolute  left-1 pointer-events-none">
+              <span className=" text-gray-500 text-sm">$</span>
+            </div>
+            <input
+              id="price"
+              type="text"
+              placeholder="0.00"
+              className="pl-5 border-2 border-gray-300 rounded-md appearance-none w-full hover:border-orange-500 hover:border-2 focus:border-orange-500 focus:ring-orange-500  focus:outline-none"
+            />
+            <div className="absolute right-2 text-sm pointer-events-none">
+              <span className="text-gray-500">USD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="mt-2">
+        <label className="text-gray-500 text-sm" htmlFor="description">
+          Description
+        </label>
+        <div>
+          <textarea
+            id="description"
+            rows={4}
+            className="w-full rounded-md border-2 border-gray-300 hover:border-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
+          />
+        </div>
+      </div>
+      <button className="mt-4 bg-orange-500 rounded-md w-full py-2 px-3 text-white shadow-sm hover:bg-orange-600 focus:ring-orange-500 outline-none">
+        Upload product
+      </button>
+    </div>
+  );
+};
+
+export default Create;
