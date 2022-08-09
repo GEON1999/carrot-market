@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Layout from "../../components/layout";
+import ProfileInfo from "../../components/profile";
 
 const Stream: NextPage = () => {
   return (
@@ -11,15 +12,11 @@ const Stream: NextPage = () => {
             <h3 className="font-bold first:text-2xl text-gray-700">
               Come to check this!!
             </h3>
-            <div className="flex  items-center space-x-3">
-              <div className="rounded-full bg-gray-300 p-6" />
-              <div>
-                <p className="font-semibold text-gray-700">Steve Jebs</p>
-                <p className="text-sm text-gray-500">
-                  This is what you are looking for
-                </p>
-              </div>
-            </div>
+            <ProfileInfo
+              big
+              name="Geon"
+              subtitle="I got eveything you want"
+            ></ProfileInfo>
             <div className="space-y-1">
               <h1 className="font-bold text-xl ">Galaxy S50</h1>
               <p className="font-semibold text-lg">$140</p>

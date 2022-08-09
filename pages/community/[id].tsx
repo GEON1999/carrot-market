@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Layout from "../../components/layout";
+import ProfileInfo from "../../components/profile";
 
 const CommunityPostDetail: NextPage = () => {
   return (
@@ -8,13 +9,12 @@ const CommunityPostDetail: NextPage = () => {
         <span className="bg-gray-100 text-gray-700 px-2.5 py-0.5 rounded-full text-sm">
           동네질문
         </span>
-        <div className="flex mt-3 mb-2">
-          <div className="rounded-full bg-gray-300 p-6 mr-3" />
-          <div>
-            <p className="font-semibold">Steve Jebs</p>
-            <p className="text-sm text-gray-500">View profile &rarr;</p>
-          </div>
-        </div>
+        <ProfileInfo
+          big
+          py="3"
+          name="Steve Jobs"
+          subtitle="View profile"
+        ></ProfileInfo>
         <div className="border-t border-b-[2px] py-3 space-y-8">
           <div>
             <span className="text-orange-500 font-bold">Q.</span> What is the
@@ -58,14 +58,12 @@ const CommunityPostDetail: NextPage = () => {
           </div>
         </div>
         <div className="mt-5">
-          <div className="flex items-start mb-4">
-            <div className="rounded-full bg-gray-300 p-5 mr-3" />
-            <div className="flex flex-col">
-              <span className="text-sm font-semibold">Steve Jebs</span>
-              <span className="text-xs text-gray-500 mb-2">2시간 전</span>
-              <p>The best mandu restaurant is the one next to my house.</p>
-            </div>
-          </div>
+          <ProfileInfo
+            mb="4"
+            name="Steve Jobs"
+            subtitle="2시간 전"
+            big={false}
+          ></ProfileInfo>
         </div>
         <div className="flex flex-col">
           <textarea

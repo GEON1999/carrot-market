@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Layout from "../../components/layout";
+import ProfileInfo from "../../components/profile";
 
 const ItemDetail: NextPage = () => {
   return (
@@ -7,13 +8,12 @@ const ItemDetail: NextPage = () => {
       <div className="mx-4">
         <div className="mt-4">
           <div className="h-96 bg-gray-400" />
-          <div className="flex mt-3 space-x-3">
-            <div className="w-14 aspect-square bg-slate-400 rounded-full" />
-            <div>
-              <p className="font-semibold">Steve Jebs</p>
-              <p className="text-gray-400 text-sm">View profile &rarr;</p>
-            </div>
-          </div>
+          <ProfileInfo
+            mt="3"
+            big
+            name="Steve Jebs"
+            subtitle="View profile →"
+          ></ProfileInfo>
           <div className="mt-3 ">
             <h1 className="font-bold text-3xl ">Galaxy S50</h1>
             <p className="mt-3 mb-4 font-semibold text-2xl">$140</p>

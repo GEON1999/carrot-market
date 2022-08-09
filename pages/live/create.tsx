@@ -3,7 +3,7 @@ import Layout from "../../components/layout";
 
 const Create: NextPage = () => {
   return (
-    <Layout canGoBack>
+    <Layout canGoBack hasTabBar>
       <div className="px-4 py-2">
         <div className="space-y-3">
           <div>

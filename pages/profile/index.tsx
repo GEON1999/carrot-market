@@ -1,17 +1,16 @@
 import type { NextPage } from "next";
 import Layout from "../../components/layout";
+import ProfileInfo from "../../components/profile";
 
 const Profile: NextPage = () => {
   return (
     <Layout title="나의 정보" hasTabBar>
       <div className="px-4 py-2">
-        <div className="flex items-center space-x-3">
-          <div className="rounded-full bg-gray-300 p-7" />
-          <div className="flex flex-col">
-            <span className="font-semibold">Steve Jebs</span>
-            <span className="text-sm text-gray-500">Edit profile &rarr;</span>
-          </div>
-        </div>
+        <ProfileInfo
+          big
+          name="Steave Jobs"
+          subtitle="Edit profile ->"
+        ></ProfileInfo>
         <div className="flex justify-between px-5 my-12">
           <div className="text-sm">
             <div className="w-14 h-14 rounded-full bg-orange-500 flex justify-center items-center text-white mb-2 hover:bg-orange-600">
@@ -72,6 +71,7 @@ const Profile: NextPage = () => {
           </div>
         </div>
         <div>
+          {/* svg 가 있을 경우에 대한 boolean 추가로 구현이 가능하지만 1회 사용을 위한 컴포넌트 수정은 비효율인 듯 함 */}
           <div className="flex items-start space-x-2 mb-4">
             <div className="rounded-full bg-gray-300 p-6" />
             <div className="flex flex-col">

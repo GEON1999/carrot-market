@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Item from "../../components/item";
 import Layout from "../../components/layout";
 
 const Sold: NextPage = () => {
@@ -7,14 +8,7 @@ const Sold: NextPage = () => {
       <div className="mx-4">
         {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
           <div key={i} className="py-4 border-b flex justify-between ">
-            <div className="space-x-3 flex justify-center items-center">
-              <div className="bg-gray-600 w-20 h-20" />
-              <div className="flex flex-col">
-                <h3 className="font-semibold">New iPhone 14</h3>
-                <span className="text-sm text-gray-500">Black</span>
-                <span className="mt-2 font-bold text-lg">$95</span>
-              </div>
-            </div>
+            <Item title="New iPhone 14" subtitle="Black" price="95"></Item>
             <div className="flex items-end space-x-2">
               <div className="flex items-center space-x-0.5">
                 <svg
