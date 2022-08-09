@@ -1,4 +1,6 @@
 import type { NextPage } from "next";
+import FixedBtn from "../components/fixedBtn";
+import Button from "../components/fixedBtn";
 import Item from "../components/item";
 import Layout from "../components/layout";
 
@@ -47,7 +49,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         ))}
-        <button className="border-none text-white fixed bottom-24 right-8 bg-orange-400 hover:bg-orange-500 p-4 rounded-full shadow-lg transition-colors">
+        <FixedBtn>
           <svg
             className="h-6 w-6"
             xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +65,7 @@ const Home: NextPage = () => {
               d="M12 6v6m0 0v6m0-6h6m-6 0H6"
             />
           </svg>
-        </button>
+        </FixedBtn>
       </div>
     </Layout>
   );
