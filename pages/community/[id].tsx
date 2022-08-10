@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Layout from "../../components/layout";
 import ProfileInfo from "../../components/profile";
 import SubmitBtn from "../../components/submitBtn";
+import Textarea from "../../components/textarea";
 
 const CommunityPostDetail: NextPage = () => {
   return (
@@ -62,11 +63,7 @@ const CommunityPostDetail: NextPage = () => {
           />
         </div>
         <div className="flex flex-col">
-          <textarea
-            rows={4}
-            placeholder="Answer this question!"
-            className="rounded-md border-2 shadow-sm border-gray-300 hover:border-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
-          />
+          <Textarea placeholder="Answer this question!" />
           <SubmitBtn title="Reply" mt="4" />
         </div>
       </div>

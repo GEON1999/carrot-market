@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Input from "../../components/input";
 import Layout from "../../components/layout";
 import SubmitBtn from "../../components/submitBtn";
+import Textarea from "../../components/textarea";
 
 const Create: NextPage = () => {
   return (
@@ -35,16 +36,7 @@ const Create: NextPage = () => {
           </div>
         </div>
         <div className="mt-2">
-          <label className="text-gray-500 text-sm" htmlFor="description">
-            Description
-          </label>
-          <div>
-            <textarea
-              id="description"
-              rows={4}
-              className="w-full rounded-md border-2 border-gray-300 hover:border-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
-            />
-          </div>
+          <Textarea id="description" title="Description" label />
         </div>
         <SubmitBtn title="Upload product" mt="4" />
       </div>
