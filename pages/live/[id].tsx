@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import ChatInput from "../../components/chatInput";
 import Layout from "../../components/layout";
+import Message from "../../components/message";
 import ProfileInfo from "../../components/profile";
 
 const Stream: NextPage = () => {
@@ -31,67 +32,17 @@ const Stream: NextPage = () => {
             </div>
           </div>
         </div>
-        <div className="px-4 space-y-7 h-[40vh] overflow-scroll">
-          <div className="flex items-start justify-start space-x-3">
-            <div className="rounded-full bg-gray-300 p-5" />
-            <div className="border p-2 w-1/2 shadow-sm rounded-md">
-              <p>Hi~~</p>
-            </div>
-          </div>
-          <div className="flex flex-row-reverse items-start justify-start space-x-3 space-x-reverse">
-            <div className="rounded-full bg-gray-300 p-5" />
-            <div className="border p-2 w-1/2 shadow-sm rounded-md">
-              <p>Hi! i want to buy them all!!!</p>
-            </div>
-          </div>
-          <div className="flex items-start justify-start space-x-3">
-            <div className="rounded-full bg-gray-300 p-5" />
-            <div className="border p-2 w-1/2 shadow-sm rounded-md">
-              <p>omg!</p>
-            </div>
-          </div>
-          <div className="flex items-start justify-start space-x-3">
-            <div className="rounded-full bg-gray-300 p-5" />
-            <div className="border p-2 w-1/2 shadow-sm rounded-md">
-              <p>i wanna buy that iphone. plz give me that right now</p>
-            </div>
-          </div>
-          <div className="flex items-start justify-start space-x-3">
-            <div className="rounded-full bg-gray-300 p-5" />
-            <div className="border p-2 w-1/2 shadow-sm rounded-md">
-              <p>Hi, i wanna buy that iphone</p>
-            </div>
-          </div>
-          <div className="flex flex-row-reverse items-start justify-start space-x-3 space-x-reverse">
-            <div className="rounded-full bg-gray-300 p-5" />
-            <div className="border p-2 w-1/2 shadow-sm rounded-md">
-              <p>Hi, I am free tommrow night</p>
-            </div>
-          </div>
-          <div className="flex items-start justify-start space-x-3">
-            <div className="rounded-full bg-gray-300 p-5" />
-            <div className="border p-2 w-1/2 shadow-sm rounded-md">
-              <p>i wanna buy that iphone. plz give me that right now</p>
-            </div>
-          </div>
-          <div className="flex items-start justify-start space-x-3">
-            <div className="rounded-full bg-gray-300 p-5" />
-            <div className="border p-2 w-1/2 shadow-sm rounded-md">
-              <p>i wanna buy that iphone. plz give me that right now</p>
-            </div>
-          </div>
-          <div className="flex items-start justify-start space-x-3">
-            <div className="rounded-full bg-gray-300 p-5" />
-            <div className="border p-2 w-1/2 shadow-sm rounded-md">
-              <p>i wanna buy that iphone. plz give me that right now</p>
-            </div>
-          </div>
-          <div className="flex items-start justify-start space-x-3">
-            <div className="rounded-full bg-gray-300 p-5" />
-            <div className="border p-2 w-1/2 shadow-sm rounded-md">
-              <p>i wanna buy that iphone. plz give me that right now</p>
-            </div>
-          </div>
+        <div className="px-4 space-y-7 py-4 h-[40vh] overflow-scroll">
+          <Message text="I don't know what you've been told" />
+          <Message text="But time is running out, no need to take it slow" />
+          <Message text="I'm stepping to you toe-to-toe" mine />
+          <Message text="I should be scared, honey, maybe so" />
+          <Message text="But I ain't worried 'bout it right now (right now)" />
+          <Message text="Keeping dreams alive, 1999, heroes" />
+          <Message text="I ain't worried 'bout it right now (right now)" mine />
+          <Message text="Swimmin' in the floods (hey!)" />
+          <Message text="Dancing on the clouds below" />
+          <Message text="I ain't worried 'bout it" />
         </div>
         <div className="relative -top-2">
           <ChatInput />
