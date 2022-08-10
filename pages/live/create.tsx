@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Input from "../../components/input";
 import Layout from "../../components/layout";
 import SubmitBtn from "../../components/submitBtn";
 
@@ -8,30 +9,25 @@ const Create: NextPage = () => {
       <div className="px-4 py-2">
         <div className="space-y-3">
           <div>
-            <label htmlFor="title" className="text-sm text-gray-500">
-              Title
-            </label>
-            <input
+            <Input
+              title="Title"
               id="title"
               type="text"
               placeholder="Product title"
-              className="border-2 border-gray-300 rounded-md appearance-none w-full hover:border-orange-500 hover:border-2 focus:border-orange-500 focus:ring-orange-500  focus:outline-none"
             />
           </div>
           <div>
-            <label htmlFor="price" className="text-sm text-gray-500">
-              Price
-            </label>
-            <div className="relative flex items-center">
+            <Input
+              id="price"
+              title="Price"
+              type="text"
+              placeholder="0.00"
+              position="5"
+            />
+            <div className="relative flex items-center -top-[21px]">
               <div className="absolute  left-2 pointer-events-none">
                 <span className=" text-gray-500 text-sm">$</span>
               </div>
-              <input
-                id="price"
-                type="text"
-                placeholder="0.00"
-                className="pl-5 border-2 border-gray-300 rounded-md appearance-none w-full hover:border-orange-500 hover:border-2 focus:border-orange-500 focus:ring-orange-500  focus:outline-none"
-              />
               <div className="absolute right-2 text-sm pointer-events-none">
                 <span className="text-gray-500">USD</span>
               </div>

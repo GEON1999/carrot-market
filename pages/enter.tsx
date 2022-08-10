@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Input from "../components/input";
 import Layout from "../components/layout";
 import SubmitBtn from "../components/submitBtn";
 import { cls } from "../libs/utils";
@@ -42,36 +43,13 @@ export default function Enter() {
             </div>
           </div>
           <form className="mt-4 mb-2">
-            <label className="text-sm text-gray-500" htmlFor={method}>
-              {method === "email" ? "Email address" : null}
-              {method === "phone" ? "Phone number" : null}
-            </label>
-            <div>
-              {method === "email" ? (
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  placeholder="
-                Please enter your email"
-                  className="border-gray-300 shadow-md w-full border placeholder:text-gray-500 placeholder:text-sm rounded-md  px-3 py-2 focus:outline-none focus:border-orange-500 focus:ring-orange-500"
-                />
-              ) : null}
-              {method === "phone" ? (
-                <div className="flex rounded-sm shadow-md">
-                  <span className="flex items-center justify-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 select-none text-sm">
-                    +82
-                  </span>
-                  <input
-                    id="phone"
-                    type="number"
-                    required
-                    placeholder="Plese enter your number"
-                    className="appearance-none border-gray-300 w-full border px-3 py-2 placeholder:text-gray-500 placeholder:text-sm rounded-md rounded-l-none   focus:outline-none focus:border-orange-500 focus:ring-orange-500"
-                  />
-                </div>
-              ) : null}
-            </div>
+            <Input
+              phone={method === "email" ? false : true}
+              title={method}
+              id={method}
+              type="email"
+              placeholder="Please enter your email"
+            />
             <SubmitBtn
               title={
                 method === "email" ? "Get login link" : "Get one-time password"
