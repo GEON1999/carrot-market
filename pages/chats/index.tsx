@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import Layout from "../../components/layout";
 import ProfileInfo from "../../components/profile";
 
@@ -7,14 +8,17 @@ const Chats: NextPage = () => {
     <Layout title="채팅" hasTabBar>
       <div className="divide-y-[1px] py-2">
         {[1, 1, 1, 1, 1, 1, 1].map((_, i) => (
-          <ProfileInfo
-            py="3"
-            px="4"
-            key={i}
-            big
-            name="Steve Jobs"
-            subtitle="can you discount this?"
-          />
+          <Link href="chats/id" key={i}>
+            <a>
+              <ProfileInfo
+                py="3"
+                px="4"
+                big
+                name="Steve Jobs"
+                subtitle="can you discount this?"
+              />
+            </a>
+          </Link>
         ))}
       </div>
     </Layout>
