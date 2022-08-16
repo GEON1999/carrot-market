@@ -2,12 +2,31 @@ import { useState } from "react";
 import Input from "../components/input";
 import Layout from "../components/layout";
 import SubmitBtn from "../components/submitBtn";
-import { cls } from "../libs/utils";
+import { cls } from "../libs/server/utils";
+import { useForm } from "react-hook-form";
+import useMutation from "../libs/client/useMutation";
+
+interface EnterProps {
+  email?: string;
+  phone?: string;
+}
 
 export default function Enter() {
+  const [enter, { loading, data, error }] = useMutation("/api/users/enter");
+  const { register, handleSubmit, reset, watch } = useForm<EnterProps>();
   const [method, setMethod] = useState<"email" | "phone">("email");
-  const onEmailClick = () => setMethod("email");
-  const onPhoneClick = () => setMethod("phone");
+  const onEmailClick = () => {
+    reset();
+    setMethod("email");
+  };
+  const onPhoneClick = () => {
+    reset();
+    setMethod("phone");
+  };
+  const onVaild = (validForm: EnterProps) => {
+    enter(validForm);
+  };
+  console.log("1", loading, "2", data, "3", error);
   return (
     <Layout hasTabBar title="로그인">
       <div className="mx-4">
@@ -42,19 +61,22 @@ export default function Enter() {
               </button>
             </div>
           </div>
-          <form className="mt-4 mb-2">
+          <form className="mt-4 mb-2" onSubmit={handleSubmit(onVaild)}>
             <Input
               phone={method === "email" ? false : true}
               title={method}
               id={method}
               type="email"
               placeholder="Please enter your email"
+              register={register(method, {
+                required: true,
+              })}
             />
             <SubmitBtn
               title={
                 method === "email" ? "Get login link" : "Get one-time password"
               }
-              mt="6"
+              mt="4"
             />
           </form>
           <div className="mt-8">

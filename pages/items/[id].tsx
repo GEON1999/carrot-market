@@ -23,8 +23,8 @@ const ItemDetail: NextPage = () => {
               in there, and that ni**a Winston or anybody else is in there, you
               the first motherfucker to get shot. You understand?
             </p>
-            <div className="mt-3 flex items-center">
-              <SubmitBtn title="Talk to seller" py="3" mr="2" />
+            <div className="mt-3 flex space-x-1">
+              <SubmitBtn title="Talk to seller" />
               <button className="py-3 px-3 bg-gray-200 flex justify-center items-center rounded-md text-gray-700 hover:text-red-400 hover:bg-gray-300 focus:ring-gray-400 focus:ring-2  outline-none">
                 <svg
                   className="h-6 w-6 "

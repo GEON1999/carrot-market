@@ -3,9 +3,21 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  phone Int? @unique
+  email String @unique
+  name String
+  avatar String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
