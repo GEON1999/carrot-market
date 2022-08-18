@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
-import Layout from "../../components/layout";
-import ProfileInfo from "../../components/profile";
-import SubmitBtn from "../../components/submitBtn";
+import Layout from "@components/layout";
+import ProfileInfo from "@components/profile";
+import SubmitBtn from "@components/submitBtn";
 
 const ItemDetail: NextPage = () => {
   return (

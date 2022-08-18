@@ -8,7 +8,7 @@ interface InputProps {
   placeholder?: string;
   pl?: string;
   phone?: boolean;
-  register: UseFormRegisterReturn;
+  register?: UseFormRegisterReturn;
 }
 
 export default function Input({

@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
-import Input from "../../components/input";
-import Layout from "../../components/layout";
-import SubmitBtn from "../../components/submitBtn";
-import Textarea from "../../components/textarea";
+import Input from "@components/input";
+import Layout from "@components/layout";
+import SubmitBtn from "@components/submitBtn";
+import Textarea from "@components/textarea";
 
 const Upload: NextPage = () => {
   return (
@@ -31,13 +31,7 @@ const Upload: NextPage = () => {
           </div>
         </div>
         <div>
-          <Input
-            id="price"
-            title="Price"
-            type="text"
-            placeholder="0.00"
-            position="5"
-          />
+          <Input id="price" title="Price" type="text" placeholder="0.00" />
           <div className="relative flex items-center -top-[21px]">
             <div className="absolute  left-2 pointer-events-none">
               <span className=" text-gray-500 text-sm">$</span>

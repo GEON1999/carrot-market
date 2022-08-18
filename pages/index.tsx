@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
-import FixedBtn from "../components/fixedBtn";
-import Item from "../components/item";
-import Layout from "../components/layout";
+import FixedBtn from "@components/fixedBtn";
+import Item from "@components/item";
+import Layout from "@components/layout";
 import Link from "next/link";
 
 const Home: NextPage = () => {
