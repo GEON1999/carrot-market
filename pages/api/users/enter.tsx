@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import twilio from "twilio";
-import smtpTransport from "@libs/server/email";
 
 const twilioClient = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 
@@ -34,14 +33,16 @@ async function handler(
     },
   });
   if (phone) {
+    /*
     const message = await twilioClient.messages.create({
       messagingServiceSid: process.env.TWILIO_MSID,
       to: process.env.MY_PHONE!,
       body: `your token is ${payload}`,
     });
     console.log(message);
+  */
   } else if (email) {
-    const mailOptions = {
+    /* const mailOptions = {
       from: process.env.MAIL_ID,
       to: email,
       subject: "Verification Code From Carrot Market",
@@ -61,8 +62,11 @@ async function handler(
     );
     smtpTransport.close();
     console.log(result);
+    */
   }
+
   console.log(token);
+
   return res.json({
     ok: true,
   });

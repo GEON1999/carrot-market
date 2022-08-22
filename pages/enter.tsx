@@ -11,9 +11,22 @@ interface EnterForm {
   phone?: string;
 }
 
+interface TokenForm {
+  token: number;
+}
+
+interface MutationResult {
+  ok: boolean;
+}
+
 export default function Enter() {
-  const [enter, { loading, data, error }] = useMutation("/api/users/enter");
-  const { register, handleSubmit, reset, watch } = useForm<EnterForm>();
+  const [enter, { loading, data, error }] =
+    useMutation<MutationResult>("/api/users/enter");
+  const [tokenEnter, { loading: tokenLoading, data: tokenData }] =
+    useMutation<MutationResult>("/api/users/confirm");
+  const { register, handleSubmit, reset } = useForm<EnterForm>();
+  const { register: tokenRegister, handleSubmit: tokenHandleSubmit } =
+    useForm<TokenForm>();
   const [method, setMethod] = useState<"email" | "phone">("email");
   const onEmailClick = () => {
     reset();
@@ -24,7 +37,12 @@ export default function Enter() {
     setMethod("phone");
   };
   const onVaild = (validForm: EnterForm) => {
+    if (loading) return;
     enter(validForm);
+  };
+  const onTokenValid = (validForm: TokenForm) => {
+    if (tokenLoading) return;
+    tokenEnter(validForm);
   };
 
   return (
@@ -32,55 +50,85 @@ export default function Enter() {
       <div className="mx-4">
         <h3 className="text-center mt-12 font-bold text-3xl">Join</h3>
         <div>
-          <div className="felx flex-col">
-            <h5 className="text-center mt-10 text-sm text-gray-500">
-              Enter using
-            </h5>
-            <div className="grid grid-cols-2 mt-3  border-b">
-              <button
-                onClick={onEmailClick}
-                className={cls(
-                  "pb-4 border-b-2",
-                  method === "email"
-                    ? " border-orange-400 text-orange-400"
-                    : "border-transparent"
-                )}
+          {data?.ok ? (
+            <>
+              <form
+                className="mt-4 mb-2"
+                onSubmit={tokenHandleSubmit(onTokenValid)}
               >
-                Email
-              </button>
-              <button
-                onClick={onPhoneClick}
-                className={cls(
-                  "pb-4 border-b-2",
-                  method === "phone"
-                    ? " border-orange-400 text-orange-400"
-                    : "border-transparent"
-                )}
-              >
-                Phone
-              </button>
-            </div>
-          </div>
-          <form className="mt-4 mb-2" onSubmit={handleSubmit(onVaild)}>
-            <Input
-              phone={method === "email" ? false : true}
-              title={method}
-              id={method}
-              type={method === "email" ? "email" : "number"}
-              placeholder={
-                method === "email"
-                  ? "Please enter your email"
-                  : "Plese enter your number"
-              }
-              register={register(method, { required: true })}
-            />
-            <SubmitBtn
-              title={
-                method === "email" ? "Get login link" : "Get one-time password"
-              }
-              mt="4"
-            />
-          </form>
+                <Input
+                  phone={false}
+                  title={"Verification Code"}
+                  id={"token"}
+                  type={"password"}
+                  placeholder={""}
+                  register={tokenRegister("token", { required: true })}
+                />
+                <SubmitBtn
+                  title={tokenLoading ? "Loading...." : "Confirm"}
+                  mt="4"
+                />
+              </form>
+            </>
+          ) : (
+            <>
+              <div className="felx flex-col">
+                <h5 className="text-center mt-10 text-sm text-gray-500">
+                  Enter using
+                </h5>
+                <div className="grid grid-cols-2 mt-3  border-b">
+                  <button
+                    onClick={onEmailClick}
+                    className={cls(
+                      "pb-4 border-b-2",
+                      method === "email"
+                        ? " border-orange-400 text-orange-400"
+                        : "border-transparent"
+                    )}
+                  >
+                    Email
+                  </button>
+                  <button
+                    onClick={onPhoneClick}
+                    className={cls(
+                      "pb-4 border-b-2",
+                      method === "phone"
+                        ? " border-orange-400 text-orange-400"
+                        : "border-transparent"
+                    )}
+                  >
+                    Phone
+                  </button>
+                </div>
+              </div>
+              <form className="mt-4 mb-2" onSubmit={handleSubmit(onVaild)}>
+                <Input
+                  phone={method === "email" ? false : true}
+                  title={method}
+                  id={method}
+                  type={method === "email" ? "email" : "number"}
+                  placeholder={
+                    method === "email"
+                      ? "Please enter your email"
+                      : "Plese enter your number"
+                  }
+                  register={register(method, { required: true })}
+                />
+                <SubmitBtn
+                  title={
+                    method === "email"
+                      ? loading
+                        ? "Loading...."
+                        : "Get login link"
+                      : loading
+                      ? "Loading...."
+                      : "Get one-time password"
+                  }
+                  mt="4"
+                />
+              </form>
+            </>
+          )}
           <div className="mt-8">
             <div className="relative">
               <div className="absolute border-b border-gray-300 w-full" />

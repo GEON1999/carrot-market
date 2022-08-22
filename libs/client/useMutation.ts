@@ -1,21 +1,23 @@
 import { useState } from "react";
 
-interface useMutationState {
+interface useMutationState<T> {
   loading: boolean;
-  data: undefined | any;
-  error: undefined | any;
+  data?: T;
+  error?: object;
 }
 
-type useMutationResult = [(data?: any) => void, useMutationState];
+type useMutationResult<T> = [(data?: any) => void, useMutationState<T>];
 // 아무것도 return 하지 않는다는 것을 명시적으로 표기 하는 void.
 
-export default function useMutation(url: string): useMutationResult {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<undefined | any>(undefined);
-  const [error, setError] = useState<undefined | any>(undefined);
+export default function useMutation<T>(url: string): useMutationResult<T> {
+  const [state, setState] = useState<useMutationState<T>>({
+    loading: false,
+    data: undefined,
+    error: undefined,
+  });
 
-  async function mutation(data: any) {
-    setLoading(true);
+  function mutation(data: any) {
+    setState((prev) => ({ ...prev, loading: true }));
     fetch(url, {
       method: "POST",
       headers: {
@@ -23,13 +25,11 @@ export default function useMutation(url: string): useMutationResult {
       },
       body: JSON.stringify(data),
     })
-      .then((response) => {
-        response.json().catch(() => {});
-      })
-      .then((data) => setData(data))
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
+      .then((response) => response.json().catch(() => {}))
+      .then((data) => setState((prev) => ({ ...prev, data })))
+      .catch((error) => setState((prev) => ({ ...prev, error })))
+      .finally(() => setState((prev) => ({ ...prev, loading: false })));
   }
 
-  return [mutation, { loading, data, error }];
+  return [mutation, { ...state }];
 }
