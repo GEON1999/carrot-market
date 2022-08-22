@@ -2,6 +2,7 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
+import { withApiSession } from "@libs/server/withSession";
 
 // iron session에 sesstion type 정의
 declare module "iron-session" {
@@ -25,7 +26,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   });
 }
 
-export default withIronSessionApiRoute(withHandler("GET", handler), {
-  cookieName: "CarotSession",
-  password: "dfq003gj24gegdjfehsiynb4nybotyohbyiusgheibteyirtkuhskuiez5ig",
-});
+export default withApiSession(withHandler("GET", handler));
