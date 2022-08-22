@@ -2,8 +2,8 @@ import React from "react";
 import type { UseFormRegisterReturn } from "react-hook-form"; // import type : type 만을 import 함
 
 interface InputProps {
-  id: string;
-  title: string;
+  id?: string;
+  title?: string;
   type?: string;
   placeholder?: string;
   pl?: string;
@@ -33,8 +33,8 @@ export default function Input({
             </span>
             <input
               id={id}
-              type="number"
-              placeholder="Plese enter your number"
+              type={type}
+              placeholder={placeholder}
               {...register}
               className="appearance-none border-gray-300 w-full border px-3 py-2 placeholder:text-gray-500 placeholder:text-sm rounded-md rounded-l-none   focus:outline-none focus:border-orange-500 focus:ring-orange-500"
             />

@@ -24,9 +24,7 @@ export default function useMutation(url: string): useMutationResult {
       body: JSON.stringify(data),
     })
       .then((response) => {
-        response.json().catch(() => {
-          console.log("catched");
-        });
+        response.json().catch(() => {});
       })
       .then((data) => setData(data))
       .catch((error) => setError(error))

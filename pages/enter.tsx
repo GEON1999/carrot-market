@@ -2,18 +2,18 @@ import { useState } from "react";
 import Input from "@components/input";
 import Layout from "@components/layout";
 import SubmitBtn from "@components/submitBtn";
-import { cls } from "@libs/server/utils";
+import { cls } from "@libs/client/utils";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 
-interface EnterProps {
+interface EnterForm {
   email?: string;
   phone?: string;
 }
 
 export default function Enter() {
   const [enter, { loading, data, error }] = useMutation("/api/users/enter");
-  const { register, handleSubmit, reset, watch } = useForm<EnterProps>();
+  const { register, handleSubmit, reset, watch } = useForm<EnterForm>();
   const [method, setMethod] = useState<"email" | "phone">("email");
   const onEmailClick = () => {
     reset();
@@ -23,10 +23,10 @@ export default function Enter() {
     reset();
     setMethod("phone");
   };
-  const onVaild = (validForm: EnterProps) => {
+  const onVaild = (validForm: EnterForm) => {
     enter(validForm);
   };
-  console.log("1", loading, "2", data, "3", error);
+
   return (
     <Layout hasTabBar title="로그인">
       <div className="mx-4">
@@ -66,11 +66,13 @@ export default function Enter() {
               phone={method === "email" ? false : true}
               title={method}
               id={method}
-              type="email"
-              placeholder="Please enter your email"
-              register={register(method, {
-                required: true,
-              })}
+              type={method === "email" ? "email" : "number"}
+              placeholder={
+                method === "email"
+                  ? "Please enter your email"
+                  : "Plese enter your number"
+              }
+              register={register(method, { required: true })}
             />
             <SubmitBtn
               title={
