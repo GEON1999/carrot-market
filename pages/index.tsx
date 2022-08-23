@@ -3,8 +3,11 @@ import FixedBtn from "@components/fixedBtn";
 import Item from "@components/item";
 import Layout from "@components/layout";
 import Link from "next/link";
+import useUser from "@libs/client/useUser";
 
 const Home: NextPage = () => {
+  const user = useUser();
+  console.log(user);
   return (
     <Layout title="홈" hasTabBar>
       <div className="mx-4">
