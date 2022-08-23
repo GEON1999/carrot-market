@@ -35,13 +35,12 @@ async function handler(
     },
   });
   if (phone) {
-    /*
     const message = await twilioClient.messages.create({
       messagingServiceSid: process.env.TWILIO_MSID,
       to: process.env.MY_PHONE!,
       body: `your token is ${payload}`,
     });
-    console.log(message);*/
+    console.log(message);
   } else if (email) {
     const mailOptions = {
       from: process.env.MAIL_ID,
@@ -64,9 +63,6 @@ async function handler(
     smtpTransport.close();
     console.log(result);
   }
-
-  console.log(token);
-
   return res.json({
     ok: true,
   });
