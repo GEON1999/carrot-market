@@ -13,7 +13,7 @@ const Home: NextPage = () => {
       <div className="mx-4">
         {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
           <div key={i} className="py-4 border-b flex justify-between ">
-            <Link href="items/id">
+            <Link href={`/products/id`}>
               <a>
                 <Item title="New iPhone 14" subtitle="Black" price="95" />
               </a>
@@ -56,7 +56,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         ))}
-        <Link href="/items/upload">
+        <Link href="/products/upload">
           <a>
             <FixedBtn>
               <svg

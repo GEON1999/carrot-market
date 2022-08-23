@@ -13,23 +13,37 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  phone     BigInt?     @unique
-  email     String?  @unique
+  id        Int       @id @default(autoincrement())
+  phone     String?   @unique
+  email     String?   @unique
   name      String
   avatar    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  tokens     Token[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  tokens    Token[]
+  product   Product[]
 }
 
 model Token {
   id        Int      @id @default(autoincrement())
   token     String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete:Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
+model Product {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  image       String
+  name        String
+  price       Int
+  description String   @db.MediumText
+}
+
 // prisma 에 작성되는 model 은 npx prisma db push 코드를 통해 push 해야지만 planetscale 에 적용됨
+// npx prisma format
