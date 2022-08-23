@@ -40,7 +40,8 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   image       String
-  name        String
+  title       String
+  subTitle    String
   price       Int
   description String   @db.MediumText
 }

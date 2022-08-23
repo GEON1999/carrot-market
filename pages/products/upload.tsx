@@ -9,9 +9,10 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 interface UploadProductForm {
-  name: string;
   price: string;
   description: string;
+  title: string;
+  subTitle: string;
 }
 
 interface UploadProductMutation {
@@ -61,11 +62,18 @@ const Upload: NextPage = () => {
         <form onSubmit={handleSubmit(onVaild)}>
           <div>
             <Input
-              id="name"
-              title="Name"
+              id="title"
+              title="Title"
               type="text"
               position="mb-2"
-              register={register("name", { required: true })}
+              register={register("title", { required: true })}
+            />
+            <Input
+              id="subTitle"
+              title="Subtitle"
+              type="text"
+              position="mb-2"
+              register={register("subTitle", { required: true })}
             />
             <Input
               id="price"

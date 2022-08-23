@@ -26,5 +26,5 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export default withApiSession(
-  withHandler({ method: "GET", handler, isPrivate: false })
+  withHandler({ methods: ["GET"], handler, isPrivate: false })
 );
