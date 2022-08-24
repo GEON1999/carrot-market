@@ -2,45 +2,93 @@ import type { NextPage } from "next";
 import Layout from "@components/layout";
 import ProfileInfo from "@components/profile";
 import SubmitBtn from "@components/submitBtn";
+import { useRouter } from "next/router";
+import useSWR from "swr";
+import { useState } from "react";
+import { Product, User } from "@prisma/client";
+import useMutation from "@libs/client/useMutation";
+import { cls } from "@libs/utils";
+
+interface ProductWitheUser extends Product {
+  user: User;
+}
+
+interface ItemDetailResponse {
+  ok: boolean;
+  product: ProductWitheUser;
+  relatedProducts: Product[];
+  isLiked: boolean;
+}
 
 const ItemDetail: NextPage = () => {
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const { id } = router.query;
+  const { data, mutate } = useSWR<ItemDetailResponse>(
+    id ? `/api/products/${id}` : null
+  );
+  const [toggoleFav] = useMutation(`/api/products/${id}/fav`);
+  const onFavClick = () => {
+    if (!data) return;
+    mutate({ ...data, isLiked: !data.isLiked }, false);
+    toggoleFav({});
+  };
+  console.log(data);
   return (
     <Layout canGoBack hasTabBar>
       <div className="mx-4">
         <div className="mt-4">
           <div className="h-96 bg-gray-400" />
-          <ProfileInfo mt="3" big name="Steve Jebs" subtitle="View profile →" />
+          <ProfileInfo
+            mt="3"
+            big
+            name={data?.product?.user?.name}
+            subtitle="View profile →"
+            id={data?.product?.user?.id}
+          />
           <div className="mt-3 ">
-            <h1 className="font-bold text-3xl ">Galaxy S50</h1>
-            <p className="mt-3 mb-4 font-semibold text-2xl">$140</p>
-            <p>
-              My money&apos;s in that office, right? If she start giving me some
-              bullshit about it ain&apos;t there, and we got to go someplace
-              else and get it, I&apos;m gonna shoot you in the head then and
-              there. Then I&apos;m gonna shoot that bitch in the kneecaps, find
-              out where my goddamn money is. She gonna tell me too. Hey, look at
-              me when I&apos;m talking to you, motherfucker. You listen: we go
-              in there, and that ni**a Winston or anybody else is in there, you
-              the first motherfucker to get shot. You understand?
+            <h1 className="font-bold text-3xl ">{data?.product?.title}</h1>
+            <p className="mt-3 mb-4 font-semibold text-2xl">
+              {data?.product?.price}
             </p>
+            <p>{data?.product?.description}</p>
             <div className="mt-3 flex space-x-1">
               <SubmitBtn title="Talk to seller" />
-              <button className="py-3 px-3 bg-gray-200 flex justify-center items-center rounded-md text-gray-700 hover:text-red-400 hover:bg-gray-300 focus:ring-gray-400 focus:ring-2  outline-none">
-                <svg
-                  className="h-6 w-6 "
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
+              <button
+                onClick={onFavClick}
+                className={cls(
+                  "py-3 px-3 bg-gray-200 flex justify-center items-center rounded-md outline-none",
+                  data?.isLiked
+                    ? "text-red-500 hover:text-red-600"
+                    : "text-gray-500 hover:text-red-500"
+                )}
+              >
+                {data?.isLiked ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+                  </svg>
+                ) : (
+                  <svg
+                    className="h-6 w-6 "
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    />
+                  </svg>
+                )}
               </button>
             </div>
           </div>
@@ -48,11 +96,11 @@ const ItemDetail: NextPage = () => {
         <div className="mt-8">
           <h2 className="mb-3 font-bold text-xl">Similar items</h2>
           <div className="grid grid-cols-2 gap-10">
-            {[1, 2, 3, 4, 5, 6].map((_, i) => (
-              <div key={i} className="flex flex-col">
+            {data?.relatedProducts?.map((product) => (
+              <div key={product?.id} className="flex flex-col">
                 <div className="bg-gray-400 w-full aspect-square" />
-                <h3 className="text-gray-700 mt-2 -mb-1">Galaxy S60</h3>
-                <p className="text-gray-900 text-sm">$6</p>
+                <h3 className="text-gray-700 mt-2 -mb-1">{product?.title}</h3>
+                <p className="text-gray-900 text-sm">$ {product?.price}</p>
               </div>
             ))}
           </div>

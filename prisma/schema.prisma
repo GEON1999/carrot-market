@@ -22,6 +22,7 @@ model User {
   updatedAt DateTime  @updatedAt
   tokens    Token[]
   product   Product[]
+  fav       Fav[]
 }
 
 model Token {
@@ -44,6 +45,17 @@ model Product {
   subTitle    String
   price       Int
   description String   @db.MediumText
+  fav         Fav[]
+}
+
+model Fav {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
 }
 
 // prisma 에 작성되는 model 은 npx prisma db push 코드를 통해 push 해야지만 planetscale 에 적용됨

@@ -1,9 +1,11 @@
+import Link from "next/link";
 import React from "react";
 
 interface ProfileProps {
   big: boolean;
-  name: string;
+  name?: string;
   subtitle: string;
+  id?: number;
   px?: string;
   py?: string;
   mt?: string;
@@ -14,6 +16,7 @@ export default function ProfileInfo({
   big,
   name,
   subtitle,
+  id,
   px,
   py,
   mt,
@@ -26,7 +29,11 @@ export default function ProfileInfo({
       <div className="w-14 aspect-square bg-slate-400 rounded-full" />
       <div>
         <p className="font-semibold">{name}</p>
-        <p className="text-gray-400 text-sm">{subtitle}</p>
+        <Link href={`/profile/${id}`}>
+          <a>
+            <p className="text-gray-400 text-sm">{subtitle}</p>
+          </a>
+        </Link>
       </div>
     </div>
   ) : (
