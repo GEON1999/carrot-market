@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Product, User } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/utils";
+import Link from "next/link";
 
 interface ProductWitheUser extends Product {
   user: User;
@@ -19,6 +20,8 @@ interface ItemDetailResponse {
   relatedProducts: Product[];
   isLiked: boolean;
 }
+
+// 글 작성자가 본인인 경우 삭제 버튼이 노출되며 삭제할 수 있도록 해야함.
 
 const ItemDetail: NextPage = () => {
   const [loading, setLoading] = useState(true);
@@ -98,9 +101,15 @@ const ItemDetail: NextPage = () => {
           <div className="grid grid-cols-2 gap-10">
             {data?.relatedProducts?.map((product) => (
               <div key={product?.id} className="flex flex-col">
-                <div className="bg-gray-400 w-full aspect-square" />
-                <h3 className="text-gray-700 mt-2 -mb-1">{product?.title}</h3>
-                <p className="text-gray-900 text-sm">$ {product?.price}</p>
+                <Link href={`/products/${product?.id}`}>
+                  <a>
+                    <div className="bg-gray-400 w-full aspect-square" />
+                    <h3 className="text-gray-700 mt-2 -mb-1">
+                      {product?.title}
+                    </h3>
+                    <p className="text-gray-900 text-sm">$ {product?.price}</p>
+                  </a>
+                </Link>
               </div>
             ))}
           </div>

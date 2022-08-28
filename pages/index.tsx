@@ -7,9 +7,15 @@ import useUser from "@libs/client/useUser";
 import useSWR from "swr";
 import { Product } from "@prisma/client";
 
+interface ProductWithFavCount extends Product {
+  _count: {
+    fav: number;
+  };
+}
+
 interface ProductResponse {
   ok: boolean;
-  products: Product[];
+  products: ProductWithFavCount[];
 }
 
 const Home: NextPage = () => {
@@ -25,6 +31,7 @@ const Home: NextPage = () => {
             title={product.title}
             subtitle={product.subTitle}
             price={product.price}
+            hearts={product._count.fav}
           />
         ))}
         <Link href="/products/upload">
