@@ -6,6 +6,7 @@ import { withApiSession } from "@libs/server/withSession";
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
     query: { id },
+    session: { user },
   } = req;
 
   const post = await client.post.findUnique({
@@ -20,7 +21,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           avatar: true,
         },
       },
-      comment: {
+      comments: {
         select: {
           comment: true,
           createdAt: true,
@@ -37,14 +38,24 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       _count: {
         select: {
           interest: true,
-          comment: true,
+          comments: true,
         },
       },
+    },
+  });
+  const isInterested = await client.interest.findFirst({
+    where: {
+      userId: user?.id,
+      postId: Number(id),
+    },
+    select: {
+      id: true,
     },
   });
   res.json({
     ok: true,
     post,
+    isInterested,
   });
 }
 
