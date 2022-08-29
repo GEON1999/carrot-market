@@ -16,7 +16,6 @@ export default function useMutation<T = any>(
     error: undefined,
   });
   function mutation(data: any) {
-    console.log("sdffd", data);
     setSate((prev) => ({ ...prev, loading: true }));
     fetch(url, {
       method: "POST",

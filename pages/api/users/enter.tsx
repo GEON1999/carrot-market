@@ -40,7 +40,6 @@ async function handler(
       to: process.env.MY_PHONE!,
       body: `your token is ${payload}`,
     });
-    console.log(message);
   } else if (email) {
     const mailOptions = {
       from: process.env.MAIL_ID,
@@ -48,20 +47,13 @@ async function handler(
       subject: "Verification Code From Carrot Market",
       text: `Verification Code : ${payload}`,
     };
-    const result = await smtpTransport.sendMail(
-      mailOptions,
-      (error, responses) => {
-        if (error) {
-          console.log(error);
-          return null;
-        } else {
-          console.log(responses);
-          return null;
-        }
+    const result = await smtpTransport.sendMail(mailOptions, (error) => {
+      if (error) {
+        console.log(error);
+        return null;
       }
-    );
+    });
     smtpTransport.close();
-    console.log(result);
   }
   return res.json({
     ok: true,

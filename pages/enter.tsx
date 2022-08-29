@@ -48,7 +48,7 @@ export default function Enter() {
   const router = useRouter();
 
   useEffect(() => {
-    if (tokenData?.ok) {
+    if (tokenData && tokenData.ok) {
       router.push("/");
     }
   }, [tokenData, router]);

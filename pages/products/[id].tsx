@@ -36,7 +36,6 @@ const ItemDetail: NextPage = () => {
     mutate({ ...data, isLiked: !data.isLiked }, false);
     toggoleFav({});
   };
-  console.log(data);
   return (
     <Layout canGoBack hasTabBar>
       <div className="mx-4">

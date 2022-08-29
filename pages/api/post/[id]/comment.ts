@@ -9,7 +9,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     session: { user },
     query: { id },
   } = req;
-  console.log(comment);
   const newComment = await client.comment.create({
     data: {
       comment,

@@ -8,7 +8,6 @@ interface ItemProps {
   id: number;
   comments?: number;
   hearts?: number;
-  key: number;
 }
 
 export default function Item({
@@ -18,10 +17,9 @@ export default function Item({
   id,
   comments = 1,
   hearts,
-  key,
 }: ItemProps) {
   return (
-    <div key={key} className="py-4 border-b flex justify-between ">
+    <div className="py-4 border-b flex justify-between ">
       <Link href={`/products/${id}`}>
         <a>
           <div className="space-x-3 flex justify-center items-center">

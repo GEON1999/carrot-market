@@ -19,20 +19,20 @@ interface ProductResponse {
 }
 
 const Home: NextPage = () => {
-  const { user, isLoading } = useUser();
   const { data } = useSWR<ProductResponse>("/api/products");
   return (
     <Layout title="홈" hasTabBar>
       <div className="mx-4">
         {data?.products?.map((product) => (
-          <Item
-            id={product.id}
-            key={product.id}
-            title={product.title}
-            subtitle={product.subTitle}
-            price={product.price}
-            hearts={product._count.fav}
-          />
+          <div key={product.id}>
+            <Item
+              id={product.id}
+              title={product.title}
+              subtitle={product.subTitle}
+              price={product.price}
+              hearts={product._count.fav}
+            />
+          </div>
         ))}
         <Link href="/products/upload">
           <a>

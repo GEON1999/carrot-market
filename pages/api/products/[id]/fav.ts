@@ -8,19 +8,19 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     query: { id },
     session: { user },
   } = req;
-  const isyFav = await client.fav.findFirst({
+  const isFav = await client.fav.findFirst({
     where: {
       productId: Number(id),
       userId: user?.id,
     },
   });
-  if (isyFav) {
+  if (isFav) {
     await client.fav.delete({
       where: {
-        id: Number(isyFav.id),
+        id: Number(isFav.id),
       },
     });
-  } else if (!isyFav) {
+  } else if (!isFav) {
     await client.fav.create({
       data: {
         user: {
