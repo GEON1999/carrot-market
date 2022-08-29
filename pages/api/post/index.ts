@@ -5,13 +5,15 @@ import { withApiSession } from "@libs/server/withSession";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
-    body: { question },
+    body: { question, longitude, latitude },
     session: { user },
   } = req;
   if (req.method === "POST") {
     const post = await client.post.create({
       data: {
         question,
+        longitude,
+        latitude,
         user: {
           connect: {
             id: user?.id,
