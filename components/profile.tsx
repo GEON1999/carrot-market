@@ -29,11 +29,8 @@ export default function ProfileInfo({
       <div className="w-14 aspect-square bg-slate-400 rounded-full" />
       <div>
         <p className="font-semibold">{name}</p>
-        <Link href={`/profile/${id}`}>
-          <a>
-            <p className="text-gray-400 text-sm">{subtitle}</p>
-          </a>
-        </Link>
+
+        <p className="text-gray-400 text-sm">{subtitle}</p>
       </div>
     </div>
   ) : (

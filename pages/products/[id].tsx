@@ -50,9 +50,7 @@ const ItemDetail: NextPage = () => {
           />
           <div className="mt-3 ">
             <h1 className="font-bold text-3xl ">{data?.product?.title}</h1>
-            <p className="mt-3 mb-4 font-semibold text-2xl">
-              {data?.product?.price}
-            </p>
+            <p className="mt-3 mb-4  text-xl">$ {data?.product?.price}</p>
             <p>{data?.product?.description}</p>
             <div className="mt-3 flex space-x-1">
               <SubmitBtn title="Talk to seller" />

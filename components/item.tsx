@@ -15,8 +15,8 @@ export default function Item({
   subtitle,
   price,
   id,
-  comments = 1,
-  hearts,
+  comments = 0,
+  hearts = 0,
 }: ItemProps) {
   return (
     <div className="py-4 border-b flex justify-between ">

@@ -13,19 +13,23 @@ datasource db {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  phone     String?    @unique
-  email     String?    @unique
-  name      String
-  avatar    String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  tokens    Token[]
-  product   Product[]
-  fav       Fav[]
-  post     Post[]
-  comment   Comment[]
-  interest  Interest[]
+  id              Int        @id @default(autoincrement())
+  phone           String?    @unique
+  email           String?    @unique
+  name            String
+  avatar          String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  tokens          Token[]
+  product         Product[]
+  fav             Fav[]
+  post            Post[]
+  comment         Comment[]
+  interest        Interest[]
+  receivedReviews Review[]   @relation(name: "receivedReviews")
+  leftReviews     Review[]   @relation(name: "leftReviews")
+  sales       Sale[]
+  Purchases     Purchase[]
 }
 
 model Token {
@@ -49,16 +53,8 @@ model Product {
   price       Int
   description String   @db.MediumText
   fav         Fav[]
-}
-
-model Fav {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId Int
+  sales       Sale[]
+  Purchases     Purchase[]
 }
 
 model Post {
@@ -67,9 +63,11 @@ model Post {
   updatedAt DateTime   @updatedAt
   user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
-  comments   Comment[]
+  comments  Comment[]
   interest  Interest[]
   question  String     @db.MediumText
+  longitude Float?
+  latitude  Float?
 }
 
 model Interest {
@@ -91,6 +89,47 @@ model Comment {
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    Int
   comment   String   @db.MediumText
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  review     String   @db.MediumText
+  leavedBy   User     @relation(name: "receivedReviews", fields: [leavedById], references: [id], onDelete: Cascade)
+  leavedById Int
+  leaveFor   User     @relation(name: "leftReviews", fields: [leaveForId], references: [id], onDelete: Cascade)
+  leaveForId Int
+}
+
+model Fav {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+}
+
+model Sale {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+}
+
+model Purchase {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
 }
 
 // prisma 에 작성되는 model 은 npx prisma db push 코드를 통해 push 해야지만 planetscale 에 적용됨
