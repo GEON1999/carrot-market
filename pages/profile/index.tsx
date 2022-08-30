@@ -100,20 +100,18 @@ const Profile: NextPage = () => {
         </div>
         <>
           {data?.reviews.map((review) => (
-            <>
-              <div key={review.id} className="space-y-6">
-                <ProfileInfo
-                  big={false}
-                  name={review.leavedBy.name}
-                  subtitle={String(review.createdAt)}
-                />
-                <div>
-                  <p className="text-gray-700  -mt-5 ml-12 mb-8">
-                    {review.review}
-                  </p>
-                </div>
+            <div key={review.id} className="space-y-6">
+              <ProfileInfo
+                big={false}
+                name={review.leavedBy.name}
+                subtitle={String(review.createdAt)}
+              />
+              <div>
+                <p className="text-gray-700  -mt-5 ml-12 mb-8">
+                  {review.review}
+                </p>
               </div>
-            </>
+            </div>
           ))}
         </>
       </div>

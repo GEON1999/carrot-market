@@ -3,7 +3,6 @@ import FixedBtn from "@components/fixedBtn";
 import Item from "@components/item";
 import Layout from "@components/layout";
 import Link from "next/link";
-import useUser from "@libs/client/useUser";
 import useSWR from "swr";
 import { Product } from "@prisma/client";
 
