@@ -3,32 +3,44 @@ import ChatInput from "@components/chatInput";
 import Layout from "@components/layout";
 import Message from "@components/message";
 import ProfileInfo from "@components/profile";
+import useSWR from "swr";
+import { useRouter } from "next/router";
+import { Stream } from "@prisma/client";
 
-const Stream: NextPage = () => {
+interface StreamWithUser extends Stream {
+  user: {
+    name: string;
+  };
+}
+
+interface StreamResponse {
+  ok: boolean;
+  stream: StreamWithUser;
+}
+
+const StreamDetail: NextPage = () => {
+  const router = useRouter();
+  console.log(router.query.id);
+  const { data } = useSWR<StreamResponse>(`/api/streams/${router.query.id}`);
+  console.log(data);
   return (
     <Layout canGoBack hasTabBar>
       <div className=" px-4 py-2 space-y-7">
         <div className="space-y-2 pt-7">
           <div className="w-full aspect-video bg-gray-400 shadow-sm rounded-2xl" />
           <div className="space-y-3 ml-2">
-            <h3 className="font-bold first:text-2xl text-gray-700">
-              Come to check this!!
+            <h3 className="font-semibold first:text-xl text-gray-700">
+              {data?.stream?.streamTitle}
             </h3>
-            <ProfileInfo big name="Geon" subtitle="I got eveything you want" />
-            <div className="space-y-1">
-              <h1 className="font-bold text-xl ">Galaxy S50</h1>
-              <p className="font-semibold text-lg">$140</p>
-              <p>
-                My money&apos;s in that office, right? If she start giving me
-                some bullshit about it ain&apos;t there, and we got to go
-                someplace else and get it, I&apos;m gonna shoot you in the head
-                then and there. Then I&apos;m gonna shoot that bitch in the
-                kneecaps, find out where my goddamn money is. She gonna tell me
-                too. Hey, look at me when I&apos;m talking to you, motherfucker.
-                You listen: we go in there, and that ni**a Winston or anybody
-                else is in there, you the first motherfucker to get shot. You
-                understand?
-              </p>
+            <ProfileInfo
+              big
+              name={data?.stream?.user.name}
+              subtitle="I got eveything you want"
+            />
+            <div className=" pt-4 border-t">
+              <h1 className=" text-xl font-semibold">{data?.stream?.title}</h1>
+              <p className="mb-10">$ {data?.stream?.price}</p>
+              <p>{data?.stream?.description}</p>
             </div>
           </div>
         </div>
@@ -52,4 +64,4 @@ const Stream: NextPage = () => {
   );
 };
 
-export default Stream;
+export default StreamDetail;
