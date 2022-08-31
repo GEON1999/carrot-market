@@ -5,13 +5,13 @@ import Button from "@components/fixedBtn";
 import Layout from "@components/layout";
 import ProfileInfo from "@components/profile";
 
-const Live: NextPage = () => {
+const Stream: NextPage = () => {
   return (
     <Layout title="라이브" hasTabBar>
       <div className=" px-4 py-2 space-y-9 divide-y-2">
         {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
           <div key={i} className=" pt-7">
-            <Link href="live/id">
+            <Link href="/stream/id">
               <a>
                 <div className="w-full aspect-video bg-gray-400 shadow-sm rounded-2xl my-2" />
                 <div className="space-y-3 ml-2">
@@ -28,7 +28,7 @@ const Live: NextPage = () => {
             </Link>
           </div>
         ))}
-        <Link href="live/create">
+        <Link href="/stream/create">
           <a>
             <FixedBtn>
               <svg
@@ -53,4 +53,4 @@ const Live: NextPage = () => {
   );
 };
 
-export default Live;
+export default Stream;
