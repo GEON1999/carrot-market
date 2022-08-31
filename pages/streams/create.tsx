@@ -48,6 +48,7 @@ const Create: NextPage = () => {
                 placeholder="Stream title"
                 position="mb-3"
                 register={register("stream", { required: true })}
+                kind="text"
               />
               <Input
                 title="Product"
@@ -55,6 +56,7 @@ const Create: NextPage = () => {
                 type="text"
                 placeholder="Product title"
                 register={register("product", { required: true })}
+                kind="text"
               />
             </div>
             <div>
@@ -63,20 +65,12 @@ const Create: NextPage = () => {
                 title="Price"
                 type="text"
                 placeholder="0.00"
-                position="px-5"
+                kind="price"
                 register={register("price", {
                   required: true,
                   valueAsNumber: true,
                 })}
               />
-              <div className="relative flex items-center -top-[21px]">
-                <div className="absolute  left-2 pointer-events-none">
-                  <span className=" text-gray-500 text-sm">$</span>
-                </div>
-                <div className="absolute right-2 text-sm pointer-events-none">
-                  <span className="text-gray-500">USD</span>
-                </div>
-              </div>
             </div>
           </div>
           <div className="mt-2">

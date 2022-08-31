@@ -71,6 +71,7 @@ export default function Enter() {
                   type={"password"}
                   placeholder={""}
                   register={tokenRegister("token", { required: true })}
+                  kind="text"
                 />
                 <SubmitBtn
                   title={tokenLoading ? "Loading...." : "Confirm"}
@@ -111,7 +112,7 @@ export default function Enter() {
               </div>
               <form className="mt-4 mb-2" onSubmit={handleSubmit(onVaild)}>
                 <Input
-                  phone={method === "email" ? false : true}
+                  kind={method === "email" ? "text" : "phone"}
                   title={method}
                   id={method}
                   type={method === "email" ? "email" : "number"}

@@ -91,6 +91,7 @@ const EditProfile: NextPage = () => {
             placeholder="Please enter your name"
             register={register("name")}
             position={"mb-4"}
+            kind="text"
           />
           <Input
             id="email"
@@ -98,13 +99,19 @@ const EditProfile: NextPage = () => {
             type="emali"
             placeholder="Please enter your email"
             register={register("email")}
+            kind="text"
           />
           {errors ? (
             <div className="mb-4 mt-1 font-serif font-semibold mx-2">
               {errors.emailErrors?.message}
             </div>
           ) : null}
-          <Input phone id="phone" title="phone" register={register("phone")} />
+          <Input
+            kind="phone"
+            id="phone"
+            title="phone"
+            register={register("phone")}
+          />
 
           <SubmitBtn mt="8" title={loading ? "Loading...." : "Edit"} />
           {errors ? (

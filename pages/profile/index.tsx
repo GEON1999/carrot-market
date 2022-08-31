@@ -30,7 +30,7 @@ const Profile: NextPage = () => {
           <a>
             <ProfileInfo
               big
-              name={user?.profile.name}
+              name={user?.profile?.name}
               subtitle="Edit profile →"
             />
           </a>
@@ -107,7 +107,7 @@ const Profile: NextPage = () => {
           </Link>
         </div>
         <>
-          {data?.reviews.map((review) => (
+          {data?.reviews?.map((review) => (
             <div key={review.id} className="space-y-6">
               <ProfileInfo
                 big={false}

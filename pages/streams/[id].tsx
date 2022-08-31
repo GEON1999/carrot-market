@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import ChatInput from "@components/chatInput";
 import Layout from "@components/layout";
 import Message from "@components/message";
 import ProfileInfo from "@components/profile";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import { Stream } from "@prisma/client";
+import Input from "@components/input";
 
 interface StreamWithUser extends Stream {
   user: {
@@ -57,7 +57,7 @@ const StreamDetail: NextPage = () => {
           <Message text="I ain't worried 'bout it" />
         </div>
         <div className="relative -top-2">
-          <ChatInput />
+          <Input kind="chat" />
         </div>
       </div>
     </Layout>

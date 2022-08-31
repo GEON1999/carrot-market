@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
-import ChatInput from "@components/chatInput";
 import Layout from "@components/layout";
 import Message from "@components/message";
+import Input from "@components/input";
 
 const ChatDetail: NextPage = () => {
   return (
@@ -12,7 +12,7 @@ const ChatDetail: NextPage = () => {
         <Message text="Ok, can you come to my place?" />
         <div className="mt-6-5">
           <div className="relative top-4">
-            <ChatInput />
+            <Input kind="chat" />
           </div>
         </div>
       </div>
