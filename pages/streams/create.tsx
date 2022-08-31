@@ -18,7 +18,7 @@ interface StreamForm {
 
 interface StreamResponse {
   ok: boolean;
-  stream: Stream;
+  streams: Stream;
 }
 
 const Create: NextPage = () => {
@@ -32,7 +32,7 @@ const Create: NextPage = () => {
   };
   useEffect(() => {
     if (data && data.ok) {
-      router.push(`/streams/${data?.stream.id}`);
+      router.push(`/streams/${data?.streams.id}`);
     }
   }, [data, router]);
   return (

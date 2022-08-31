@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import { withApiSession } from "@libs/server/withSession";
-import Stream from "pages/stream";
 
 async function handler(
   req: NextApiRequest,
@@ -30,6 +29,12 @@ async function handler(
       ok: true,
       streams,
     });
+  }
+  if (req.method === "GET") {
+    const streams = await client.stream.findMany({
+      include: { user: {} },
+    });
+    res.json({ ok: true, streams });
   }
 }
 

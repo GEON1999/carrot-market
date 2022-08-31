@@ -4,23 +4,36 @@ import FixedBtn from "@components/fixedBtn";
 import Button from "@components/fixedBtn";
 import Layout from "@components/layout";
 import ProfileInfo from "@components/profile";
+import useSWR from "swr";
+import { Stream, User } from "@prisma/client";
 
-const Stream: NextPage = () => {
+interface StreamsWithUser extends Stream {
+  user: User;
+}
+
+interface StreamsResponse {
+  ok: boolean;
+  streams: StreamsWithUser[];
+}
+
+const Streams: NextPage = () => {
+  const { data } = useSWR<StreamsResponse>(`/api/streams`);
+  console.log(data);
   return (
     <Layout title="라이브" hasTabBar>
       <div className=" px-4 py-2 space-y-9 divide-y-2">
-        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
-          <div key={i} className=" pt-7">
-            <Link href="/stream/id">
+        {data?.streams.map((stream) => (
+          <div key={stream.id} className=" pt-7">
+            <Link href={`/streams/${stream.id}`}>
               <a>
                 <div className="w-full aspect-video bg-gray-400 shadow-sm rounded-2xl my-2" />
                 <div className="space-y-3 ml-2">
                   <h3 className="font-bold first:text-xl text-gray-700">
-                    Come to check this!!
+                    {stream.streamTitle}
                   </h3>
                   <ProfileInfo
                     big={false}
-                    name="Geon"
+                    name={stream.user.name}
                     subtitle="I got eveything you want"
                   />
                 </div>
@@ -28,7 +41,7 @@ const Stream: NextPage = () => {
             </Link>
           </div>
         ))}
-        <Link href="/stream/create">
+        <Link href="/streams/create">
           <a>
             <FixedBtn>
               <svg
@@ -53,4 +66,4 @@ const Stream: NextPage = () => {
   );
 };
 
-export default Stream;
+export default Streams;
