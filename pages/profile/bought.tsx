@@ -16,7 +16,6 @@ interface PurchaseResponse {
 
 const Bought: NextPage = () => {
   const { data } = useSWR<PurchaseResponse>(`/api/users/me/purchase`);
-  console.log(data);
   return (
     <Layout canGoBack hasTabBar>
       <div className="mx-4">

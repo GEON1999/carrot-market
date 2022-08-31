@@ -20,7 +20,6 @@ interface WriteResponse {
 
 const Write: NextPage = () => {
   const { longitude, latitude } = useCoords();
-  console.log(longitude, latitude);
   const { register, handleSubmit } = useForm<WriteForm>();
   const [post, { data, loading }] = useMutation<WriteResponse>(`/api/post`);
   const router = useRouter();

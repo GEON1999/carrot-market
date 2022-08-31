@@ -28,8 +28,8 @@ model User {
   interest        Interest[]
   receivedReviews Review[]   @relation(name: "receivedReviews")
   leftReviews     Review[]   @relation(name: "leftReviews")
-  sales       Sale[]
-  Purchases     Purchase[]
+  sales           Sale[]
+  Purchases       Purchase[]
 }
 
 model Token {
@@ -42,19 +42,19 @@ model Token {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          Int        @id @default(autoincrement())
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   image       String
   title       String
   subTitle    String
   price       Int
-  description String   @db.MediumText
+  description String     @db.MediumText
   fav         Fav[]
   sales       Sale[]
-  Purchases     Purchase[]
+  Purchases   Purchase[]
 }
 
 model Post {

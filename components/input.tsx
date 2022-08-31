@@ -6,7 +6,6 @@ interface InputProps {
   title?: string;
   type?: string;
   placeholder?: string;
-  pl?: string;
   phone?: boolean;
   register?: UseFormRegisterReturn;
   [key: string]: any;
@@ -18,7 +17,6 @@ export default function Input({
   type,
   placeholder,
   phone,
-  pl,
   register,
   position,
 }: InputProps) {
@@ -49,7 +47,7 @@ export default function Input({
             type={type}
             placeholder={placeholder}
             {...register}
-            className={`pl-${pl} ${position}  border-gray-300 shadow-sm w-full border placeholder:text-gray-500 placeholder:text-sm rounded-md  px-3 py-2 focus:outline-none focus:border-orange-500 focus:ring-orange-500`}
+            className={`${position}  border-gray-300 shadow-sm w-full border placeholder:text-gray-500 placeholder:text-sm rounded-md  px-3 py-2 focus:outline-none focus:border-orange-500 focus:ring-orange-500`}
           />
         </>
       )}

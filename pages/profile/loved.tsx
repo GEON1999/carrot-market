@@ -21,7 +21,6 @@ interface FavResponse {
 
 const Loved: NextPage = () => {
   const { data } = useSWR<FavResponse>(`/api/users/me/fav`);
-  console.log(data);
   return (
     <Layout canGoBack hasTabBar>
       <div className="mx-4">

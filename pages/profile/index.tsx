@@ -15,16 +15,24 @@ interface ReviewsResponse {
   reviews: ReviewWithUser[];
 }
 
+export interface UserProfile {
+  ok: boolean;
+  profile: User;
+}
+
 const Profile: NextPage = () => {
-  const { user } = useUser();
+  const { data: user } = useSWR<UserProfile>("/api/users/me");
   const { data } = useSWR<ReviewsResponse>(`/api/reviews`);
-  console.log("myProfile : ", user, "reviewed :", data);
   return (
     <Layout title="나의 정보" hasTabBar>
       <div className="px-4 py-4">
         <Link href="profile/edit">
           <a>
-            <ProfileInfo big name={user?.name} subtitle="Edit profile →" />
+            <ProfileInfo
+              big
+              name={user?.profile.name}
+              subtitle="Edit profile →"
+            />
           </a>
         </Link>
         <div className="flex justify-between px-5 my-12">

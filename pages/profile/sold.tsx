@@ -16,7 +16,6 @@ interface SaleResponse {
 
 const Sold: NextPage = () => {
   const { data } = useSWR<SaleResponse>(`/api/users/me/sale`);
-  console.log(data);
   return (
     <Layout canGoBack hasTabBar>
       <div className="mx-4">
