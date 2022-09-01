@@ -31,10 +31,15 @@ async function handler(
     });
   }
   if (req.method === "GET") {
+    const {
+      query: { page },
+    } = req;
     const streams = await client.stream.findMany({
       include: {
         user: true,
       },
+      take: 10,
+      skip: (Number(page) - 1) * 10,
     });
     res.json({ ok: true, streams });
   }

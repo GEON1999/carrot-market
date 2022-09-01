@@ -1,11 +1,12 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import FixedBtn from "@components/fixedBtn";
-import Button from "@components/fixedBtn";
 import Layout from "@components/layout";
 import ProfileInfo from "@components/profile";
-import useSWR from "swr";
 import { Stream, User } from "@prisma/client";
+import useSWRInfinite from "swr/infinite";
+import useScrollpage from "@libs/client/scrollPage";
+import { useEffect } from "react";
 
 interface StreamsWithUser extends Stream {
   user: User;
@@ -16,13 +17,25 @@ interface StreamsResponse {
   streams: StreamsWithUser[];
 }
 
+const getKey = (pageIndex: number) => {
+  return `/api/streams?page=${pageIndex + 1}`;
+};
+
 const Streams: NextPage = () => {
-  const { data } = useSWR<StreamsResponse>(`/api/streams`);
-  console.log(data);
+  const { data, setSize } = useSWRInfinite<StreamsResponse>(getKey, {
+    initialSize: 1,
+    revalidateAll: false,
+  });
+  const streams = data?.map((i) => i.streams).flat();
+  console.log("streams", streams);
+  const page = useScrollpage();
+  useEffect(() => {
+    setSize(page);
+  }, [setSize, page]);
   return (
     <Layout title="라이브" hasTabBar>
       <div className=" px-4 py-2 space-y-9 divide-y-2">
-        {data?.streams?.map((stream) => (
+        {streams?.map((stream) => (
           <div key={stream.id} className=" pt-7">
             <Link href={`/streams/${stream.id}`}>
               <a>
