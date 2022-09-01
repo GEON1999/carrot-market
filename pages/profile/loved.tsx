@@ -1,8 +1,10 @@
 import type { NextPage } from "next";
 import Item from "@components/item";
 import Layout from "@components/layout";
-import useSWR from "swr";
 import { Fav, Product } from "@prisma/client";
+import useSWRInfinite from "swr/infinite";
+import { useEffect } from "react";
+import useScrollpage from "@libs/client/scrollPage";
 
 export interface ProductWithCount extends Product {
   _count: {
@@ -19,12 +21,23 @@ interface FavResponse {
   favs: FavWithProduct[];
 }
 
+const getKey = (pageIndex: number) => {
+  return `/api/users/me/fav?page=${pageIndex + 1}`;
+};
 const Loved: NextPage = () => {
-  const { data } = useSWR<FavResponse>(`/api/users/me/fav`);
+  const { data, setSize } = useSWRInfinite<FavResponse>(getKey, {
+    initialSize: 1,
+    revalidateAll: false,
+  });
+  const favs = data?.map((i) => i.favs).flat();
+  const page = useScrollpage();
+  useEffect(() => {
+    setSize(page);
+  }, [setSize, page]);
   return (
     <Layout canGoBack hasTabBar>
       <div className="mx-4">
-        {data?.favs?.map((product) => (
+        {favs?.map((product) => (
           <div key={product.id}>
             <Item
               id={product.productId}
@@ -35,23 +48,11 @@ const Loved: NextPage = () => {
             />
           </div>
         ))}
-        <button className="text-white fixed bottom-12 right-8 bg-orange-400 hover:bg-orange-500 p-4 rounded-full shadow-lg transition-colors">
-          <svg
-            className="h-6 w-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
-        </button>
+        {page >= 2 ? (
+          <div className="p-10 text-center text-xl text-gray-500">
+            no more content
+          </div>
+        ) : null}
       </div>
     </Layout>
   );

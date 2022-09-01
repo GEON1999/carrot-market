@@ -4,7 +4,10 @@ import client from "@libs/server/client";
 import { withApiSession } from "@libs/server/withSession";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { user } = req.session;
+  const {
+    session: { user },
+    query: { page },
+  } = req;
   const sales = await client.sale.findMany({
     where: {
       userId: user?.id,
@@ -20,6 +23,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         },
       },
     },
+    take: 1,
+    skip: (Number(page) - 1) * 1,
   });
   res.json({
     ok: true,

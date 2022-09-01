@@ -22,16 +22,16 @@ const getKey = (pageIndex: number) => {
 };
 
 const Streams: NextPage = () => {
-  const { data, setSize } = useSWRInfinite<StreamsResponse>(getKey, {
+  const { data, setSize, size } = useSWRInfinite<StreamsResponse>(getKey, {
     initialSize: 1,
     revalidateAll: false,
   });
   const streams = data?.map((i) => i.streams).flat();
-  console.log("streams", streams);
   const page = useScrollpage();
   useEffect(() => {
     setSize(page);
   }, [setSize, page]);
+  console.log(size);
   return (
     <Layout title="라이브" hasTabBar>
       <div className=" px-4 py-2 space-y-9 divide-y-2">
@@ -54,6 +54,11 @@ const Streams: NextPage = () => {
             </Link>
           </div>
         ))}
+        {page >= 2 ? (
+          <div className="p-10 text-center text-xl text-gray-500">
+            no more content
+          </div>
+        ) : null}
         <Link href="/streams/create">
           <a>
             <FixedBtn>

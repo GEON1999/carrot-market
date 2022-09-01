@@ -5,6 +5,9 @@ import { withApiSession } from "@libs/server/withSession";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
+    const {
+      query: { page },
+    } = req;
     const products = await client.product.findMany({
       include: {
         _count: {
@@ -13,6 +16,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           },
         },
       },
+      take: 15,
+      skip: (Number(page) - 1) * 15,
     });
     res.json({ ok: true, products });
   }

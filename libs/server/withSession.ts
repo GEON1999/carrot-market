@@ -1,5 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 
+// iron session에 sesstion type 정의
 declare module "iron-session" {
   interface IronSessionData {
     user?: {

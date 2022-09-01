@@ -3,8 +3,10 @@ import Link from "next/link";
 import Layout from "@components/layout";
 import ProfileInfo from "@components/profile";
 import useSWR from "swr";
-import useUser from "@libs/client/useUser";
 import { Review, User } from "@prisma/client";
+import useSWRInfinite from "swr/infinite";
+import useScrollpage from "@libs/client/scrollPage";
+import { useEffect } from "react";
 
 interface ReviewWithUser extends Review {
   leavedBy: User;
@@ -19,10 +21,21 @@ export interface UserProfile {
   ok: boolean;
   profile: User;
 }
+const getKey = (pageIndex: number) => {
+  return `/api/reviews?page=${pageIndex + 1}`;
+};
 
 const Profile: NextPage = () => {
   const { data: user } = useSWR<UserProfile>("/api/users/me");
-  const { data } = useSWR<ReviewsResponse>(`/api/reviews`);
+  const { data, setSize } = useSWRInfinite<ReviewsResponse>(getKey, {
+    initialSize: 1,
+    revalidateAll: false,
+  });
+  const reviews = data?.map((i) => i.reviews).flat();
+  const page = useScrollpage();
+  useEffect(() => {
+    setSize(page);
+  }, [setSize, page]);
   return (
     <Layout title="나의 정보" hasTabBar>
       <div className="px-4 py-4">
@@ -107,7 +120,7 @@ const Profile: NextPage = () => {
           </Link>
         </div>
         <>
-          {data?.reviews?.map((review) => (
+          {reviews?.map((review) => (
             <div key={review.id} className="space-y-6">
               <ProfileInfo
                 big={false}
@@ -121,6 +134,11 @@ const Profile: NextPage = () => {
               </div>
             </div>
           ))}
+          {page >= 2 ? (
+            <div className="p-10 text-center text-xl text-gray-500">
+              no more content
+            </div>
+          ) : null}
         </>
       </div>
     </Layout>

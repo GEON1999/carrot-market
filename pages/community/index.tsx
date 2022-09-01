@@ -2,11 +2,10 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import FixedBtn from "@components/fixedBtn";
 import Layout from "@components/layout";
-import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
 import { Post, User } from "@prisma/client";
-import useMutation from "@libs/client/useMutation";
-import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
+import useScrollpage from "@libs/client/scrollPage";
+import { useEffect } from "react";
 
 interface PostwithUser extends Post {
   user: User;
@@ -21,12 +20,24 @@ interface PostsResponse {
   posts: PostwithUser[];
 }
 
+const getKey = (pageIndex: number) => {
+  return `/api/post?page=${pageIndex + 1}`;
+};
+
 const Community: NextPage = () => {
-  const { data } = useSWR<PostsResponse>(`/api/post`);
+  const { data, setSize } = useSWRInfinite<PostsResponse>(getKey, {
+    initialSize: 1,
+    revalidateAll: false,
+  });
+  const posts = data?.map((i) => i.posts).flat();
+  const page = useScrollpage();
+  useEffect(() => {
+    setSize(page);
+  }, [setSize, page]);
   return (
     <Layout title="동네생활" hasTabBar>
       <div className="mx-4 py-2">
-        {data?.posts?.map((post) => (
+        {posts?.map((post) => (
           <div key={post.id}>
             <Link href={`/community/${post.id}`}>
               <a>
@@ -86,7 +97,11 @@ const Community: NextPage = () => {
             </div>
           </div>
         ))}
-
+        {page >= 2 ? (
+          <div className="p-10 text-center text-xl text-gray-500">
+            no more content
+          </div>
+        ) : null}
         <Link href="community/write">
           <a>
             <FixedBtn>

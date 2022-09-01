@@ -1,9 +1,12 @@
 import type { NextPage } from "next";
 import Item from "@components/item";
 import Layout from "@components/layout";
-import useSWR from "swr";
-import { Product, Purchase } from "@prisma/client";
+
+import { Purchase } from "@prisma/client";
 import { ProductWithCount } from "./loved";
+import useSWRInfinite from "swr/infinite";
+import { useEffect } from "react";
+import useScrollpage from "@libs/client/scrollPage";
 
 interface PurchaseWithProduct extends Purchase {
   product: ProductWithCount;
@@ -14,12 +17,24 @@ interface PurchaseResponse {
   purchases: PurchaseWithProduct[];
 }
 
+const getKey = (pageIndex: number) => {
+  return `/api/users/me/purchase?page=${pageIndex + 1}`;
+};
+
 const Bought: NextPage = () => {
-  const { data } = useSWR<PurchaseResponse>(`/api/users/me/purchase`);
+  const { data, setSize } = useSWRInfinite<PurchaseResponse>(getKey, {
+    initialSize: 1,
+    revalidateAll: false,
+  });
+  const purchases = data?.map((i) => i.purchases).flat();
+  const page = useScrollpage();
+  useEffect(() => {
+    setSize(page);
+  }, [setSize, page]);
   return (
     <Layout canGoBack hasTabBar>
       <div className="mx-4">
-        {data?.purchases?.map((product) => (
+        {purchases?.map((product) => (
           <div key={product.id}>
             <Item
               id={product.productId}
@@ -30,23 +45,11 @@ const Bought: NextPage = () => {
             />
           </div>
         ))}
-        <button className="text-white fixed bottom-12 right-8 bg-orange-400 hover:bg-orange-500 p-4 rounded-full shadow-lg transition-colors">
-          <svg
-            className="h-6 w-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
-        </button>
+        {page >= 2 ? (
+          <div className="p-10 text-center text-xl text-gray-500">
+            no more content
+          </div>
+        ) : null}
       </div>
     </Layout>
   );

@@ -7,6 +7,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
     body: { question, longitude, latitude },
     session: { user },
+    query: { page },
   } = req;
   if (req.method === "POST") {
     const post = await client.post.create({
@@ -42,6 +43,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           },
         },
       },
+      take: 15,
+      skip: (Number(page) - 1) * 15,
     });
     res.json({
       ok: true,
