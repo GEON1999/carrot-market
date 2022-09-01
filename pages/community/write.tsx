@@ -27,7 +27,6 @@ const Write: NextPage = () => {
     if (loading) return;
     post({ ...data, longitude, latitude });
   };
-
   useEffect(() => {
     if (data && data.ok) {
       router.push(`/community/${data.post.id}`);

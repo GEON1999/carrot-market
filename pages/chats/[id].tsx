@@ -11,9 +11,7 @@ const ChatDetail: NextPage = () => {
         <Message text="Hi, I am free tommrow night" mine />
         <Message text="Ok, can you come to my place?" />
         <div className="mt-6-5">
-          <div className="relative top-4">
-            <Input kind="chat" />
-          </div>
+          <Input position={"relative top-4"} kind="chat" />
         </div>
       </div>
     </Layout>

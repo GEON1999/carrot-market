@@ -6,23 +6,84 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import { Stream } from "@prisma/client";
 import Input from "@components/input";
+import { useForm } from "react-hook-form";
+import useMutation from "@libs/client/useMutation";
+import { useEffect, useRef } from "react";
 
-interface StreamWithUser extends Stream {
+interface StreamMessage {
+  id: number;
+  message: string;
   user: {
+    id: number;
+    avatar: string;
     name: string;
   };
 }
 
+interface StreamWithMessage extends Stream {
+  user: {
+    name: string;
+  };
+  streamMessages: StreamMessage[];
+}
+
 interface StreamResponse {
   ok: boolean;
-  stream: StreamWithUser;
+  stream: StreamWithMessage;
+}
+
+interface MessageForm {
+  message: string;
 }
 
 const StreamDetail: NextPage = () => {
   const router = useRouter();
-  console.log(router.query.id);
-  const { data } = useSWR<StreamResponse>(`/api/streams/${router.query.id}`);
-  console.log(data);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { data: userData } = useSWR(`/api/users/me`);
+  const streamId = router.query.id;
+  const { register, handleSubmit, reset } = useForm<MessageForm>();
+  const [sendMessage, { data: sendMessageData, loading }] = useMutation(
+    `/api/streams/${streamId}/messages`
+  );
+  const { data, mutate } = useSWR<StreamResponse>(
+    streamId ? `/api/streams/${streamId}` : null,
+    {
+      refreshInterval: 1000,
+      revalidateOnFocus: true,
+    }
+  );
+  const onValid = async (validForm: MessageForm) => {
+    if (loading) return;
+    mutate(
+      (prev) =>
+        prev &&
+        ({
+          ...prev,
+          stream: {
+            ...prev.stream,
+            streamMessages: [
+              ...prev.stream.streamMessages,
+              {
+                id: Date.now(),
+                message: validForm.message,
+                user: { ...userData.profile },
+              },
+            ],
+          },
+        } as any),
+      false
+    );
+    sendMessage(validForm);
+    reset();
+  };
+  useEffect(() => {
+    scrollRef?.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "start",
+    });
+  }, [data]);
+  ` `;
   return (
     <Layout canGoBack hasTabBar>
       <div className=" px-4 py-2 space-y-7">
@@ -44,21 +105,24 @@ const StreamDetail: NextPage = () => {
             </div>
           </div>
         </div>
-        <div className="px-4 space-y-7 py-4 h-[40vh] overflow-scroll">
-          <Message text="I don't know what you've been told" />
-          <Message text="But time is running out, no need to take it slow" />
-          <Message text="I'm stepping to you toe-to-toe" mine />
-          <Message text="I should be scared, honey, maybe so" />
-          <Message text="But I ain't worried 'bout it right now (right now)" />
-          <Message text="Keeping dreams alive, 1999, heroes" />
-          <Message text="I ain't worried 'bout it right now (right now)" mine />
-          <Message text="Swimmin' in the floods (hey!)" />
-          <Message text="Dancing on the clouds below" />
-          <Message text="I ain't worried 'bout it" />
+        <div className="px-4 space-y-7 py-4 h-[40vh] overflow-scroll scrollbar scrollbar-thumb-inherit">
+          {data?.stream?.streamMessages?.map((message) => (
+            <div key={message.id}>
+              <Message
+                text={message.message}
+                mine={message.user.id === userData?.profile?.id ? true : false}
+              />
+              <div ref={scrollRef} />
+            </div>
+          ))}
         </div>
-        <div className="relative -top-2">
-          <Input kind="chat" />
-        </div>
+        <form onSubmit={handleSubmit(onValid)}>
+          <Input
+            position={"relative -top-2"}
+            kind="chat"
+            register={register("message")}
+          />
+        </form>
       </div>
     </Layout>
   );

@@ -20,6 +20,19 @@ async function handler(
           name: true,
         },
       },
+      streamMessages: {
+        select: {
+          id: true,
+          message: true,
+          user: {
+            select: {
+              id: true,
+              avatar: true,
+              name: true,
+            },
+          },
+        },
+      },
     },
   });
   res.json({
