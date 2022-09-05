@@ -8,6 +8,7 @@ interface ItemProps {
   id: number;
   comments?: number;
   hearts?: number;
+  prodcut?: string | null;
 }
 
 export default function Item({
@@ -17,13 +18,21 @@ export default function Item({
   id,
   comments = 0,
   hearts = 0,
+  prodcut,
 }: ItemProps) {
   return (
     <div className="py-4 border-b flex justify-between ">
       <Link href={`/products/${id}`}>
         <a>
           <div className="space-x-3 flex justify-center items-center">
-            <div className="bg-gray-600 w-20 h-20" />
+            {prodcut ? (
+              <img
+                src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${prodcut}/public`}
+                className=" w-20 h-20"
+              />
+            ) : (
+              <div className="bg-gray-600 w-20 h-20" />
+            )}
             <div className="flex flex-col">
               <h3 className="font-semibold">{title}</h3>
               <span className="text-sm text-gray-500">{subtitle}</span>
