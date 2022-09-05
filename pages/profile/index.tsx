@@ -123,15 +123,16 @@ const Profile: NextPage = () => {
         </div>
         <>
           {reviews?.map((review) => (
-            <div key={review.id} className="space-y-6">
+            <div key={review?.id} className="space-y-6">
               <ProfileInfo
                 big={false}
-                name={review.leavedBy.name}
-                subtitle={String(review.createdAt)}
+                name={review?.leavedBy.name}
+                subtitle={String(review?.createdAt)}
+                avatar={review?.leavedBy.avatar}
               />
               <div>
                 <p className="text-gray-700  -mt-5 ml-12 mb-8">
-                  {review.review}
+                  {review?.review}
                 </p>
               </div>
             </div>

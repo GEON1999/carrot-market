@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 interface UploadProductForm {
   price: string;
@@ -69,9 +70,13 @@ const Upload: NextPage = () => {
     <Layout canGoBack hasTabBar>
       <div className="px-4 py-2">
         {productPreview ? (
-          <img
+          <Image
+            alt="product"
+            width={480}
+            height={384}
             src={productPreview}
-            className="justify-center w-full h-46 mb-6"
+            className="object-contain"
+            quality={100}
           />
         ) : (
           <label className="mb-6 w-full cursor-pointer text-gray-600 hover:border-orange-500 hover:text-orange-500 flex items-center justify-center border-2 border-dashed border-gray-300 h-48 rounded-md">

@@ -11,8 +11,7 @@ const Chats: NextPage = () => {
           <Link href="chats/id" key={i}>
             <a>
               <ProfileInfo
-                py="3"
-                px="4"
+                position={"py-3 px-4"}
                 big
                 name="Steve Jobs"
                 subtitle="can you discount this?"

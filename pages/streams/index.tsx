@@ -36,17 +36,17 @@ const Streams: NextPage = () => {
     <Layout title="라이브" hasTabBar>
       <div className=" px-4 py-2 space-y-9 divide-y-2">
         {streams?.map((stream) => (
-          <div key={stream.id} className=" pt-7">
-            <Link href={`/streams/${stream.id}`}>
+          <div key={stream?.id} className=" pt-7">
+            <Link href={`/streams/${stream?.id}`}>
               <a>
                 <div className="w-full aspect-video bg-gray-400 shadow-sm rounded-2xl my-2" />
                 <div className="space-y-3 ml-2">
                   <h3 className="font-bold first:text-xl text-gray-700">
-                    {stream.streamTitle}
+                    {stream?.streamTitle}
                   </h3>
                   <ProfileInfo
                     big={false}
-                    name={stream.user.name}
+                    name={stream?.user.name}
                     subtitle="I got eveything you want"
                   />
                 </div>

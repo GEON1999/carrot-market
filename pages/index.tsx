@@ -37,13 +37,14 @@ const Home: NextPage = () => {
     <Layout title="홈" hasTabBar>
       <div className="mx-4">
         {products?.map((product) => (
-          <div key={product.id}>
+          <div key={product?.id}>
             <Item
-              id={product.id}
-              title={product.title}
-              subtitle={product.subTitle}
-              price={product.price}
-              hearts={product._count.fav}
+              id={product?.id}
+              title={product?.title}
+              subtitle={product?.subTitle}
+              price={product?.price}
+              hearts={product?._count.fav}
+              prodcut={product?.image ? product.image : null}
             />
           </div>
         ))}

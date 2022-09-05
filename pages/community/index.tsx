@@ -38,8 +38,8 @@ const Community: NextPage = () => {
     <Layout title="동네생활" hasTabBar>
       <div className="mx-4 py-2">
         {posts?.map((post) => (
-          <div key={post.id}>
-            <Link href={`/community/${post.id}`}>
+          <div key={post?.id}>
+            <Link href={`/community/${post?.id}`}>
               <a>
                 <div className="flex flex-col items-start my-5">
                   <span className="bg-gray-100 text-gray-700 px-2.5 py-0.5 rounded-full text-sm  mb-2">
@@ -47,11 +47,11 @@ const Community: NextPage = () => {
                   </span>
                   <span>
                     <span className="text-orange-500 font-bold">Q.</span>
-                    {post.question}
+                    {post?.question}
                   </span>
                   <div className="my-4 flex justify-between w-full text-gray-500 text-sm">
-                    <span>{post.user.name}</span>
-                    <span>{String(post.createdAt)}</span>
+                    <span>{post?.user.name}</span>
+                    <span>{String(post?.createdAt)}</span>
                   </div>
                 </div>
               </a>
@@ -73,7 +73,7 @@ const Community: NextPage = () => {
                       d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                     ></path>
                   </svg>
-                  <span>궁금해요 {post._count.interest}</span>
+                  <span>궁금해요 {post?._count.interest}</span>
                 </span>
               </button>
 
@@ -92,7 +92,7 @@ const Community: NextPage = () => {
                     d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                   ></path>
                 </svg>
-                <span>답변 {post._count.comments}</span>
+                <span>답변 {post?._count.comments}</span>
               </span>
             </div>
           </div>

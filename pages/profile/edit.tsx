@@ -8,6 +8,7 @@ import { User } from "@prisma/client";
 import { UserProfile } from ".";
 import { useEffect, useState } from "react";
 import useMutation from "@libs/client/useMutation";
+import Image from "next/image";
 
 interface EditProfileForm {
   email?: string;
@@ -105,7 +106,14 @@ const EditProfile: NextPage = () => {
         <div className="px-4 py-2">
           <div className="flex items-center space-x-3 mb-6">
             {avatarPreview ? (
-              <img src={avatarPreview} className="w-16 h-16 rounded-full" />
+              <Image
+                alt="profile"
+                width={64}
+                height={64}
+                src={avatarPreview}
+                className="object-cover rounded-full"
+                quality={100}
+              />
             ) : (
               <div className="w-16 h-16 bg-slate-500 rounded-full" />
             )}

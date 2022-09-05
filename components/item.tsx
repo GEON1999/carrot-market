@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -26,17 +27,23 @@ export default function Item({
         <a>
           <div className="space-x-3 flex justify-center items-center">
             {prodcut ? (
-              <img
-                src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${prodcut}/public`}
-                className=" w-20 h-20"
+              <Image
+                alt="prodcut"
+                width={80}
+                height={80}
+                src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${prodcut}/profile`}
+                className=" w-20 h-20 rounded-md"
+                quality={100}
               />
             ) : (
-              <div className="bg-gray-600 w-20 h-20" />
+              <div className="bg-gray-600 w-20 h-20 rounded-md" />
             )}
             <div className="flex flex-col">
-              <h3 className="font-semibold">{title}</h3>
-              <span className="text-sm text-gray-500">{subtitle}</span>
-              <span className="mt-2 font-bold text-lg">$ {price}</span>
+              <h3>{title}</h3>
+              <span className="text-xs text-gray-400 mt-1 mb-2">
+                {subtitle}
+              </span>
+              <span className="font-bold">$ {price}</span>
             </div>
           </div>
         </a>

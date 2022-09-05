@@ -42,6 +42,7 @@ const Bought: NextPage = () => {
               subtitle={product.product.subTitle}
               price={product.product.price}
               hearts={product.product._count.fav}
+              prodcut={product.product.image}
             />
           </div>
         ))}

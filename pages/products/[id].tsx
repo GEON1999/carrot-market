@@ -9,6 +9,7 @@ import { Product, User } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/utils";
 import Link from "next/link";
+import Image from "next/image";
 
 interface ProductWitheUser extends Product {
   user: User;
@@ -42,9 +43,13 @@ const ItemDetail: NextPage = () => {
       <div className="mx-4">
         <div className="mt-4">
           {data?.product?.image ? (
-            <img
+            <Image
+              alt="product"
+              width={480}
+              height={384}
               src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${data?.product?.image}/public`}
-              className="object-contain h-96 w-full mb-8"
+              className="object-contain"
+              quality={100}
             />
           ) : (
             <div className="h-96 bg-gray-400" />
@@ -55,6 +60,7 @@ const ItemDetail: NextPage = () => {
             subtitle="View profile →"
             id={data?.product?.user?.id}
             avatar={data?.product?.user?.avatar}
+            position={"mt-8"}
           />
           <div className="mt-3 ">
             <h1 className="font-bold text-3xl ">{data?.product?.title}</h1>

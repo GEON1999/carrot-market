@@ -87,7 +87,7 @@ const CommunityPostDetail: NextPage = () => {
         </span>
         <ProfileInfo
           big
-          py="3"
+          position={"py-3"}
           name={data?.post.user.name}
           subtitle="View profile"
         />
