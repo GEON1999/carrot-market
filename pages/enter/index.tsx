@@ -21,6 +21,7 @@ interface MutationResult {
 }
 
 export default function Enter() {
+  const router = useRouter();
   const [enter, { loading, data, error }] =
     useMutation<MutationResult>("/api/users/enter");
   const [tokenEnter, { loading: tokenLoading, data: tokenData }] =
@@ -45,13 +46,11 @@ export default function Enter() {
     if (tokenLoading) return;
     tokenEnter(validForm);
   };
-  const router = useRouter();
-
   useEffect(() => {
-    if (tokenData && tokenData.ok) {
-      router.push("/");
+    if (data?.ok) {
+      router.push("/enter/profile");
     }
-  }, [tokenData, router]);
+  }, [data, router]);
 
   return (
     <Layout hasTabBar title="로그인">

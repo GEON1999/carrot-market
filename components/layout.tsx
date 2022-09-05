@@ -24,7 +24,7 @@ export default function Layout({
     <div>
       <div
         className={cls(
-          "max-w-lg bg-white text-lg text-gray-700 font-semibold py-3 border-b flex items-center fixed top-0 w-full cursor-pointer",
+          "max-w-lg bg-white text-lg text-gray-700 font-semibold py-3 border-b border-gray-100 flex items-center fixed top-0 w-full cursor-pointer",
           canGoBack ? "justify-start px-4" : "justify-center"
         )}
       >

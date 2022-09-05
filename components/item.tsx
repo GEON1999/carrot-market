@@ -22,7 +22,7 @@ export default function Item({
   prodcut,
 }: ItemProps) {
   return (
-    <div className="py-4 border-b flex justify-between ">
+    <div className="py-4 border-b border-gray-100 flex justify-between ">
       <Link href={`/products/${id}`}>
         <a>
           <div className="space-x-3 flex justify-center items-center">
