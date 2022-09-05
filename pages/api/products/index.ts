@@ -24,13 +24,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === "POST") {
     const {
-      body: { title, price, description, subTitle },
+      body: { title, price, description, subTitle, photoId },
       session: { user },
     } = req;
 
     const product = await client.product.create({
       data: {
-        image: "",
+        image: photoId,
         title,
         price: +price,
         description,

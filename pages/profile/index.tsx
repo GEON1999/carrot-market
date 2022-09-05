@@ -26,7 +26,8 @@ const getKey = (pageIndex: number) => {
 };
 
 const Profile: NextPage = () => {
-  const { data: user } = useSWR<UserProfile>("/api/users/me");
+  const { data: userData } = useSWR<UserProfile>("/api/users/me");
+  const user = userData?.profile;
   const { data, setSize } = useSWRInfinite<ReviewsResponse>(getKey, {
     initialSize: 1,
     revalidateAll: false,
@@ -42,8 +43,9 @@ const Profile: NextPage = () => {
         <Link href="profile/edit">
           <a>
             <ProfileInfo
+              avatar={user?.avatar}
               big
-              name={user?.profile?.name}
+              name={user?.name}
               subtitle="Edit profile →"
             />
           </a>

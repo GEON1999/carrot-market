@@ -30,6 +30,7 @@ const ItemDetail: NextPage = () => {
   const { data, mutate } = useSWR<ItemDetailResponse>(
     id ? `/api/products/${id}` : null
   );
+  console.log(data);
   const [toggoleFav] = useMutation(`/api/products/${id}/fav`);
   const onFavClick = () => {
     if (!data) return;
@@ -40,13 +41,20 @@ const ItemDetail: NextPage = () => {
     <Layout canGoBack hasTabBar>
       <div className="mx-4">
         <div className="mt-4">
-          <div className="h-96 bg-gray-400" />
+          {data?.product?.image ? (
+            <img
+              src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${data?.product?.image}/public`}
+              className="object-contain h-96 w-full mb-8"
+            />
+          ) : (
+            <div className="h-96 bg-gray-400" />
+          )}
           <ProfileInfo
-            mt="3"
             big
             name={data?.product?.user?.name}
             subtitle="View profile →"
             id={data?.product?.user?.id}
+            avatar={data?.product?.user?.avatar}
           />
           <div className="mt-3 ">
             <h1 className="font-bold text-3xl ">{data?.product?.title}</h1>

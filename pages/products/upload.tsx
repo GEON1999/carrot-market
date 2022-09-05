@@ -5,7 +5,7 @@ import SubmitBtn from "@components/submitBtn";
 import Textarea from "@components/textarea";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 interface UploadProductForm {
@@ -13,6 +13,7 @@ interface UploadProductForm {
   description: string;
   title: string;
   subTitle: string;
+  photo: FileList;
 }
 
 interface UploadProductMutation {
@@ -21,44 +22,81 @@ interface UploadProductMutation {
 }
 
 const Upload: NextPage = () => {
-  const { register, handleSubmit } = useForm<UploadProductForm>();
+  const { register, handleSubmit, watch } = useForm<UploadProductForm>();
   const [upload, { loading, data }] =
     useMutation<UploadProductMutation>("/api/products");
   const router = useRouter();
-  const onVaild = (data: UploadProductForm) => {
+  const onVaild = async ({
+    price,
+    description,
+    title,
+    subTitle,
+    photo,
+  }: UploadProductForm) => {
     if (loading) return;
-    upload(data);
+    if (photo && photo.length > 0) {
+      const { uploadURL } = await (await fetch("/api/files")).json();
+      const formData = new FormData();
+      formData.append("file", photo[0], title);
+      const {
+        result: { id },
+      } = await (
+        await fetch(uploadURL, {
+          method: "POST",
+          body: formData,
+        })
+      ).json();
+      upload({ price, description, title, subTitle, photoId: id });
+    } else {
+      upload({ price, description, title, subTitle });
+    }
   };
   useEffect(() => {
     if (data?.ok) {
       router.push(`/products/${data.id}`);
     }
   }, [data, router]);
+  const [productPreview, setProductPreview] = useState("");
+  const photo = watch("photo");
+  useEffect(() => {
+    if (photo && photo.length > 0) {
+      const file = photo[0];
+      console.log(file);
+      setProductPreview(URL.createObjectURL(file));
+    }
+  }, [photo]);
   return (
     <Layout canGoBack hasTabBar>
       <div className="px-4 py-2">
-        <div className="flex justify-center w-full py-32 border-gray-400 border-2 border-dashed rounded-sm text-gray-400 hover:border-orange-500 mb-5 hover:text-orange-500">
-          <div className="p-4 border-dashed border-gray-500 ">
-            <label>
-              <svg
-                className="h-12 w-12"
-                stroke="currentColor"
-                fill="none"
-                viewBox="0 0 48 48"
-                aria-hidden="true"
-              >
-                <path
-                  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-
-              <input className="hidden" type="file" />
-            </label>
-          </div>
-        </div>
+        {productPreview ? (
+          <img
+            src={productPreview}
+            className="justify-center w-full h-46 mb-6"
+          />
+        ) : (
+          <label className="mb-6 w-full cursor-pointer text-gray-600 hover:border-orange-500 hover:text-orange-500 flex items-center justify-center border-2 border-dashed border-gray-300 h-48 rounded-md">
+            <svg
+              className="h-12 w-12"
+              stroke="currentColor"
+              fill="none"
+              viewBox="0 0 48 48"
+              aria-hidden="true"
+            >
+              <path
+                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <input
+              {...register("photo")}
+              accept="image/*"
+              className="hidden"
+              type="file"
+            />
+          </label>
+        )}
         <form onSubmit={handleSubmit(onVaild)}>
           <div>
             <Input
