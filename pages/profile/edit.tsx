@@ -6,7 +6,7 @@ import useSWR from "swr";
 import { useForm } from "react-hook-form";
 import { User } from "@prisma/client";
 import { UserProfile } from ".";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useMutation from "@libs/client/useMutation";
 
 interface EditProfileForm {
@@ -15,6 +15,7 @@ interface EditProfileForm {
   name?: string;
   formErrors?: string;
   emailErrors?: string;
+  avatar?: FileList;
 }
 
 interface EditProfileResponse {
@@ -24,9 +25,9 @@ interface EditProfileResponse {
 
 const EditProfile: NextPage = () => {
   const { data } = useSWR<UserProfile>(`/api/users/me`);
+  const user = data?.profile;
   const [updateForm, { data: responseData, loading }] =
     useMutation<EditProfileResponse>(`/api/users/me`);
-
   const {
     register,
     setValue,
@@ -34,18 +35,9 @@ const EditProfile: NextPage = () => {
     setError,
     formState: { errors },
     clearErrors,
+    watch,
   } = useForm<EditProfileForm>();
-  useEffect(() => {
-    if (data?.profile.name) setValue("name", data?.profile.name);
-    if (data?.profile.email) setValue("email", data?.profile.email);
-    if (data?.profile.phone) setValue("phone", data?.profile.phone);
-  }, [data, setValue]);
-  useEffect(() => {
-    if (responseData && !responseData.ok) {
-      setError("formErrors", { message: responseData.error });
-    }
-  }, [responseData, setError]);
-  const onVaild = ({ email, phone, name }: EditProfileForm) => {
+  const onVaild = async ({ email, phone, name, avatar }: EditProfileForm) => {
     if (email === `` && phone === ``) {
       return setError("formErrors", {
         message: "Email OR Phone number are required.",
@@ -54,8 +46,52 @@ const EditProfile: NextPage = () => {
     if (email && !email.includes("@")) {
       return setError("emailErrors", { message: "Please check if there is @" });
     }
-    updateForm({ email, phone, name });
+    if (avatar && avatar.length > 0 && user) {
+      const { uploadURL } = await (await fetch(`/api/files`)).json();
+      const formData = new FormData();
+      formData.append("file", avatar[0], user?.id + "");
+      const {
+        result: { id },
+      } = await (
+        await fetch(uploadURL, {
+          method: "POST",
+          body: formData,
+        })
+      ).json();
+      updateForm({
+        email,
+        phone,
+        name,
+        avatarId: id,
+      });
+    } else {
+      updateForm({ email, phone, name });
+    }
   };
+  const [avatarPreview, setAvatarPreview] = useState("");
+  const avatar = watch("avatar");
+  useEffect(() => {
+    if (avatar && avatar.length > 0) {
+      const file = avatar[0];
+      setAvatarPreview(URL.createObjectURL(file));
+      // 주어진 객체를 가리키는 URL을 DOMString으로 반환합니다.
+    }
+  }, [avatar]);
+  useEffect(() => {
+    if (user?.name) setValue("name", user?.name);
+    if (user?.email) setValue("email", user?.email);
+    if (user?.phone) setValue("phone", user?.phone);
+    if (user?.avatar)
+      setAvatarPreview(
+        `https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${user?.avatar}/avatar`
+      );
+  }, [user, setValue]);
+  useEffect(() => {
+    if (responseData && !responseData.ok) {
+      setError("formErrors", { message: responseData.error });
+    }
+  }, [responseData, setError]);
+
   return (
     <Layout canGoBack hasTabBar>
       <form
@@ -68,7 +104,11 @@ const EditProfile: NextPage = () => {
       >
         <div className="px-4 py-2">
           <div className="flex items-center space-x-3 mb-6">
-            <div className="rounded-full bg-gray-300 p-7" />
+            {avatarPreview ? (
+              <img src={avatarPreview} className="w-16 h-16 rounded-full" />
+            ) : (
+              <div className="w-16 h-16 bg-slate-500 rounded-full" />
+            )}
             <div className="flex flex-col">
               <label
                 htmlFor="picture"
@@ -76,6 +116,7 @@ const EditProfile: NextPage = () => {
               >
                 Change
                 <input
+                  {...register("avatar")}
                   id="picture"
                   className="hidden"
                   type="file"
