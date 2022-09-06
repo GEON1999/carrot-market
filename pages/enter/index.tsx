@@ -26,6 +26,7 @@ export default function Enter() {
     useMutation<MutationResult>("/api/users/enter");
   const [tokenEnter, { loading: tokenLoading, data: tokenData }] =
     useMutation<MutationResult>("/api/users/confirm");
+  console.log(tokenData);
   const { register, handleSubmit, reset } = useForm<EnterForm>();
   const { register: tokenRegister, handleSubmit: tokenHandleSubmit } =
     useForm<TokenForm>();
@@ -42,15 +43,11 @@ export default function Enter() {
     if (loading) return;
     enter(validForm);
   };
-  const onTokenValid = (validForm: TokenForm) => {
+  const onTokenValid = async (validForm: TokenForm) => {
     if (tokenLoading) return;
-    tokenEnter(validForm);
+    await tokenEnter(validForm);
+    router.push("/enter/profile");
   };
-  useEffect(() => {
-    if (data?.ok) {
-      router.push("/enter/profile");
-    }
-  }, [data, router]);
 
   return (
     <Layout hasTabBar title="로그인">
@@ -74,7 +71,7 @@ export default function Enter() {
                 />
                 <SubmitBtn
                   title={tokenLoading ? "Loading...." : "Confirm"}
-                  mt="4"
+                  position={"mt-4"}
                 />
               </form>
             </>
@@ -132,7 +129,7 @@ export default function Enter() {
                       ? "Loading...."
                       : "Get one-time password"
                   }
-                  mt="4"
+                  position={"mt-4"}
                 />
               </form>
             </>
