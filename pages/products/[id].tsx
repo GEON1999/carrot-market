@@ -4,12 +4,13 @@ import ProfileInfo from "@components/profile";
 import SubmitBtn from "@components/submitBtn";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { useState } from "react";
-import { Product, User } from "@prisma/client";
+import { useEffect, useState } from "react";
+import { ChatRoom, Message, Product, User } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/utils";
 import Link from "next/link";
 import Image from "next/image";
+import { useForm } from "react-hook-form";
 
 interface ProductWitheUser extends Product {
   user: User;
@@ -22,22 +23,40 @@ interface ItemDetailResponse {
   isLiked: boolean;
 }
 
+interface MessageResponse {
+  ok: boolean;
+  chatRoom: ChatRoom;
+  isChatRoom?: ChatRoom;
+}
+
 // 글 작성자가 본인인 경우 삭제 버튼이 노출되며 삭제할 수 있도록 해야함.
 
 const ItemDetail: NextPage = () => {
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
   const { id } = router.query;
   const { data, mutate } = useSWR<ItemDetailResponse>(
     id ? `/api/products/${id}` : null
   );
-  console.log(data);
   const [toggoleFav] = useMutation(`/api/products/${id}/fav`);
   const onFavClick = () => {
     if (!data) return;
     mutate({ ...data, isLiked: !data.isLiked }, false);
     toggoleFav({});
   };
+  const { handleSubmit } = useForm();
+  const [send, { data: chatRoomData, loading }] =
+    useMutation<MessageResponse>("/api/chatRoom");
+  console.log(chatRoomData);
+  const onVaild = () => {
+    send(id);
+  };
+  useEffect(() => {
+    if (chatRoomData && chatRoomData?.chatRoom) {
+      router.push(`/chats/${chatRoomData.chatRoom?.id}`);
+    } else if (chatRoomData?.isChatRoom) {
+      router.push(`/chats/${chatRoomData.isChatRoom?.id}`);
+    }
+  }, [chatRoomData, router]);
   return (
     <Layout canGoBack hasTabBar>
       <div className="mx-4">
@@ -67,11 +86,16 @@ const ItemDetail: NextPage = () => {
             <p className="mt-3 mb-4  text-xl">$ {data?.product?.price}</p>
             <p>{data?.product?.description}</p>
             <div className="mt-3 flex space-x-1">
-              <SubmitBtn title="Talk to seller" />
+              <form className="w-full" onSubmit={handleSubmit(onVaild)}>
+                <SubmitBtn
+                  position={"py-2"}
+                  title={loading ? "Loading...." : "Talk to seller"}
+                />
+              </form>
               <button
                 onClick={onFavClick}
                 className={cls(
-                  "py-3 px-3 bg-gray-200 flex justify-center items-center rounded-md outline-none",
+                  "py-2 px-2 bg-gray-200 flex justify-center items-center rounded-md outline-none",
                   data?.isLiked
                     ? "text-red-500 hover:text-red-600"
                     : "text-gray-500 hover:text-red-500"

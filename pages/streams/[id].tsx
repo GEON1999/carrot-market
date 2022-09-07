@@ -83,7 +83,6 @@ const StreamDetail: NextPage = () => {
       inline: "start",
     });
   }, [data]);
-  ` `;
   return (
     <Layout canGoBack hasTabBar>
       <div className=" px-4 py-2 space-y-7">
