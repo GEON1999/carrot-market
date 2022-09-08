@@ -2,13 +2,13 @@ import { User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import useSWR from "swr";
 
 interface ProfileProps {
   big: boolean;
   name?: string;
-  subtitle: string;
+  subtitle?: string;
   avatar?: string | null;
+  avatarId?: number | null;
   id?: number;
   [key: string]: any;
 }
@@ -20,6 +20,7 @@ export default function ProfileInfo({
   id,
   position,
   avatar,
+  avatarId,
 }: ProfileProps) {
   return big ? (
     <div className={`flex space-x-3 items-start ${position}`}>

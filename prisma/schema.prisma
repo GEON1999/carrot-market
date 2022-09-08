@@ -32,9 +32,9 @@ model User {
   purchases       Purchase[]
   steams          Stream[]
   streamMessages  StreamMessage[]
-  sendMessages    ChatRoom[]       @relation(name: "sendMessages")
-  receiveMessages ChatRoom[]       @relation(name: "receiveMessages")
-  messages Messages[]
+  sendMessages    ChatRoom[]      @relation(name: "sendMessages")
+  receiveMessages ChatRoom[]      @relation(name: "receiveMessages")
+  messages        Messages[]
 }
 
 model Token {
@@ -163,28 +163,28 @@ model StreamMessage {
 }
 
 model ChatRoom {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  sending     User     @relation(name: "sendMessages", fields: [sendingId], references: [id], onDelete: Cascade)
-  sendingId   Int
-  receiving   User     @relation(name: "receiveMessages", fields: [receivingId], references: [id], onDelete: Cascade)
-  receivingId Int
-  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId   Int
-  messages    Messages[]     
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  buyer     User       @relation(name: "sendMessages", fields: [buyerId], references: [id], onDelete: Cascade)
+  buyerId   Int
+  seller    User       @relation(name: "receiveMessages", fields: [sellerId], references: [id], onDelete: Cascade)
+  sellerId  Int
+  product   Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+  messages  Messages[]
 }
-
 
 model Messages {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  chatRoom    ChatRoom   @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
-  chatRoomId  Int
-  message   String
-    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
+  chatRoomId Int
+  message    String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
 }
+
 // prisma 에 작성되는 model 은 npx prisma db push 코드를 통해 push 해야지만 planetscale 에 적용됨
 // npx prisma format

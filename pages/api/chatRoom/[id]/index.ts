@@ -17,8 +17,8 @@ async function handler(
       id: Number(id),
     },
     include: {
-      sending: true,
-      receiving: true,
+      buyer: true,
+      seller: true,
       messages: {
         select: {
           id: true,
@@ -28,10 +28,7 @@ async function handler(
       },
     },
   });
-  if (
-    chatRoom?.sending?.id === user?.id ||
-    chatRoom?.receiving?.id === user?.id
-  ) {
+  if (chatRoom?.buyer?.id === user?.id || chatRoom?.seller?.id === user?.id) {
     res.json({
       ok: true,
       chatRoom,

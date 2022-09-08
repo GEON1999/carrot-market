@@ -5,7 +5,7 @@ interface UseMutationState<T> {
   data?: T;
   error?: object;
 }
-type UseMutationResult<T> = [(data: any) => void, UseMutationState<T>];
+type UseMutationResult<T> = [(data?: any) => void, UseMutationState<T>];
 
 export default function useMutation<T = any>(
   url: string

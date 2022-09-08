@@ -24,8 +24,8 @@ interface MessageWithUser extends Messages {
 
 interface ChatRoomWith extends ChatRoom {
   messages: MessageWithUser[];
-  sending: User;
-  receiving: User;
+  buyer: User;
+  seller: User;
 }
 
 interface ChatRoomResponse {
@@ -79,15 +79,7 @@ const ChatDetail: NextPage = () => {
       inline: "nearest",
     });
   }, [data]);
-  console.log("나다", data?.chatRoom?.sending?.id);
-  /*useEffect(() => {
-    if (
-      userData?.profile?.id != data?.chatRoom?.sending?.id &&
-      userData?.profile?.id != data?.chatRoom?.receiving?.id
-    ) {
-      router.replace("/chats");
-    }
-  }, [userData, data, router]);*/
+
   return (
     <>
       <Layout canGoBack hasTabBar>
