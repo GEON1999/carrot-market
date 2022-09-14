@@ -5,7 +5,7 @@ import SubmitBtn from "@components/submitBtn";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useEffect, useState } from "react";
-import { ChatRoom, Message, Product, User } from "@prisma/client";
+import { ChatRoom, Product, User } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/utils";
 import Link from "next/link";
@@ -37,6 +37,7 @@ const ItemDetail: NextPage = () => {
   const { data, mutate } = useSWR<ItemDetailResponse>(
     id ? `/api/products/${id}` : null
   );
+  const { data: userData } = useSWR(`/api/users/me`);
   const [toggoleFav] = useMutation(`/api/products/${id}/fav`);
   const onFavClick = () => {
     if (!data) return;
@@ -46,7 +47,6 @@ const ItemDetail: NextPage = () => {
   const { handleSubmit } = useForm();
   const [send, { data: chatRoomData, loading }] =
     useMutation<MessageResponse>("/api/chatRoom");
-  console.log(chatRoomData);
   const onVaild = () => {
     send(id);
   };
@@ -57,6 +57,7 @@ const ItemDetail: NextPage = () => {
       router.push(`/chats/${chatRoomData.isChatRoom?.id}`);
     }
   }, [chatRoomData, router]);
+  console.log(userData);
   return (
     <Layout canGoBack hasTabBar>
       <div className="mx-4">
@@ -88,8 +89,17 @@ const ItemDetail: NextPage = () => {
             <div className="mt-3 flex space-x-1">
               <form className="w-full" onSubmit={handleSubmit(onVaild)}>
                 <SubmitBtn
-                  position={"py-2"}
+                  position={`py-2 ${
+                    userData?.profile?.id === data?.product?.userId
+                      ? "bg-gray-300 hover:bg-gray-400 focus:bg-gray-400"
+                      : ""
+                  }`}
                   title={loading ? "Loading...." : "Talk to seller"}
+                  disabled={
+                    userData?.profile?.id === data?.product?.userId
+                      ? true
+                      : false
+                  }
                 />
               </form>
               <button

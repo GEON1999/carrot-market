@@ -33,32 +33,36 @@ const Chats: NextPage = () => {
             <a>
               {chatRoom.sellerId === userData?.profile?.id ||
               chatRoom.buyerId === userData?.profile?.id ? (
-                <div className="flex justify-between items-center">
-                  <ProfileInfo
-                    big
-                    name={
-                      chatRoom.sellerId === userData?.profile?.id
-                        ? chatRoom.buyer.name
-                        : chatRoom.buyerId === userData?.profile?.id
-                        ? chatRoom.seller.name
-                        : ""
-                    }
-                    avatar={
-                      chatRoom.sellerId === userData?.profile?.id
-                        ? chatRoom.buyer.avatar
-                        : chatRoom.buyerId === userData?.profile?.id
-                        ? chatRoom.seller.avatar
-                        : ""
-                    }
-                    subtitle={chatRoom.messages.slice(-1)[0].message}
-                    position={"m-4"}
-                  />
-                  <span className="text-xs text-gray-400 mr-5 ">
-                    {timeForToday(
-                      Number(new Date(`${chatRoom.messages[0].updatedAt}`))
-                    )}
-                  </span>
-                </div>
+                <>
+                  {chatRoom.messages[0] ? (
+                    <div className="flex justify-between items-center">
+                      <ProfileInfo
+                        big
+                        name={
+                          chatRoom.sellerId === userData?.profile?.id
+                            ? chatRoom.buyer.name
+                            : chatRoom.buyerId === userData?.profile?.id
+                            ? chatRoom.seller.name
+                            : ""
+                        }
+                        avatar={
+                          chatRoom.sellerId === userData?.profile?.id
+                            ? chatRoom.buyer.avatar
+                            : chatRoom.buyerId === userData?.profile?.id
+                            ? chatRoom.seller.avatar
+                            : ""
+                        }
+                        subtitle={chatRoom.messages?.slice(-1)[0].message}
+                        position={"m-4"}
+                      />
+                      <span className="text-xs text-gray-400 mr-5 ">
+                        {timeForToday(
+                          Number(new Date(`${chatRoom.messages[0].updatedAt}`))
+                        )}
+                      </span>
+                    </div>
+                  ) : null}
+                </>
               ) : null}
             </a>
           </Link>
