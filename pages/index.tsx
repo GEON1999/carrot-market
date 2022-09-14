@@ -7,6 +7,7 @@ import useSWRInfinite from "swr/infinite";
 import { Product } from "@prisma/client";
 import { useEffect } from "react";
 import useScrollpage from "@libs/client/scrollPage";
+import timeForToday from "@libs/client/timeForToday";
 
 interface ProductWithFavCount extends Product {
   _count: {
@@ -41,7 +42,9 @@ const Home: NextPage = () => {
             <Item
               id={product?.id}
               title={product?.title}
-              subtitle={product?.subTitle}
+              subtitle={`${product?.subTitle} · ${timeForToday(
+                Number(new Date(product.createdAt))
+              )}`}
               price={product?.price}
               hearts={product?._count.fav}
               prodcut={product?.image ? product.image : null}

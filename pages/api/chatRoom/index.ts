@@ -24,7 +24,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     const chatRooms = await client.chatRoom.findMany({
       include: {
-        messages: true,
+        messages: {
+          orderBy: {
+            updatedAt: "desc",
+          },
+        },
         buyer: true,
         seller: true,
       },

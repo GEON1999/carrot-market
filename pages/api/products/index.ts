@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import { withApiSession } from "@libs/server/withSession";
+import { createDeflate } from "zlib";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
@@ -9,6 +10,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       query: { page },
     } = req;
     const products = await client.product.findMany({
+      orderBy: [
+        {
+          createdAt: "desc",
+        },
+      ],
       include: {
         _count: {
           select: {
