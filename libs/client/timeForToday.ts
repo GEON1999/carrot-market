@@ -1,4 +1,4 @@
-export default function timeForToday(value: number) {
+export default function timeForToday(value: any) {
   const today = new Date();
   const timeValue = new Date(value);
 

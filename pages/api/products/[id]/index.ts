@@ -22,31 +22,43 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     },
   });
-  const filter = product?.title.split(" ").map((word) => ({
-    title: {
-      contains: word,
-    },
-  }));
-  const relatedProducts = await client.product.findMany({
-    where: {
-      OR: filter,
-      AND: {
-        id: {
-          not: product?.id,
+  if (req.method === "GET") {
+    const filter = product?.title.split(" ").map((word) => ({
+      title: {
+        contains: word,
+      },
+    }));
+    const relatedProducts = await client.product.findMany({
+      where: {
+        OR: filter,
+        AND: {
+          id: {
+            not: product?.id,
+          },
         },
       },
-    },
-  });
-  const isLiked = await client.fav.findFirst({
-    where: {
-      productId: Number(id),
-      userId: user?.id,
-    },
-    select: {
-      id: true,
-    },
-  });
-  res.json({ ok: true, product, relatedProducts, isLiked });
+    });
+    const isLiked = await client.fav.findFirst({
+      where: {
+        productId: Number(id),
+        userId: user?.id,
+      },
+      select: {
+        id: true,
+      },
+    });
+    res.json({ ok: true, product, relatedProducts, isLiked });
+  }
+  if (req.method === "DELETE") {
+    await client.product.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+    res.json({ ok: true });
+  }
 }
 
-export default withApiSession(withHandler({ methods: ["GET"], handler }));
+export default withApiSession(
+  withHandler({ methods: ["GET", "DELETE"], handler })
+);

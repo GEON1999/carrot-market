@@ -11,6 +11,8 @@ import { cls } from "@libs/utils";
 import Link from "next/link";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
+import timeForToday from "@libs/client/timeForToday";
+import useDelete from "@libs/client/useDelete";
 
 interface ProductWitheUser extends Product {
   user: User;
@@ -33,12 +35,18 @@ interface MessageResponse {
 
 const ItemDetail: NextPage = () => {
   const router = useRouter();
+  const [state, setState] = useState<"판매중" | "예약중" | "판매완료">(
+    "판매중"
+  );
+  const [effect, setEffect] = useState(false);
+  const [ownerMenu, setOwnerMenu] = useState(false);
   const { id } = router.query;
   const { data, mutate } = useSWR<ItemDetailResponse>(
     id ? `/api/products/${id}` : null
   );
   const { data: userData } = useSWR(`/api/users/me`);
   const [toggoleFav] = useMutation(`/api/products/${id}/fav`);
+  const [deleteProduct] = useDelete(`/api/products/${id}`);
   const onFavClick = () => {
     if (!data) return;
     mutate({ ...data, isLiked: !data.isLiked }, false);
@@ -50,6 +58,18 @@ const ItemDetail: NextPage = () => {
   const onVaild = () => {
     send(id);
   };
+
+  const onClicked = () => {
+    deleteProduct();
+    router.push("/profile");
+  };
+  const handleChange = (e: any) => {
+    setState(e.target.value);
+  };
+  useEffect(() => {
+    if (state === "판매완료") {
+    }
+  }, [state]);
   useEffect(() => {
     if (chatRoomData && chatRoomData?.chatRoom) {
       router.push(`/chats/${chatRoomData.chatRoom?.id}`);
@@ -57,7 +77,6 @@ const ItemDetail: NextPage = () => {
       router.push(`/chats/${chatRoomData.isChatRoom?.id}`);
     }
   }, [chatRoomData, router]);
-  console.log(userData);
   return (
     <Layout canGoBack hasTabBar>
       <div className="mx-4">
@@ -74,28 +93,76 @@ const ItemDetail: NextPage = () => {
           ) : (
             <div className="h-96 bg-gray-400" />
           )}
-          <ProfileInfo
-            big
-            name={data?.product?.user?.name}
-            subtitle="View profile →"
-            id={data?.product?.user?.id}
-            avatar={data?.product?.user?.avatar}
-            position={"mt-8"}
-          />
+          <div className=" flex justify-between items-center content-center pb-4 border-b">
+            <ProfileInfo
+              big
+              name={data?.product?.user?.name}
+              subtitle={state}
+              id={data?.product?.user?.id}
+              avatar={data?.product?.user?.avatar}
+              position={"mt-8"}
+            />
+            <button
+              className={`${ownerMenu ? "hidden" : ""}`}
+              onClick={() => {
+                userData?.profile?.id !== data?.product?.userId
+                  ? setEffect(true)
+                  : setOwnerMenu(true);
+              }}
+              onAnimationEnd={() => setEffect(false)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className={`w-7 h-7 items-center mt-2 ${
+                  effect && "animate-wiggle"
+                }`}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                />
+              </svg>
+            </button>
+            {ownerMenu ? (
+              <div className="flex w-36 space-x-2 mt-5">
+                <button
+                  onClick={onClicked}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-1/2"
+                >
+                  삭제
+                </button>
+                <select
+                  value={state}
+                  onChange={handleChange}
+                  className="appearance-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+                >
+                  <option>판매중</option>
+                  <option>예약중</option>
+                  <option>판매완료</option>
+                </select>
+              </div>
+            ) : null}
+          </div>
           <div className="mt-3 ">
-            <h1 className="font-bold text-3xl ">{data?.product?.title}</h1>
-            <p className="mt-3 mb-4  text-xl">$ {data?.product?.price}</p>
+            <h1 className="font-bold text-xl ">{data?.product?.title}</h1>
+            <p className="text-sm mt-[2px] text-gray-400">
+              {timeForToday(data?.product?.createdAt)}
+            </p>
+            <p className="mt-1 mb-4 font-semibold text-base">
+              {data?.product?.price}원
+            </p>
             <p>{data?.product?.description}</p>
             <div className="mt-3 flex space-x-1">
               <form className="w-full" onSubmit={handleSubmit(onVaild)}>
                 <SubmitBtn
-                  position={`py-2 ${
-                    userData?.profile?.id === data?.product?.userId
-                      ? "bg-gray-300 hover:bg-gray-400 focus:bg-gray-400"
-                      : ""
-                  }`}
-                  title={loading ? "Loading...." : "Talk to seller"}
-                  disabled={
+                  position={`py-2`}
+                  title={loading ? "Loading...." : "채팅하기"}
+                  mine={
                     userData?.profile?.id === data?.product?.userId
                       ? true
                       : false
@@ -142,7 +209,7 @@ const ItemDetail: NextPage = () => {
           </div>
         </div>
         <div className="mt-8">
-          <h2 className="mb-3 font-bold text-xl">Similar items</h2>
+          <h2 className="mb-3 font-semibold text-base">비슷한 상품</h2>
           <div className="grid grid-cols-2 gap-10">
             {data?.relatedProducts?.map((product) => (
               <div key={product?.id} className="flex flex-col">
