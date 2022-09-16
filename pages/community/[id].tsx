@@ -10,6 +10,7 @@ import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/utils";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import timeForToday from "@libs/client/timeForToday";
 
 interface CommentForm {
   comment?: string;
@@ -89,7 +90,8 @@ const CommunityPostDetail: NextPage = () => {
           big
           position={"py-3"}
           name={data?.post.user.name}
-          subtitle="View profile"
+          subtitle=""
+          avatar={data?.post?.user?.avatar}
         />
         <div className="border-t border-b-[2px] py-3 space-y-8">
           <div>
@@ -147,12 +149,12 @@ const CommunityPostDetail: NextPage = () => {
               className="flex flex-col items-start justify-center"
             >
               <ProfileInfo
-                mb="4"
                 name={comment.user.name}
-                subtitle={comment.createdAt}
+                subtitle={timeForToday(comment.createdAt)}
                 big={false}
+                avatar={comment?.user?.avatar}
               />
-              <p className="text-gray-700 text-center -mt-3 ml-11 mb-8">
+              <p className="text-gray-700 text-center ml-11 mb-4">
                 {comment.comment}
               </p>
             </div>
