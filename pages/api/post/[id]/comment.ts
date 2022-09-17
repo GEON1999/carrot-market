@@ -9,25 +9,35 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     session: { user },
     query: { id },
   } = req;
-  const newComment = await client.comment.create({
-    data: {
-      comment,
-      user: {
-        connect: {
-          id: user?.id,
+  if (req.method === "POST") {
+    const newComment = await client.comment.create({
+      data: {
+        comment,
+        user: {
+          connect: {
+            id: user?.id,
+          },
+        },
+        post: {
+          connect: {
+            id: Number(id),
+          },
         },
       },
-      post: {
-        connect: {
-          id: Number(id),
-        },
-      },
-    },
-  });
-  res.json({
-    ok: true,
-    comment: newComment,
-  });
+    });
+    res.json({
+      ok: true,
+      comment: newComment,
+    });
+  }
+  if (req.method === "DELETE") {
+    await client.comment.delete({
+      where: {},
+    });
+  }
+  //comment delete 를 위한 container 를 만들어야함
 }
 
-export default withApiSession(withHandler({ methods: ["POST"], handler }));
+export default withApiSession(
+  withHandler({ methods: ["POST", "DELETE"], handler })
+);
