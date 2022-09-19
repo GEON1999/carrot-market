@@ -39,7 +39,7 @@ const Write: NextPage = () => {
           register={register("question", { required: true })}
           placeholder="Ask a question!"
         />
-        <SubmitBtn title={loading ? "loading" : "Submit"} mt="3" />
+        <SubmitBtn title={loading ? "loading" : "Submit"} position={"mt-2"} />
       </form>
     </Layout>
   );

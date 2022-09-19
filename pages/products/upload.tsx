@@ -62,7 +62,6 @@ const Upload: NextPage = () => {
   useEffect(() => {
     if (photo && photo.length > 0) {
       const file = photo[0];
-      console.log(file);
       setProductPreview(URL.createObjectURL(file));
     }
   }, [photo]);
@@ -137,7 +136,10 @@ const Upload: NextPage = () => {
               register={register("description", { required: true })}
             />
           </div>
-          <SubmitBtn title={loading ? "Loading..." : "Upload product"} mt="4" />
+          <SubmitBtn
+            title={loading ? "Loading..." : "Upload product"}
+            position={"mt-2"}
+          />
         </form>
       </div>
     </Layout>

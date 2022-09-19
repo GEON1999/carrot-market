@@ -197,7 +197,7 @@ const CommunityPostDetail: NextPage = () => {
             />
             <SubmitBtn
               title={commentLoading ? "Loading...." : "Reply"}
-              mt="4"
+              position={"mt-2"}
             />
           </form>
         </div>

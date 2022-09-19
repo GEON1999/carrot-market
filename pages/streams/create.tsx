@@ -81,7 +81,7 @@ const Create: NextPage = () => {
               register={register("description")}
             />
           </div>
-          <SubmitBtn title="Upload product" mt="4" />
+          <SubmitBtn title="Upload product" position={"mt-2"} />
         </div>
       </form>
     </Layout>

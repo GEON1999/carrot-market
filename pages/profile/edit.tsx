@@ -162,7 +162,10 @@ const EditProfile: NextPage = () => {
             register={register("phone")}
           />
 
-          <SubmitBtn mt="8" title={loading ? "Loading...." : "Edit"} />
+          <SubmitBtn
+            position={"mt-6"}
+            title={loading ? "Loading...." : "Edit"}
+          />
           {errors ? (
             <div className="mb-4 mt-1 font-serif font-semibold mx-2">
               {errors.formErrors?.message}
