@@ -10,6 +10,8 @@ import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/utils";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import timeForToday from "@libs/client/timeForToday";
+import useDelete from "@libs/client/useDelete";
 
 interface CommentForm {
   comment?: string;
@@ -43,12 +45,15 @@ const CommunityPostDetail: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const { register, handleSubmit, reset } = useForm<CommentForm>();
+  const { data: userData } = useSWR(`/api/users/me`);
   const { data, mutate } = useSWR<PostFormResponse>(
     id ? `/api/post/${id}` : null
   );
   const [toggleInterested] = useMutation(`/api/post/${id}/interest`);
   const [leaveComment, { data: commentData, loading: commentLoading }] =
     useMutation<LeaveCommentMutation>(`/api/post/${id}/comment`);
+  const [deletePost] = useDelete(`/api/post/${id}`);
+  const [deleteComment] = useDelete(`/api/post/${id}/comment`);
   const onClick = () => {
     if (!data) return;
     mutate(
@@ -79,18 +84,36 @@ const CommunityPostDetail: NextPage = () => {
       mutate();
     }
   }, [commentData, reset, mutate]);
+  const onClicked = () => {
+    deletePost();
+    router.push("/community");
+  };
+  const commentClicked = () => {
+    deleteComment();
+  };
   return (
     <Layout canGoBack hasTabBar>
       <div className="px-4 py-2">
         <span className="bg-gray-100 text-gray-700 px-2.5 py-0.5 rounded-full text-sm">
           동네질문
         </span>
-        <ProfileInfo
-          big
-          position={"py-3"}
-          name={data?.post.user.name}
-          subtitle="View profile"
-        />
+        <div className="flex justify-between items-center">
+          <ProfileInfo
+            big
+            position={"py-3"}
+            name={data?.post.user.name}
+            subtitle=""
+            avatar={data?.post?.user?.avatar}
+          />
+          {userData?.profile?.id === data?.post?.userId ? (
+            <button
+              onClick={onClicked}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block px-2 h-7"
+            >
+              삭제
+            </button>
+          ) : null}
+        </div>
         <div className="border-t border-b-[2px] py-3 space-y-8">
           <div>
             <span className="text-orange-500 font-bold">Q. </span>
@@ -146,13 +169,21 @@ const CommunityPostDetail: NextPage = () => {
               key={comment.id}
               className="flex flex-col items-start justify-center"
             >
-              <ProfileInfo
-                mb="4"
-                name={comment.user.name}
-                subtitle={comment.createdAt}
-                big={false}
-              />
-              <p className="text-gray-700 text-center -mt-3 ml-11 mb-8">
+              <div className="flex justify-between items-center w-full">
+                <ProfileInfo
+                  name={comment.user.name}
+                  subtitle={timeForToday(comment.createdAt)}
+                  big={false}
+                  avatar={comment?.user?.avatar}
+                />
+                <button
+                  onClick={commentClicked}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block px-2 h-7"
+                >
+                  삭제
+                </button>
+              </div>
+              <p className="text-gray-700 text-center ml-11 mb-4">
                 {comment.comment}
               </p>
             </div>
@@ -166,7 +197,7 @@ const CommunityPostDetail: NextPage = () => {
             />
             <SubmitBtn
               title={commentLoading ? "Loading...." : "Reply"}
-              mt="4"
+              position={"mt-2"}
             />
           </form>
         </div>

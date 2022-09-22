@@ -20,10 +20,6 @@ interface ChatRoomResponse {
 const Chats: NextPage = () => {
   const { data: userData } = useSWR("/api/users/me");
   const { data } = useSWR<ChatRoomResponse>(`/api/chatRoom`);
-  const chatRoomUpdate = data?.chatRooms
-    ?.map((chatRoom) => chatRoom.updatedAt)
-    .sort()
-    .reverse();
 
   return (
     <Layout title="채팅" hasTabBar>
@@ -52,7 +48,7 @@ const Chats: NextPage = () => {
                             ? chatRoom.seller.avatar
                             : ""
                         }
-                        subtitle={chatRoom.messages?.slice(-1)[0].message}
+                        subtitle={chatRoom.messages?.[0].message}
                         position={"m-4"}
                       />
                       <span className="text-xs text-gray-400 mr-5 ">

@@ -102,7 +102,7 @@ const ChatDetail: NextPage = () => {
               <Input
                 position={"relative"}
                 kind="chat"
-                register={register("message")}
+                register={register("message", { required: true })}
               />
             </form>
           </div>

@@ -12,7 +12,7 @@ import timeForToday from "@libs/client/timeForToday";
 interface ProductWithFavCount extends Product {
   _count: {
     fav: number;
-    messages: number;
+    chatRooms: number;
   };
 }
 
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
               )}`}
               price={product?.price}
               hearts={product?._count.fav}
-              comments={product?._count.messages}
+              comments={product?._count.chatRooms}
               prodcut={product?.image ? product.image : null}
             />
           </div>

@@ -60,7 +60,7 @@ model Product {
   fav         Fav[]
   sales       Sale[]
   Purchases   Purchase[]
-  messages    ChatRoom[]
+  chatRooms    ChatRoom[]
 }
 
 model Post {

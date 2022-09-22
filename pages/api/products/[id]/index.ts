@@ -13,6 +13,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       id: Number(id),
     },
     include: {
+      chatRooms: {
+        orderBy: {
+          updatedAt: "desc",
+        },
+        include: {
+          buyer: true,
+          messages: true,
+        },
+      },
       user: {
         select: {
           id: true,

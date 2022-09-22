@@ -31,7 +31,6 @@ const Streams: NextPage = () => {
   useEffect(() => {
     setSize(page);
   }, [setSize, page]);
-  console.log(size);
   return (
     <Layout title="라이브" hasTabBar>
       <div className=" px-4 py-2 space-y-9 divide-y-2">

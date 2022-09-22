@@ -26,7 +26,6 @@ export default function Enter() {
     useMutation<MutationResult>("/api/users/enter");
   const [tokenEnter, { loading: tokenLoading, data: tokenData }] =
     useMutation<MutationResult>("/api/users/confirm");
-  console.log(tokenData);
   const { register, handleSubmit, reset } = useForm<EnterForm>();
   const { register: tokenRegister, handleSubmit: tokenHandleSubmit } =
     useForm<TokenForm>();

@@ -22,7 +22,6 @@ interface SetProfileResponse {
 
 export default function Enter() {
   const router = useRouter();
-  console.log(router.pathname);
   const { data: userData } = useSWR<UserProfile>(`/api/users/me`);
   const [updateForm, { data, loading }] =
     useMutation<SetProfileResponse>(`/api/users/me`);

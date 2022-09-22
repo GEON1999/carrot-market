@@ -9,54 +9,66 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     session: { user },
   } = req;
 
-  const post = await client.post.findUnique({
-    where: {
-      id: Number(id),
-    },
-    include: {
-      user: {
-        select: {
-          id: true,
-          name: true,
-          avatar: true,
-        },
+  if (req.method === "GET") {
+    const post = await client.post.findUnique({
+      where: {
+        id: Number(id),
       },
-      comments: {
-        select: {
-          comment: true,
-          createdAt: true,
-          id: true,
-          user: {
-            select: {
-              id: true,
-              name: true,
-              avatar: true,
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            avatar: true,
+          },
+        },
+        comments: {
+          select: {
+            comment: true,
+            createdAt: true,
+            id: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+                avatar: true,
+              },
             },
           },
         },
-      },
-      _count: {
-        select: {
-          interest: true,
-          comments: true,
+        _count: {
+          select: {
+            interest: true,
+            comments: true,
+          },
         },
       },
-    },
-  });
-  const isInterested = await client.interest.findFirst({
-    where: {
-      userId: user?.id,
-      postId: Number(id),
-    },
-    select: {
-      id: true,
-    },
-  });
-  res.json({
-    ok: true,
-    post,
-    isInterested,
-  });
+    });
+    const isInterested = await client.interest.findFirst({
+      where: {
+        userId: user?.id,
+        postId: Number(id),
+      },
+      select: {
+        id: true,
+      },
+    });
+    res.json({
+      ok: true,
+      post,
+      isInterested,
+    });
+  }
+
+  if (req.method === "DELETE") {
+    const post = await client.post.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+  }
 }
 
-export default withApiSession(withHandler({ methods: ["GET"], handler }));
+export default withApiSession(
+  withHandler({ methods: ["GET", "DELETE"], handler })
+);

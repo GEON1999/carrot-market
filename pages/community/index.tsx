@@ -6,6 +6,7 @@ import useSWRInfinite from "swr/infinite";
 import { Post, User } from "@prisma/client";
 import useScrollpage from "@libs/client/scrollPage";
 import { useEffect } from "react";
+import timeForToday from "@libs/client/timeForToday";
 
 interface PostwithUser extends Post {
   user: User;
@@ -46,12 +47,12 @@ const Community: NextPage = () => {
                     동네질문
                   </span>
                   <span>
-                    <span className="text-orange-500 font-bold">Q.</span>
+                    <span className="text-orange-500 font-bold">Q. </span>
                     {post?.question}
                   </span>
                   <div className="my-4 flex justify-between w-full text-gray-500 text-sm">
                     <span>{post?.user.name}</span>
-                    <span>{String(post?.createdAt)}</span>
+                    <span>{timeForToday(post?.createdAt)}</span>
                   </div>
                 </div>
               </a>
