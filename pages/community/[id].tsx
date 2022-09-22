@@ -192,11 +192,11 @@ const CommunityPostDetail: NextPage = () => {
         <div className="flex flex-col">
           <form onSubmit={handleSubmit(onValid)}>
             <Textarea
-              placeholder="Answer this question!"
+              placeholder="댓글을 입력해주세요."
               register={register("comment", { required: true })}
             />
             <SubmitBtn
-              title={commentLoading ? "Loading...." : "Reply"}
+              title={commentLoading ? "로딩...." : "등록"}
               position={"mt-2"}
             />
           </form>

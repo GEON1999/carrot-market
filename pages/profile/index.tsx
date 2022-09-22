@@ -38,7 +38,7 @@ const Profile: NextPage = () => {
     setSize(page);
   }, [setSize, page]);
   return (
-    <Layout title="나의 정보" hasTabBar>
+    <Layout title="나의 당근" hasTabBar>
       <div className="px-4 py-4">
         <Link href="profile/edit">
           <a>
@@ -46,7 +46,7 @@ const Profile: NextPage = () => {
               avatar={user?.avatar}
               big
               name={user?.name}
-              subtitle="Edit profile →"
+              subtitle="프로필 수정"
             />
           </a>
         </Link>

@@ -30,6 +30,7 @@ const Home: NextPage = () => {
     initialSize: 1,
     revalidateAll: false,
   });
+  console.log(data);
   const products = data?.map((i) => i.products).flat();
   const page = useScrollpage();
   useEffect(() => {

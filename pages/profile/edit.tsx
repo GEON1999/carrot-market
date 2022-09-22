@@ -104,67 +104,75 @@ const EditProfile: NextPage = () => {
         onSubmit={handleSubmit(onVaild)}
       >
         <div className="px-4 py-2">
-          <div className="flex items-center space-x-3 mb-6">
+          <div className="flex justify-center mt-4 mb-4">
             {avatarPreview ? (
               <Image
                 alt="profile"
-                width={64}
-                height={64}
+                width={160}
+                height={160}
                 src={avatarPreview}
                 className="object-cover rounded-full"
                 quality={100}
               />
             ) : (
-              <div className="w-16 h-16 bg-slate-500 rounded-full" />
-            )}
-            <div className="flex flex-col">
-              <label
-                htmlFor="picture"
-                className="px-3 py-2 border border-gray-300 rounded-md text-gray-700 shadow-sm cursor-pointer hover:bg-gray-100"
-              >
-                Change
+              <label className="mb-6 w-40 h-40 cursor-pointer text-gray-600 hover:border-orange-500 hover:text-orange-500 flex items-center justify-center border-2 border-gray-300 rounded-full">
+                <svg
+                  className="h-12 w-12"
+                  stroke="currentColor"
+                  fill="none"
+                  viewBox="0 0 48 48"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
                 <input
                   {...register("avatar")}
-                  id="picture"
+                  accept="image/*"
                   className="hidden"
                   type="file"
-                  accept="image/*"
-                ></input>
+                />
               </label>
-            </div>
+            )}
           </div>
           <Input
             id="name"
-            title="name"
+            title="이름"
             type="text"
-            placeholder="Please enter your name"
+            placeholder="이름"
             register={register("name")}
-            position={"mb-4"}
+            position={"mb-2"}
             kind="text"
           />
           <Input
             id="email"
-            title="email"
+            title="이메일"
             type="emali"
-            placeholder="Please enter your email"
+            placeholder="이메일"
             register={register("email")}
             kind="text"
           />
           {errors ? (
-            <div className="mb-4 mt-1 font-serif font-semibold mx-2">
+            <div className="mb-2 mt-1 font-serif font-semibold mx-2">
               {errors.emailErrors?.message}
             </div>
           ) : null}
           <Input
             kind="phone"
             id="phone"
-            title="phone"
+            title="휴대폰"
+            placeholder="휴대폰 번호"
+            type="number"
             register={register("phone")}
           />
 
           <SubmitBtn
-            position={"mt-6"}
-            title={loading ? "Loading...." : "Edit"}
+            position={"mt-3"}
+            title={loading ? "로딩...." : "수정 완료"}
           />
           {errors ? (
             <div className="mb-4 mt-1 font-serif font-semibold mx-2">

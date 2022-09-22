@@ -43,7 +43,7 @@ export default function Item({
               <span className="text-xs text-gray-400 mt-1 mb-2">
                 {subtitle}
               </span>
-              <span className="font-bold">$ {price}</span>
+              <span className="font-bold">{price} 원</span>
             </div>
           </div>
         </a>

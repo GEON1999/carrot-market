@@ -105,7 +105,7 @@ const Upload: NextPage = () => {
           <div>
             <Input
               id="title"
-              title="Title"
+              title="제목"
               type="text"
               position="mb-2"
               kind="text"
@@ -113,7 +113,7 @@ const Upload: NextPage = () => {
             />
             <Input
               id="subTitle"
-              title="Subtitle"
+              title="부제목"
               type="text"
               position="mb-2"
               kind="text"
@@ -121,7 +121,7 @@ const Upload: NextPage = () => {
             />
             <Input
               id="price"
-              title="Price"
+              title="가격"
               type="text"
               placeholder="0.00"
               kind="price"
@@ -131,13 +131,13 @@ const Upload: NextPage = () => {
           <div className="mt-2">
             <Textarea
               id="description"
-              title="Description"
+              title="상품 설명"
               label
               register={register("description", { required: true })}
             />
           </div>
           <SubmitBtn
-            title={loading ? "Loading..." : "Upload product"}
+            title={loading ? "로딩..." : "상품 등록"}
             position={"mt-2"}
           />
         </form>

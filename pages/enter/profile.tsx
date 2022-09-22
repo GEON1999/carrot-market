@@ -100,12 +100,12 @@ export default function Enter() {
             )}
           </div>
           <Input
-            title="Name"
+            title="이름"
             kind="text"
             register={register("name", { required: true })}
             position={"mb-4"}
           />
-          <SubmitBtn title={loading ? "Loading..." : "Enter"} />
+          <SubmitBtn title={loading ? "로딩..." : "확인"} />
         </form>
         <div className="w-full flex justify-center mt-8">
           <button

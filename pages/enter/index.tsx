@@ -51,7 +51,7 @@ export default function Enter() {
   return (
     <Layout hasTabBar title="로그인">
       <div className="mx-4">
-        <h3 className="text-center mt-12 font-bold text-3xl">Join</h3>
+        <h3 className="text-center mt-12 font-bold text-2xl">회원가입</h3>
         <div>
           {data?.ok ? (
             <>
@@ -61,7 +61,7 @@ export default function Enter() {
               >
                 <Input
                   phone={false}
-                  title={"Verification Code"}
+                  title={"코드 인증"}
                   id={"token"}
                   type={"password"}
                   placeholder={""}
@@ -69,7 +69,7 @@ export default function Enter() {
                   kind="text"
                 />
                 <SubmitBtn
-                  title={tokenLoading ? "Loading...." : "Confirm"}
+                  title={tokenLoading ? "로딩" : "인증"}
                   position={"mt-4"}
                 />
               </form>
@@ -78,7 +78,7 @@ export default function Enter() {
             <>
               <div className="felx flex-col">
                 <h5 className="text-center mt-10 text-sm text-gray-500">
-                  Enter using
+                  로그인 방식
                 </h5>
                 <div className="grid grid-cols-2 mt-3  border-b">
                   <button
@@ -90,7 +90,7 @@ export default function Enter() {
                         : "border-transparent"
                     )}
                   >
-                    Email
+                    이메일
                   </button>
                   <button
                     onClick={onPhoneClick}
@@ -101,32 +101,28 @@ export default function Enter() {
                         : "border-transparent"
                     )}
                   >
-                    Phone
+                    휴대폰
                   </button>
                 </div>
               </div>
               <form className="mt-4 mb-2" onSubmit={handleSubmit(onVaild)}>
                 <Input
                   kind={method === "email" ? "text" : "phone"}
-                  title={method}
+                  title={method === "email" ? "이메일" : "휴대폰"}
                   id={method}
                   type={method === "email" ? "email" : "number"}
-                  placeholder={
-                    method === "email"
-                      ? "Please enter your email"
-                      : "Plese enter your number"
-                  }
+                  placeholder={method === "email" ? "이메일" : "휴대폰 번호"}
                   register={register(method, { required: true })}
                 />
                 <SubmitBtn
                   title={
                     method === "email"
                       ? loading
-                        ? "Loading...."
-                        : "Get login link"
+                        ? "로딩...."
+                        : "로그인"
                       : loading
-                      ? "Loading...."
-                      : "Get one-time password"
+                      ? "로딩...."
+                      : "로그인"
                   }
                   position={"mt-4"}
                 />
@@ -138,7 +134,7 @@ export default function Enter() {
               <div className="absolute border-b border-gray-300 w-full" />
               <div className="relative -top-3 text-center ">
                 <span className=" text-gray-400 bg-white px-3">
-                  Or enter with
+                  소셜 로그인
                 </span>
               </div>
             </div>

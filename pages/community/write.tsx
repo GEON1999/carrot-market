@@ -37,9 +37,9 @@ const Write: NextPage = () => {
       <form onSubmit={handleSubmit(onValid)} className="px-4 py-2">
         <Textarea
           register={register("question", { required: true })}
-          placeholder="Ask a question!"
+          placeholder="궁금한 것을 물어보세요!"
         />
-        <SubmitBtn title={loading ? "loading" : "Submit"} position={"mt-2"} />
+        <SubmitBtn title={loading ? "로딩...." : "등록"} position={"mt-2"} />
       </form>
     </Layout>
   );
