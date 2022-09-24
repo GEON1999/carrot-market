@@ -31,6 +31,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         },
         buyer: true,
         seller: true,
+        _count: {
+          select: {
+            notifications: true,
+          },
+        },
       },
     });
     res.json({ ok: true, chatRooms });

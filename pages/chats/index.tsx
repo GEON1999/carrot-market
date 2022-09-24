@@ -11,6 +11,7 @@ interface ChatRoomWith extends ChatRoom {
   messages: Messages[];
   buyer: User;
   seller: User;
+  _count: { notifications: number };
 }
 
 interface ChatRoomResponse {
@@ -20,7 +21,7 @@ interface ChatRoomResponse {
 const Chats: NextPage = () => {
   const { data: userData } = useSWR("/api/users/me");
   const { data } = useSWR<ChatRoomResponse>(`/api/chatRoom`);
-
+  console.log(data);
   return (
     <Layout title="채팅" hasTabBar>
       <div className="divide-y-[1px] py-2">
@@ -56,6 +57,9 @@ const Chats: NextPage = () => {
                           Number(new Date(`${chatRoom.messages[0].updatedAt}`))
                         )}
                       </span>
+                      {chatRoom._count ? (
+                        <span>{chatRoom._count.notifications}</span>
+                      ) : null}
                     </div>
                   ) : null}
                 </>

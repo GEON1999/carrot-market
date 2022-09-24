@@ -35,6 +35,7 @@ model User {
   sendMessages    ChatRoom[]      @relation(name: "sendMessages")
   receiveMessages ChatRoom[]      @relation(name: "receiveMessages")
   messages        Messages[]
+  notifications   Notification[]
 }
 
 model Token {
@@ -60,7 +61,7 @@ model Product {
   fav         Fav[]
   sales       Sale[]
   Purchases   Purchase[]
-  chatRooms    ChatRoom[]
+  chatRooms   ChatRoom[]
 }
 
 model Post {
@@ -163,16 +164,17 @@ model StreamMessage {
 }
 
 model ChatRoom {
-  id        Int        @id @default(autoincrement())
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  buyer     User       @relation(name: "sendMessages", fields: [buyerId], references: [id], onDelete: Cascade)
-  buyerId   Int
-  seller    User       @relation(name: "receiveMessages", fields: [sellerId], references: [id], onDelete: Cascade)
-  sellerId  Int
-  product   Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId Int
-  messages  Messages[]
+  id            Int            @id @default(autoincrement())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  buyer         User           @relation(name: "sendMessages", fields: [buyerId], references: [id], onDelete: Cascade)
+  buyerId       Int
+  seller        User           @relation(name: "receiveMessages", fields: [sellerId], references: [id], onDelete: Cascade)
+  sellerId      Int
+  product       Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId     Int
+  messages      Messages[]
+  notifications Notification[]
 }
 
 model Messages {
@@ -184,6 +186,16 @@ model Messages {
   message    String
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     Int
+}
+
+model Notification {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
+  chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
+  chatRoomId Int
 }
 
 // prisma 에 작성되는 model 은 npx prisma db push 코드를 통해 push 해야지만 planetscale 에 적용됨

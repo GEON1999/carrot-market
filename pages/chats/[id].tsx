@@ -35,13 +35,14 @@ interface ChatRoomResponse {
 
 const ChatDetail: NextPage = () => {
   const router = useRouter();
+  const chatRoomId = router.query.id;
   const scrollRef = useRef<HTMLDivElement>(null);
   const { register, handleSubmit, reset } = useForm<MessageForm>();
   const [send, { loading, data: messageData }] = useMutation<MessageResponse>(
-    `/api/chatRoom/${router.query.id}/messages`
+    `/api/chatRoom/${chatRoomId}/messages`
   );
   const { data, mutate } = useSWR<ChatRoomResponse>(
-    router.query.id ? `/api/chatRoom/${router.query.id}` : null,
+    chatRoomId ? `/api/chatRoom/${chatRoomId}` : null,
     {
       refreshInterval: 300,
       revalidateOnFocus: true,
@@ -49,6 +50,12 @@ const ChatDetail: NextPage = () => {
   );
   const { data: userData } = useSWR("/api/users/me");
 
+  const [countingNoti] = useMutation(`/api/chatRoom/notification`);
+
+  const otherUser = data?.chatRoom?.messages?.map((message) => {
+    return message.user.id === userData?.profile?.id ? null : message.user.id;
+  });
+  const contactId = otherUser?.find((e) => (e !== null ? e : null));
   const onValid = (validForm: MessageForm) => {
     mutate(
       (prev) =>
@@ -70,6 +77,9 @@ const ChatDetail: NextPage = () => {
       false
     );
     send(validForm);
+    if (contactId && chatRoomId) {
+      countingNoti({ contactId, chatRoomId });
+    }
     reset();
   };
   useEffect(() => {
