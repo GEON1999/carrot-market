@@ -1,7 +1,8 @@
 import { cls } from "@libs/utils";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useSWR from "swr";
 
 interface LayoutProps {
   title?: string;
@@ -20,6 +21,25 @@ export default function Layout({
   const onClick = () => {
     router.back();
   };
+  const { data: userData } = useSWR("/api/users/me");
+  const { data } = useSWR(`/api/chatRoom`);
+  const [state, setState] = useState(false);
+  useEffect(() => {
+    data?.chatRooms?.map((chatRoom: any) => {
+      if (
+        chatRoom.sellerId === userData?.profile?.id ||
+        chatRoom.buyerId === userData?.profile?.id
+      ) {
+        if (chatRoom.messages?.[0]?.userId !== userData?.profile?.id) {
+          if (chatRoom._count.notifications !== 0) {
+            setState(true);
+          } else {
+            setState(false);
+          }
+        }
+      }
+    });
+  }, [data, state, router, userData]);
   return (
     <div>
       <div
@@ -104,6 +124,7 @@ export default function Layout({
               <span>동네생활</span>
             </a>
           </Link>
+
           <Link href="/chats">
             <a
               className={cls(
@@ -113,21 +134,28 @@ export default function Layout({
                   : "hover:text-gray-500 transition-colors"
               )}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-                />
-              </svg>
-              <span>채팅</span>
+              {state ? (
+                <div className="opacity-90 text-xs absolute h-6 w-6 bg-orange-500 text-white items-center flex justify-center text-center rounded-full -top-[0.1px] ml-4">
+                  N
+                </div>
+              ) : null}
+              <div className="flex flex-col justify-center items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+                  />
+                </svg>
+                <span>채팅</span>
+              </div>
             </a>
           </Link>
           <Link href="/streams">

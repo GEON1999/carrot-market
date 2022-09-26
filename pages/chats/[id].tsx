@@ -8,6 +8,7 @@ import useSWR from "swr";
 import { ChatRoom, Messages, User } from "@prisma/client";
 import Message from "@components/message";
 import { useEffect, useRef } from "react";
+import useDelete from "@libs/client/useDelete";
 
 interface MessageForm {
   message: string;
@@ -36,6 +37,7 @@ interface ChatRoomResponse {
 const ChatDetail: NextPage = () => {
   const router = useRouter();
   const chatRoomId = router.query.id;
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const { register, handleSubmit, reset } = useForm<MessageForm>();
   const [send, { loading, data: messageData }] = useMutation<MessageResponse>(
@@ -49,13 +51,19 @@ const ChatDetail: NextPage = () => {
     }
   );
   const { data: userData } = useSWR("/api/users/me");
-
-  const [countingNoti] = useMutation(`/api/chatRoom/notification`);
-
-  const otherUser = data?.chatRoom?.messages?.map((message) => {
-    return message.user.id === userData?.profile?.id ? null : message.user.id;
-  });
-  const contactId = otherUser?.find((e) => (e !== null ? e : null));
+  const [countingNoti, { data: newNotification }] = useMutation(
+    `/api/chatRoom/notification`
+  );
+  const [deleteNoti] = useDelete(`/api/chatRoom/notification`);
+  const lastMessage = data?.chatRoom?.messages?.slice(-1)[0];
+  const deleteNotification = () => {
+    if (chatRoomId && lastMessage) {
+      if (lastMessage?.user.id !== userData?.profile?.id) {
+        deleteNoti({ chatRoomId });
+      }
+    }
+  };
+  useEffect(deleteNotification, []);
   const onValid = (validForm: MessageForm) => {
     mutate(
       (prev) =>
@@ -77,8 +85,8 @@ const ChatDetail: NextPage = () => {
       false
     );
     send(validForm);
-    if (contactId && chatRoomId) {
-      countingNoti({ contactId, chatRoomId });
+    if (chatRoomId) {
+      countingNoti({ chatRoomId });
     }
     reset();
   };
@@ -89,7 +97,6 @@ const ChatDetail: NextPage = () => {
       inline: "nearest",
     });
   }, [data]);
-
   return (
     <>
       <Layout canGoBack hasTabBar>

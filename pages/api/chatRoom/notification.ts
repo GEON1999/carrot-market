@@ -4,27 +4,34 @@ import withHandler, { ResponseType } from "@libs/server/withHandler";
 import { withApiSession } from "@libs/server/withSession";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const {
-    body: { contactId, chatRoomId },
-  } = req;
-
-  console.log(contactId, chatRoomId);
-
-  await client.notification.create({
-    data: {
-      user: {
-        connect: {
-          id: contactId,
+  if (req.method === "POST") {
+    const {
+      body: { chatRoomId },
+    } = req;
+    const newNotification = await client.notification.create({
+      data: {
+        chatRoom: {
+          connect: {
+            id: Number(chatRoomId),
+          },
         },
       },
-      chatRoom: {
-        connect: {
-          id: Number(chatRoomId),
-        },
+    });
+    res.json({ ok: true, newNotification });
+  }
+  if (req.method === "DELETE") {
+    const {
+      body: { chatRoomId },
+    } = req;
+    await client.notification.deleteMany({
+      where: {
+        chatRoomId: Number(chatRoomId),
       },
-    },
-  });
-  res.json({ ok: true });
+    });
+    res.json({ ok: true });
+  }
 }
 
-export default withApiSession(withHandler({ methods: ["POST"], handler }));
+export default withApiSession(
+  withHandler({ methods: ["POST", "DELETE"], handler })
+);

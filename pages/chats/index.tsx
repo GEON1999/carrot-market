@@ -4,7 +4,7 @@ import Layout from "@components/layout";
 import ProfileInfo from "@components/profile";
 import useSWR from "swr";
 import { ChatRoom, Messages, User } from "@prisma/client";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import timeForToday from "@libs/client/timeForToday";
 
 interface ChatRoomWith extends ChatRoom {
@@ -21,7 +21,7 @@ interface ChatRoomResponse {
 const Chats: NextPage = () => {
   const { data: userData } = useSWR("/api/users/me");
   const { data } = useSWR<ChatRoomResponse>(`/api/chatRoom`);
-  console.log(data);
+
   return (
     <Layout title="채팅" hasTabBar>
       <div className="divide-y-[1px] py-2">
@@ -52,14 +52,27 @@ const Chats: NextPage = () => {
                         subtitle={chatRoom.messages?.[0].message}
                         position={"m-4"}
                       />
-                      <span className="text-xs text-gray-400 mr-5 ">
-                        {timeForToday(
-                          Number(new Date(`${chatRoom.messages[0].updatedAt}`))
+                      <div className="mr-4 space-x-2 flex items-center">
+                        {chatRoom.messages?.[0].userId !==
+                        userData?.profile?.id ? (
+                          chatRoom._count.notifications !== 0 ? (
+                            <span className="text-sm text-white w-6 h-6 bg-orange-400 rounded-full flex items-center justify-center">
+                              {chatRoom._count.notifications}
+                            </span>
+                          ) : (
+                            <span></span>
+                          )
+                        ) : (
+                          <span></span>
                         )}
-                      </span>
-                      {chatRoom._count ? (
-                        <span>{chatRoom._count.notifications}</span>
-                      ) : null}
+                        <span className="text-xs text-gray-400 mr-5 ">
+                          {timeForToday(
+                            Number(
+                              new Date(`${chatRoom.messages[0].updatedAt}`)
+                            )
+                          )}
+                        </span>
+                      </div>
                     </div>
                   ) : null}
                 </>
