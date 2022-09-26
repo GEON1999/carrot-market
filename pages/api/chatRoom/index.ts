@@ -74,8 +74,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       res.json({ ok: true, chatRoom });
     }
   }
+  if (req.method === "DELETE") {
+    const { body } = req;
+    await client.chatRoom.delete({
+      where: {
+        id: Number(body),
+      },
+    });
+    res.json({ ok: true });
+  }
 }
 
 export default withApiSession(
-  withHandler({ methods: ["POST", "GET"], handler })
+  withHandler({ methods: ["POST", "GET", "DELETE"], handler })
 );
