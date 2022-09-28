@@ -35,9 +35,7 @@ interface MessageResponse {
 
 const ItemDetail: NextPage = () => {
   const router = useRouter();
-  const [state, setState] = useState<"판매중" | "예약중" | "판매완료">(
-    "판매중"
-  );
+  const [state, setState] = useState<"판매중" | "판매완료">("판매중");
   const [effect, setEffect] = useState(false);
   const [ownerMenu, setOwnerMenu] = useState(false);
   const { id } = router.query;
@@ -68,6 +66,7 @@ const ItemDetail: NextPage = () => {
   };
   useEffect(() => {
     if (state === "판매완료") {
+      router.push(`/products/${id}/finish`);
     }
   }, [state]);
   useEffect(() => {
@@ -137,13 +136,12 @@ const ItemDetail: NextPage = () => {
                   삭제
                 </button>
                 <select
-                  value={state}
                   onChange={handleChange}
+                  value={state}
                   className="appearance-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
                 >
-                  <option>판매중</option>
-                  <option>예약중</option>
-                  <option>판매완료</option>
+                  <option value={"판매중"}>판매중</option>
+                  <option value={"판매완료"}>판매완료</option>
                 </select>
               </div>
             ) : null}
@@ -215,7 +213,18 @@ const ItemDetail: NextPage = () => {
               <div key={product?.id} className="flex flex-col">
                 <Link href={`/products/${product?.id}`}>
                   <a>
-                    <div className="bg-gray-400 w-full aspect-square" />
+                    {product?.image ? (
+                      <Image
+                        alt="product"
+                        width={480}
+                        height={384}
+                        src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${product?.image}/public`}
+                        className="object-contain"
+                        quality={100}
+                      />
+                    ) : (
+                      <div className="h-96 bg-gray-400" />
+                    )}
                     <h3 className="text-gray-700 mt-2 -mb-1">
                       {product?.title}
                     </h3>

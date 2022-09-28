@@ -7,6 +7,7 @@ import { Review, User } from "@prisma/client";
 import useSWRInfinite from "swr/infinite";
 import useScrollpage from "@libs/client/scrollPage";
 import { useEffect } from "react";
+import timeForToday from "@libs/client/timeForToday";
 
 interface ReviewWithUser extends Review {
   leavedBy: User;
@@ -122,16 +123,17 @@ const Profile: NextPage = () => {
           </Link>
         </div>
         <>
+          <h1 className="mb-7 text-sm font-bold">받은 거래 후기</h1>
           {reviews?.map((review) => (
-            <div key={review?.id} className="space-y-6">
+            <div key={review?.id} className="space-y-6 mt-4">
               <ProfileInfo
                 big={false}
                 name={review?.leavedBy.name}
-                subtitle={String(review?.createdAt)}
+                subtitle={timeForToday(review?.createdAt)}
                 avatar={review?.leavedBy.avatar}
               />
-              <div>
-                <p className="text-gray-700  -mt-5 ml-12 mb-8">
+              <div className="border-b border-gray-100">
+                <p className="text-gray-700 text-sm  -mt-5 ml-12 mb-4">
                   {review?.review}
                 </p>
               </div>

@@ -13,24 +13,36 @@ import Link from "next/link";
 import ProfileInfo from "@components/profile";
 import timeForToday from "@libs/client/timeForToday";
 
-const Upload: NextPage = () => {
+const Finish: NextPage = () => {
   const router = useRouter();
+  const { handleSubmit } = useForm();
   const productId = router.query.id;
-  const { data } = useSWR(`/api/products/${productId}`);
+  const { data } = useSWR(productId ? `/api/products/${productId}` : ``);
+  const { data: userData } = useSWR(`/api/users/me`);
   console.log(data);
-  const [buyer, setBuyer] = useState(false);
-  const onClicked = (e: any) => {
-    console.log(e);
+  const [key, setKey] = useState();
+  const onClicked = async (e: any) => {
+    await setKey(e);
   };
+  const onSubmit = () => {
+    if (key && productId) {
+      router.push(`/products/${productId}/${key}/review`);
+    }
+  };
+  useEffect(() => {
+    if (data?.product?.userId !== userData?.profile?.id) {
+      router.replace(`/products/${productId}`);
+    }
+  }, [router, data, userData, productId]);
   return (
     <Layout title="판매한 상대를 고르세요" hasTabBar>
       <div className="mx-4">
-        {data?.product?.messages?.map((chatRoom: any, i: any) => (
-          <div onClick={onClicked} key={i}>
+        {data?.product?.chatRooms?.map((chatRoom: any) => (
+          <div onClick={() => onClicked(chatRoom.buyer.id)} key={chatRoom.id}>
             {chatRoom.messages[0] ? (
               <div
                 className={`flex justify-between items-center ${
-                  buyer ? "bg-gray-200 rounded-md" : ""
+                  chatRoom.buyer.id === key ? "bg-gray-200 rounded-md" : ""
                 }`}
               >
                 <ProfileInfo
@@ -49,10 +61,12 @@ const Upload: NextPage = () => {
             ) : null}
           </div>
         ))}
-        <SubmitBtn title="확정하기" position={"mt-8"} />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <SubmitBtn title="확정하기" position={"mt-8"} />
+        </form>
       </div>
     </Layout>
   );
 };
 
-export default Upload;
+export default Finish;
