@@ -40,7 +40,7 @@ const ChatDetail: NextPage = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const { register, handleSubmit, reset } = useForm<MessageForm>();
-  const [send, { loading, data: messageData }] = useMutation<MessageResponse>(
+  const [send] = useMutation<MessageResponse>(
     `/api/chatRoom/${chatRoomId}/messages`
   );
   const { data, mutate } = useSWR<ChatRoomResponse>(
@@ -51,19 +51,20 @@ const ChatDetail: NextPage = () => {
     }
   );
   const { data: userData } = useSWR("/api/users/me");
-  const [countingNoti, { data: newNotification }] = useMutation(
-    `/api/chatRoom/notification`
-  );
+  const [countingNoti] = useMutation(`/api/chatRoom/notification`);
   const [deleteNoti] = useDelete(`/api/chatRoom/notification`);
   const lastMessage = data?.chatRoom?.messages?.slice(-1)[0];
   const deleteNotification = () => {
-    if (chatRoomId && lastMessage) {
-      if (lastMessage?.user.id !== userData?.profile?.id) {
-        deleteNoti({ chatRoomId });
-      }
+    if (lastMessage?.user.id !== userData?.profile?.id) {
+      deleteNoti({ chatRoomId });
     }
   };
-  useEffect(deleteNotification, []);
+  useEffect(() => {
+    if (chatRoomId && lastMessage) {
+      setInterval(deleteNotification, 3000);
+    }
+  }, [chatRoomId, lastMessage]);
+
   const onValid = (validForm: MessageForm) => {
     mutate(
       (prev) =>
@@ -115,7 +116,7 @@ const ChatDetail: NextPage = () => {
                 </div>
               ))}
             </div>
-            <form onSubmit={handleSubmit(onValid)}>
+            <form className="mb-4" onSubmit={handleSubmit(onValid)}>
               <Input
                 position={"relative"}
                 kind="chat"
