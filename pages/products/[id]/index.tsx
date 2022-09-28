@@ -5,7 +5,7 @@ import SubmitBtn from "@components/submitBtn";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useEffect, useState } from "react";
-import { ChatRoom, Product, Review, User } from "@prisma/client";
+import { AD, ChatRoom, Product, Review, User } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/utils";
 import Link from "next/link";
@@ -17,6 +17,7 @@ import useDelete from "@libs/client/useDelete";
 interface ProductWitheProps extends Product {
   user: User;
   reviews: Review[];
+  ADs: AD[];
 }
 
 interface ItemDetailResponse {
@@ -94,70 +95,138 @@ const ItemDetail: NextPage = () => {
           ) : (
             <div className="h-96 bg-gray-400" />
           )}
-          <div className=" flex justify-between items-center content-center pb-4 border-b">
-            <ProfileInfo
-              big
-              name={data?.product?.user?.name}
-              subtitle={state}
-              id={data?.product?.user?.id}
-              avatar={data?.product?.user?.avatar}
-              position={"mt-8"}
-            />
-            <button
-              className={`${ownerMenu ? "hidden" : ""}`}
-              onClick={() => {
-                userData?.profile?.id !== data?.product?.userId ||
-                data?.product?.reviews[0]?.review
-                  ? setEffect(true)
-                  : setOwnerMenu(true);
-              }}
-              onAnimationEnd={() => setEffect(false)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className={`w-7 h-7 items-center mt-2 ${
-                  effect && "animate-wiggle"
-                }`}
+          <div className="pb-2 border-b">
+            <div className="flex justify-between items-center content-center">
+              <ProfileInfo
+                big
+                subtitle={timeForToday(data?.product?.createdAt)}
+                name={data?.product?.user?.name}
+                id={data?.product?.user?.id}
+                avatar={data?.product?.user?.avatar}
+                position={"mt-8"}
+              />
+              <button
+                className={`${ownerMenu ? "hidden" : ""}`}
+                onClick={() => {
+                  userData?.profile?.id !== data?.product?.userId ||
+                  data?.product?.reviews[0]?.review
+                    ? setEffect(true)
+                    : setOwnerMenu(true);
+                }}
+                onAnimationEnd={() => setEffect(false)}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-                />
-              </svg>
-            </button>
-            {ownerMenu ? (
-              <div className="flex w-36 space-x-2 mt-5">
-                <button
-                  onClick={onClicked}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-1/2"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className={`w-7 h-7 items-center mt-2 ${
+                    effect && "animate-wiggle"
+                  }`}
                 >
-                  삭제
-                </button>
-                <select
-                  onChange={handleChange}
-                  value={state}
-                  className="appearance-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
-                >
-                  <option value={"판매중"}>판매중</option>
-                  <option value={"판매완료"}>판매완료</option>
-                </select>
-              </div>
-            ) : null}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                  />
+                </svg>
+              </button>
+              {ownerMenu ? (
+                <div className="flex w-36 space-x-2 mt-5">
+                  <button
+                    onClick={onClicked}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-1/2"
+                  >
+                    삭제
+                  </button>
+                  <select
+                    onChange={handleChange}
+                    value={state}
+                    className="appearance-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+                  >
+                    <option value={"판매중"}>판매중</option>
+                    <option value={"판매완료"}>판매완료</option>
+                  </select>
+                </div>
+              ) : null}
+            </div>
+            <div className="mt-5 ml-1 space-y-2">
+              {data?.product?.ADs[0]?.id ? (
+                <div className="flex space-x-2 items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"
+                    />
+                  </svg>
+
+                  <p className="font-semibold">{data?.product?.price} 원</p>
+                </div>
+              ) : null}
+              {data?.product?.ADs[0]?.phone ? (
+                <div className="flex space-x-2 items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
+                    />
+                  </svg>
+
+                  <p>{data?.product?.ADs[0]?.phone}</p>
+                </div>
+              ) : null}
+              {data?.product?.ADs[0]?.address ? (
+                <div className="flex space-x-2 items-center pb-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                    />
+                  </svg>
+
+                  <p>{data?.product?.ADs[0]?.address}</p>
+                </div>
+              ) : null}
+            </div>
           </div>
           <div className="mt-3 ">
             <h1 className="font-bold text-xl ">{data?.product?.title}</h1>
-            <p className="text-sm mt-[2px] text-gray-400">
-              {timeForToday(data?.product?.createdAt)}
-            </p>
-            <p className="mt-1 mb-4 font-semibold text-base">
-              {data?.product?.price}원
-            </p>
-            <p>{data?.product?.description}</p>
+
+            {!data?.product?.ADs[0]?.id ? (
+              <p className=" mt-1">{data?.product?.price}원</p>
+            ) : null}
+
+            <p className="my-8">{data?.product?.description}</p>
             <div className="mt-3 flex space-x-1">
               <form className="w-full" onSubmit={handleSubmit(onVaild)}>
                 <SubmitBtn
@@ -213,7 +282,7 @@ const ItemDetail: NextPage = () => {
           <h2 className="mb-3 font-semibold text-base">비슷한 상품</h2>
           <div className="grid grid-cols-2 gap-10">
             {data?.relatedProducts?.map((product) => (
-              <div key={product?.id} className="flex flex-col">
+              <div key={product?.id} className="flex flex-col mb-8">
                 <Link href={`/products/${product?.id}`}>
                   <a>
                     {product?.image ? (
@@ -231,7 +300,7 @@ const ItemDetail: NextPage = () => {
                     <h3 className="text-gray-700 mt-2 -mb-1">
                       {product?.title}
                     </h3>
-                    <p className="text-gray-900 text-sm">$ {product?.price}</p>
+                    <p className="text-gray-900 text-sm">{product?.price}원</p>
                   </a>
                 </Link>
               </div>

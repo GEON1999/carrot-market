@@ -27,6 +27,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             review: true,
           },
         },
+        ADs: true,
       },
       take: 15,
       skip: (Number(page) - 1) * 15,

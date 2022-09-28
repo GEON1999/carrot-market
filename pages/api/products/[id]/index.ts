@@ -34,6 +34,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           review: true,
         },
       },
+      ADs: true,
     },
   });
   if (req.method === "GET") {

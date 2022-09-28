@@ -4,7 +4,7 @@ import Item from "@components/item";
 import Layout from "@components/layout";
 import Link from "next/link";
 import useSWRInfinite from "swr/infinite";
-import { Product, Review } from "@prisma/client";
+import { AD, Product, Review } from "@prisma/client";
 import { useEffect } from "react";
 import useScrollpage from "@libs/client/scrollPage";
 import timeForToday from "@libs/client/timeForToday";
@@ -15,6 +15,7 @@ interface ProductWithProps extends Product {
     chatRooms: number;
   };
   reviews: Review[];
+  ADs: AD[];
 }
 
 interface ProductResponse {
@@ -31,6 +32,7 @@ const Home: NextPage = () => {
     initialSize: 1,
     revalidateAll: false,
   });
+  console.log(data);
   const products = data?.map((i) => i.products).flat();
   const page = useScrollpage();
   useEffect(() => {
@@ -43,6 +45,19 @@ const Home: NextPage = () => {
           <div key={product?.id}>
             {product?.reviews[0]?.review ? (
               ""
+            ) : product?.ADs[0]?.id ? (
+              <Item
+                ad={true}
+                id={product?.id}
+                title={product?.title}
+                subtitle={`${product?.subTitle} · ${timeForToday(
+                  Number(new Date(product?.createdAt))
+                )}`}
+                price={product?.price}
+                hearts={product?._count.fav}
+                comments={product?._count.chatRooms}
+                prodcut={product?.image ? product.image : null}
+              />
             ) : (
               <Item
                 id={product?.id}
@@ -65,25 +80,33 @@ const Home: NextPage = () => {
         ) : null}
         <Link href="/products/upload">
           <a>
-            <FixedBtn>
-              <svg
-                className="h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                />
-              </svg>
-            </FixedBtn>
+            <button className="px-3 py-2 bg-gray-200 rounded-md ">
+              내 물건 팔기
+            </button>
           </a>
         </Link>
+        <Link href="/products/adUpload">
+          <a>
+            <button className="px-3 py-2 bg-gray-200 rounded-md ">광고</button>
+          </a>
+        </Link>
+        <FixedBtn>
+          <svg
+            className="h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          </svg>
+        </FixedBtn>
       </div>
     </Layout>
   );

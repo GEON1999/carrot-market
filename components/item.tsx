@@ -10,6 +10,7 @@ interface ItemProps {
   comments?: number;
   hearts?: number;
   prodcut?: string | null;
+  ad?: boolean;
 }
 
 export default function Item({
@@ -20,12 +21,17 @@ export default function Item({
   comments = 0,
   hearts = 0,
   prodcut,
+  ad = false,
 }: ItemProps) {
   return (
-    <div className="py-4 border-b border-gray-100 flex justify-between ">
+    <div
+      className={`py-4 border-b border-gray-100 flex justify-between ${
+        ad ? `bg-orange-50 rounded-lg` : ``
+      }`}
+    >
       <Link href={`/products/${id}`}>
         <a>
-          <div className="space-x-3 flex justify-center items-center">
+          <div className={`space-x-3 flex justify-center items-center ml-2`}>
             {prodcut ? (
               <Image
                 alt="prodcut"
@@ -39,7 +45,17 @@ export default function Item({
               <div className="bg-gray-600 w-20 h-20 rounded-md" />
             )}
             <div className="flex flex-col">
-              <h3>{title}</h3>
+              {ad ? (
+                <div className="flex items-center">
+                  <h3>{title} </h3>
+                  <div className="px-2 py-1 ml-1 bg-orange-200 rounded-lg text-xs text-center">
+                    AD
+                  </div>
+                </div>
+              ) : (
+                <h3>{title}</h3>
+              )}
+
               <span className="text-xs text-gray-400 mt-1 mb-2">
                 {subtitle}
               </span>
@@ -48,7 +64,7 @@ export default function Item({
           </div>
         </a>
       </Link>
-      <div className="flex items-end space-x-2">
+      <div className="flex items-end space-x-2 mr-2">
         <div className="flex items-center space-x-0.5">
           <svg
             className="w-4 h-4"
