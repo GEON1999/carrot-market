@@ -5,7 +5,7 @@ import SubmitBtn from "@components/submitBtn";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useEffect, useState } from "react";
-import { ChatRoom, Product, User } from "@prisma/client";
+import { ChatRoom, Product, Review, User } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/utils";
 import Link from "next/link";
@@ -14,13 +14,14 @@ import { useForm } from "react-hook-form";
 import timeForToday from "@libs/client/timeForToday";
 import useDelete from "@libs/client/useDelete";
 
-interface ProductWitheUser extends Product {
+interface ProductWitheProps extends Product {
   user: User;
+  reviews: Review[];
 }
 
 interface ItemDetailResponse {
   ok: boolean;
-  product: ProductWitheUser;
+  product: ProductWitheProps;
   relatedProducts: Product[];
   isLiked: boolean;
 }
@@ -68,7 +69,7 @@ const ItemDetail: NextPage = () => {
     if (state === "판매완료") {
       router.push(`/products/${id}/finish`);
     }
-  }, [state]);
+  }, [state, router, id]);
   useEffect(() => {
     if (chatRoomData && chatRoomData?.chatRoom) {
       router.push(`/chats/${chatRoomData.chatRoom?.id}`);
@@ -76,6 +77,7 @@ const ItemDetail: NextPage = () => {
       router.push(`/chats/${chatRoomData.isChatRoom?.id}`);
     }
   }, [chatRoomData, router]);
+  console.log(data);
   return (
     <Layout canGoBack hasTabBar>
       <div className="mx-4">
@@ -104,7 +106,8 @@ const ItemDetail: NextPage = () => {
             <button
               className={`${ownerMenu ? "hidden" : ""}`}
               onClick={() => {
-                userData?.profile?.id !== data?.product?.userId
+                userData?.profile?.id !== data?.product?.userId ||
+                data?.product?.reviews[0]?.review
                   ? setEffect(true)
                   : setOwnerMenu(true);
               }}

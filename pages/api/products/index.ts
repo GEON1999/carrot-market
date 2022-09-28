@@ -22,6 +22,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             chatRooms: true,
           },
         },
+        reviews: {
+          select: {
+            review: true,
+          },
+        },
       },
       take: 15,
       skip: (Number(page) - 1) * 15,

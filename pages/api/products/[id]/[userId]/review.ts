@@ -31,6 +31,35 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     },
   });
+  await client.purchase.create({
+    data: {
+      user: {
+        connect: {
+          id: Number(userId),
+        },
+      },
+      product: {
+        connect: {
+          id: Number(id),
+        },
+      },
+    },
+  });
+  await client.sale.create({
+    data: {
+      user: {
+        connect: {
+          id: user?.id,
+        },
+      },
+      product: {
+        connect: {
+          id: Number(id),
+        },
+      },
+    },
+  });
+  res.json;
   res.json({ ok: true });
 }
 

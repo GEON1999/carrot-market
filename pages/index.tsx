@@ -4,21 +4,22 @@ import Item from "@components/item";
 import Layout from "@components/layout";
 import Link from "next/link";
 import useSWRInfinite from "swr/infinite";
-import { Product } from "@prisma/client";
+import { Product, Review } from "@prisma/client";
 import { useEffect } from "react";
 import useScrollpage from "@libs/client/scrollPage";
 import timeForToday from "@libs/client/timeForToday";
 
-interface ProductWithFavCount extends Product {
+interface ProductWithProps extends Product {
   _count: {
     fav: number;
     chatRooms: number;
   };
+  reviews: Review[];
 }
 
 interface ProductResponse {
   ok: boolean;
-  products: ProductWithFavCount[];
+  products: ProductWithProps[];
 }
 
 const getKey = (pageIndex: number) => {
@@ -30,7 +31,6 @@ const Home: NextPage = () => {
     initialSize: 1,
     revalidateAll: false,
   });
-  console.log(data);
   const products = data?.map((i) => i.products).flat();
   const page = useScrollpage();
   useEffect(() => {
@@ -41,17 +41,21 @@ const Home: NextPage = () => {
       <div className="mx-4">
         {products?.map((product) => (
           <div key={product?.id}>
-            <Item
-              id={product?.id}
-              title={product?.title}
-              subtitle={`${product?.subTitle} · ${timeForToday(
-                Number(new Date(product?.createdAt))
-              )}`}
-              price={product?.price}
-              hearts={product?._count.fav}
-              comments={product?._count.chatRooms}
-              prodcut={product?.image ? product.image : null}
-            />
+            {product?.reviews[0]?.review ? (
+              ""
+            ) : (
+              <Item
+                id={product?.id}
+                title={product?.title}
+                subtitle={`${product?.subTitle} · ${timeForToday(
+                  Number(new Date(product?.createdAt))
+                )}`}
+                price={product?.price}
+                hearts={product?._count.fav}
+                comments={product?._count.chatRooms}
+                prodcut={product?.image ? product.image : null}
+              />
+            )}
           </div>
         ))}
         {page >= 2 ? (

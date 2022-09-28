@@ -29,6 +29,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           avatar: true,
         },
       },
+      reviews: {
+        select: {
+          review: true,
+        },
+      },
     },
   });
   if (req.method === "GET") {
