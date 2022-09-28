@@ -45,8 +45,13 @@ export default function Enter() {
   const onTokenValid = async (validForm: TokenForm) => {
     if (tokenLoading) return;
     await tokenEnter(validForm);
-    router.push("/enter/profile");
   };
+
+  useEffect(() => {
+    if (tokenData && tokenData.ok) {
+      router.push("/enter/profile");
+    }
+  }, [tokenData, router]);
 
   return (
     <Layout hasTabBar title="로그인">
