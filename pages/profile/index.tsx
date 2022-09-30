@@ -61,6 +61,7 @@ const Profile: NextPage = () => {
   });
   const [post, setPost] = useState(false);
   const [product, setProduct] = useState(false);
+  const [review, setReview] = useState(false);
   const reviews = data?.map((i) => i.reviews).flat();
   const page = useScrollpage();
   useEffect(() => {
@@ -157,7 +158,7 @@ const Profile: NextPage = () => {
             </a>
           </Link>
         </div>
-        <div className="mb-16">
+        <div className="mb-14">
           <div
             className="flex pb-1 border-b w-32 cursor-pointer"
             onClick={() => {
@@ -168,7 +169,7 @@ const Profile: NextPage = () => {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
-              fill="none"
+              fill={`${post ? `orange` : `none`}`}
               viewBox="0 0 24 24"
               stroke="currentColor"
               strokeWidth={2}
@@ -214,7 +215,7 @@ const Profile: NextPage = () => {
             <button className=" text-sm font-bold  pr-1">나의 상품</button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="none"
+              fill={`${product ? `orange` : `none`}`}
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
@@ -247,11 +248,14 @@ const Profile: NextPage = () => {
               ))
             : null}
         </div>
-        <div className="flex w-32  mt-14 mb-4 items-center">
+        <div
+          onClick={() => setReview((prev) => !prev)}
+          className="flex pb-1 border-b w-32 cursor-pointer mt-14 mb-6"
+        >
           <h2 className=" text-sm font-bold pr-1">받은 거래 후기</h2>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
+            fill={`${review ? `orange` : `none`}`}
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
@@ -265,21 +269,23 @@ const Profile: NextPage = () => {
           </svg>
         </div>
 
-        {reviews?.map((review) => (
-          <div key={review?.id} className="space-y-6 mt-4">
-            <ProfileInfo
-              big={false}
-              name={review?.leavedBy.name}
-              subtitle={timeForToday(review?.createdAt)}
-              avatar={review?.leavedBy.avatar}
-            />
-            <div className="border-b border-gray-100">
-              <p className="text-gray-700 text-sm  -mt-5 ml-12 mb-4">
-                {review?.review}
-              </p>
-            </div>
-          </div>
-        ))}
+        {review
+          ? reviews?.map((review) => (
+              <div key={review?.id} className="space-y-6 mt-4">
+                <ProfileInfo
+                  big={false}
+                  name={review?.leavedBy.name}
+                  subtitle={timeForToday(review?.createdAt)}
+                  avatar={review?.leavedBy.avatar}
+                />
+                <div className="border-b border-gray-100">
+                  <p className="text-gray-700 text-sm  -mt-5 ml-12 mb-4">
+                    {review?.review}
+                  </p>
+                </div>
+              </div>
+            ))
+          : null}
       </div>
     </Layout>
   );

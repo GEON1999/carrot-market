@@ -20,6 +20,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           id: true,
         },
       },
+      _count: {
+        select: {
+          fav: true,
+          chatRooms: true,
+        },
+      },
     },
   });
   const post = await client.post.findMany({
