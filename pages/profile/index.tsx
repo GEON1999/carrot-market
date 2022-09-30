@@ -3,7 +3,7 @@ import Link from "next/link";
 import Layout from "@components/layout";
 import ProfileInfo from "@components/profile";
 import useSWR from "swr";
-import { Review, User } from "@prisma/client";
+import { Post, Product, Review, User } from "@prisma/client";
 import useSWRInfinite from "swr/infinite";
 import useScrollpage from "@libs/client/scrollPage";
 import { useEffect, useState } from "react";
@@ -23,13 +23,36 @@ export interface UserProfile {
   ok: boolean;
   profile: User;
 }
+
+interface ProductWithProps extends Product {
+  _count: {
+    fav: number;
+    chatRooms: number;
+  };
+  reviews: Review[];
+}
+
+interface PostwithUser extends Post {
+  user: User;
+  _count: {
+    interest: number;
+    comments: number;
+  };
+}
+
+interface MineResponse {
+  ok: boolean;
+  products: ProductWithProps[];
+  post: PostwithUser[];
+}
+
 const getKey = (pageIndex: number) => {
   return `/api/reviews?page=${pageIndex + 1}`;
 };
 
 const Profile: NextPage = () => {
   const { data: userData } = useSWR<UserProfile>("/api/users/me");
-  const { data: mineData } = useSWR("/api/mine");
+  const { data: mineData } = useSWR<MineResponse>("/api/mine");
   console.log(mineData);
   const user = userData?.profile;
   const { data, setSize } = useSWRInfinite<ReviewsResponse>(getKey, {
@@ -135,15 +158,13 @@ const Profile: NextPage = () => {
           </Link>
         </div>
         <div className="mb-16">
-          <div className="flex pb-2 border-b w-32">
-            <button
-              onClick={() => {
-                setPost((prev) => !prev);
-              }}
-              className=" text-sm font-bold pr-1"
-            >
-              나의 동네생활
-            </button>
+          <div
+            className="flex pb-1 border-b w-32 cursor-pointer"
+            onClick={() => {
+              setPost((prev) => !prev);
+            }}
+          >
+            <button className=" text-sm font-bold pr-1">나의 동네생활</button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -186,13 +207,11 @@ const Profile: NextPage = () => {
             : null}
         </div>
         <div>
-          <div className="flex pb-2 border-b w-24">
-            <button
-              onClick={() => setProduct((prev) => !prev)}
-              className=" text-sm font-bold  pr-1"
-            >
-              나의 상품
-            </button>
+          <div
+            onClick={() => setProduct((prev) => !prev)}
+            className="flex pb-1 border-b w-24 cursor-pointer"
+          >
+            <button className=" text-sm font-bold  pr-1">나의 상품</button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -220,13 +239,32 @@ const Profile: NextPage = () => {
                       )}`}
                       price={product?.price}
                       prodcut={product?.image ? product.image : null}
+                      hearts={product?._count.fav}
+                      comments={product?._count.chatRooms}
                     />
                   )}
                 </div>
               ))
             : null}
         </div>
-        <h2 className="mt-16 mb-8 text-sm font-bold ">받은 거래 후기</h2>
+        <div className="flex w-32  mt-14 mb-4 items-center">
+          <h2 className=" text-sm font-bold pr-1">받은 거래 후기</h2>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21.75 9v.906a2.25 2.25 0 01-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 001.183 1.981l6.478 3.488m8.839 2.51l-4.66-2.51m0 0l-1.023-.55a2.25 2.25 0 00-2.134 0l-1.022.55m0 0l-4.661 2.51m16.5 1.615a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V8.844a2.25 2.25 0 011.183-1.98l7.5-4.04a2.25 2.25 0 012.134 0l7.5 4.04a2.25 2.25 0 011.183 1.98V19.5z"
+            />
+          </svg>
+        </div>
+
         {reviews?.map((review) => (
           <div key={review?.id} className="space-y-6 mt-4">
             <ProfileInfo
