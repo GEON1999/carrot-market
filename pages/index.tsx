@@ -40,7 +40,7 @@ const Home: NextPage = () => {
   const [visible, setVisible] = useState(false);
   return (
     <div className="w-full h-full">
-      <Layout title="홈" hasTabBar>
+      <Layout title="홈" hasTabBar hasSearch>
         <div
           onClick={() => setVisible(false)}
           className={`${

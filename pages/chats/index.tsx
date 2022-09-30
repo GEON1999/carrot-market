@@ -34,7 +34,7 @@ const Chats: NextPage = () => {
   return (
     <Layout title="채팅" hasTabBar>
       <div className="flex justify-end my-1 mr-2">
-        <button onClick={activeDeleteBtn} className="mr-2">
+        <button onClick={activeDeleteBtn} className="fixed right-3 top-3.5">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
