@@ -9,7 +9,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     query: { id, userId },
     body: { review },
   } = req;
-  console.log(user, id, userId, review);
   await client.review.create({
     data: {
       review: review,

@@ -23,8 +23,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         },
       },
     },
-    take: 1,
-    skip: (Number(page) - 1) * 1,
+    take: 15,
+    skip: (Number(page) - 1) * 15,
   });
   res.json({
     ok: true,

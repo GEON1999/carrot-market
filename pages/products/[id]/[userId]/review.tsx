@@ -42,11 +42,6 @@ const Review: NextPage = () => {
           <SubmitBtn title="작성 완료" position={"mt-2"} />
         </form>
       </div>
-      <div className="w-full flex justify-center mt-8">
-        <button className="text-gray-400 px-3 hover:text-gray-500 border-b border-gray-200 pb-1">
-          skip
-        </button>
-      </div>
     </Layout>
   );
 };

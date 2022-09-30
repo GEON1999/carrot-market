@@ -53,7 +53,6 @@ const getKey = (pageIndex: number) => {
 const Profile: NextPage = () => {
   const { data: userData } = useSWR<UserProfile>("/api/users/me");
   const { data: mineData } = useSWR<MineResponse>("/api/mine");
-  console.log(mineData);
   const user = userData?.profile;
   const { data, setSize } = useSWRInfinite<ReviewsResponse>(getKey, {
     initialSize: 1,
@@ -61,7 +60,7 @@ const Profile: NextPage = () => {
   });
   const [post, setPost] = useState(false);
   const [product, setProduct] = useState(false);
-  const [review, setReview] = useState(false);
+  const [review, setReview] = useState(true);
   const reviews = data?.map((i) => i.reviews).flat();
   const page = useScrollpage();
   useEffect(() => {
@@ -80,11 +79,11 @@ const Profile: NextPage = () => {
             />
           </a>
         </Link>
-        <div className="flex justify-between px-5 my-12">
+        <div className="flex justify-between px-2 my-12">
           <Link href="profile/sold">
             <a>
               <div className="flex flex-col justify-center text-sm">
-                <div className="w-14 h-14 rounded-full bg-orange-500 flex justify-center items-center text-white mb-2 hover:bg-orange-600 shadow-sm  flex-col self-center">
+                <div className="w-14 h-14 rounded-full bg-orange-400 flex justify-center items-center text-white mb-2 hover:bg-orange-600 shadow-sm  flex-col self-center">
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -110,7 +109,7 @@ const Profile: NextPage = () => {
           <Link href="profile/bought">
             <a>
               <div className="flex flex-col justify-center text-sm">
-                <div className="w-14 h-14 rounded-full bg-orange-500 flex justify-center items-center text-white mb-2 hover:bg-orange-600 shadow-sm  flex-col self-center">
+                <div className="w-14 h-14 rounded-full bg-orange-400 flex justify-center items-center text-white mb-2 hover:bg-orange-600 shadow-sm  flex-col self-center">
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -135,7 +134,7 @@ const Profile: NextPage = () => {
           <Link href="profile/loved">
             <a>
               <div className="flex flex-col justify-center text-sm">
-                <div className="w-14 h-14 rounded-full bg-orange-500 flex justify-center items-center text-white mb-2 hover:bg-orange-600 shadow-sm  flex-col self-center">
+                <div className="w-14 h-14 rounded-full bg-orange-400 flex justify-center items-center text-white mb-2 hover:bg-orange-600 shadow-sm  flex-col self-center">
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -250,7 +249,7 @@ const Profile: NextPage = () => {
         </div>
         <div
           onClick={() => setReview((prev) => !prev)}
-          className="flex pb-1 border-b w-32 cursor-pointer mt-14 mb-6"
+          className="flex pb-1 border-b w-32 cursor-pointer mt-14 mb-6 items-center"
         >
           <h2 className=" text-sm font-bold pr-1">받은 거래 후기</h2>
           <svg

@@ -34,14 +34,14 @@ const Sold: NextPage = () => {
     <Layout canGoBack hasTabBar>
       <div className="mx-4">
         {sales?.map((product) => (
-          <div key={product.id}>
+          <div key={product?.id}>
             <Item
-              id={product.productId}
-              title={product.product.title}
-              subtitle={product.product.subTitle}
-              price={product.product.price}
-              hearts={product.product._count.fav}
-              prodcut={product.product.image}
+              id={product?.productId}
+              title={product?.product?.title}
+              subtitle={product?.product?.subTitle}
+              price={product?.product?.price}
+              hearts={product?.product?._count.fav}
+              prodcut={product?.product?.image}
             />
           </div>
         ))}

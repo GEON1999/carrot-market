@@ -39,7 +39,7 @@ const Home: NextPage = () => {
   }, [setSize, page]);
   const [visible, setVisible] = useState(false);
   return (
-    <body className="w-full h-full">
+    <div className="w-full h-full">
       <Layout title="홈" hasTabBar>
         <div
           onClick={() => setVisible(false)}
@@ -158,7 +158,7 @@ const Home: NextPage = () => {
           </svg>
         </FixedBtn>
       </form>
-    </body>
+    </div>
   );
 };
 

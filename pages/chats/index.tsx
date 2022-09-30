@@ -27,11 +27,10 @@ const Chats: NextPage = () => {
     setActive((prev) => !prev);
   };
   const [deleteChatRoom] = useDelete(`/api/chatRoom`);
-  const onClicked = (chatRoomId: number, e: any) => {
+  const onClicked = (chatRoomId: number) => {
     deleteChatRoom(chatRoomId);
     location.reload();
   };
-
   return (
     <Layout title="채팅" hasTabBar>
       <div className="flex justify-end my-1 mr-2">
@@ -94,7 +93,7 @@ const Chats: NextPage = () => {
                           <span></span>
                         )}
                         {active ? (
-                          <button onClick={(e) => onClicked(chatRoom.id, e)}>
+                          <button onClick={() => onClicked(chatRoom.id)}>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"

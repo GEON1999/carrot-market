@@ -27,7 +27,7 @@ const getKey = (pageIndex: number) => {
   return `/api/products?page=${pageIndex + 1}`;
 };
 
-const Home: NextPage = () => {
+const AD: NextPage = () => {
   const { data, setSize } = useSWRInfinite<ProductResponse>(getKey, {
     initialSize: 1,
     revalidateAll: false,
@@ -38,7 +38,7 @@ const Home: NextPage = () => {
     setSize(page);
   }, [setSize, page]);
   return (
-    <Layout title="홈" hasTabBar>
+    <Layout title="광고" hasTabBar>
       <div className="mx-4">
         {products?.map((product) => (
           <div key={product?.id}>
@@ -69,4 +69,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default AD;

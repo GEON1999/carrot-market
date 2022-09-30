@@ -19,7 +19,6 @@ const Finish: NextPage = () => {
   const productId = router.query.id;
   const { data } = useSWR(productId ? `/api/products/${productId}` : ``);
   const { data: userData } = useSWR(`/api/users/me`);
-  console.log(data);
   const [key, setKey] = useState();
   const onClicked = async (e: any) => {
     await setKey(e);

@@ -78,7 +78,6 @@ const ItemDetail: NextPage = () => {
       router.push(`/chats/${chatRoomData.isChatRoom?.id}`);
     }
   }, [chatRoomData, router]);
-  console.log(data);
   return (
     <Layout canGoBack hasTabBar>
       <div className="mx-4">

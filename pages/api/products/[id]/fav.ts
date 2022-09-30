@@ -8,7 +8,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     query: { id },
     session: { user },
   } = req;
-  console.log(req);
   const isFav = await client.fav.findFirst({
     where: {
       productId: Number(id),
