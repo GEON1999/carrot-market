@@ -104,6 +104,7 @@ const CommunityPostDetail: NextPage = () => {
             name={data?.post.user.name}
             subtitle=""
             avatar={data?.post?.user?.avatar}
+            id={data?.post?.userId}
           />
           {userData?.profile?.id === data?.post?.userId ? (
             <button
@@ -175,6 +176,7 @@ const CommunityPostDetail: NextPage = () => {
                   subtitle={timeForToday(comment.createdAt)}
                   big={false}
                   avatar={comment?.user?.avatar}
+                  id={comment?.user?.id}
                 />
                 <button
                   onClick={commentClicked}

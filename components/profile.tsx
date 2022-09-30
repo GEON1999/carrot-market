@@ -1,6 +1,7 @@
 import { User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface ProfileProps {
@@ -8,7 +9,6 @@ interface ProfileProps {
   name?: string;
   subtitle?: string;
   avatar?: string | null;
-  avatarId?: number | null;
   id?: number;
   [key: string]: any;
 }
@@ -20,22 +20,25 @@ export default function ProfileInfo({
   id,
   position,
   avatar,
-  avatarId,
 }: ProfileProps) {
   return big ? (
     <div className={`flex space-x-3 items-start ${position}`}>
-      {avatar ? (
-        <Image
-          alt="profile"
-          width={64}
-          height={64}
-          src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${avatar}/profile`}
-          className="w-16 h-16 rounded-full"
-          quality={100}
-        />
-      ) : (
-        <div className="w-16 h-16 bg-slate-500 rounded-full" />
-      )}
+      <Link href={id ? `/profile/${id}` : "#"}>
+        <a>
+          {avatar ? (
+            <Image
+              alt="profile"
+              width={64}
+              height={64}
+              src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${avatar}/profile`}
+              className="w-16 h-16 rounded-full"
+              quality={100}
+            />
+          ) : (
+            <div className="w-16 h-16 bg-slate-500 rounded-full" />
+          )}
+        </a>
+      </Link>
       <div className="mt-2">
         <p className="font-semibold">{name}</p>
 

@@ -72,7 +72,7 @@ export default function Layout({
         ) : null}
         {hasSearch ? (
           <Link href="/search">
-            <a className="fixed right-4">
+            <a className="absolute right-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

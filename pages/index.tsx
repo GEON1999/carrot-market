@@ -52,34 +52,36 @@ const Home: NextPage = () => {
         <div className="mx-4 z-0 pt-2">
           {products?.map((product) => (
             <div key={product?.id}>
-              {product?.reviews[0]?.review ? (
-                ""
-              ) : product?.ADs[0]?.id ? (
-                <Item
-                  ad={true}
-                  id={product?.id}
-                  title={product?.title}
-                  subtitle={`${product?.subTitle} · ${timeForToday(
-                    Number(new Date(product?.createdAt))
-                  )}`}
-                  price={product?.price}
-                  hearts={product?._count.fav}
-                  comments={product?._count.chatRooms}
-                  prodcut={product?.image ? product.image : null}
-                />
-              ) : (
-                <Item
-                  id={product?.id}
-                  title={product?.title}
-                  subtitle={`${product?.subTitle} · ${timeForToday(
-                    Number(new Date(product?.createdAt))
-                  )}`}
-                  price={product?.price}
-                  hearts={product?._count.fav}
-                  comments={product?._count.chatRooms}
-                  prodcut={product?.image ? product.image : null}
-                />
-              )}
+              {product ? (
+                product?.reviews[0]?.review ? (
+                  ""
+                ) : product?.ADs[0]?.id ? (
+                  <Item
+                    ad={true}
+                    id={product?.id}
+                    title={product?.title}
+                    subtitle={`${product?.subTitle} · ${timeForToday(
+                      Number(new Date(product?.createdAt))
+                    )}`}
+                    price={product?.price}
+                    hearts={product?._count.fav}
+                    comments={product?._count.chatRooms}
+                    prodcut={product?.image ? product.image : null}
+                  />
+                ) : (
+                  <Item
+                    id={product?.id}
+                    title={product?.title}
+                    subtitle={`${product?.subTitle} · ${timeForToday(
+                      Number(new Date(product?.createdAt))
+                    )}`}
+                    price={product?.price}
+                    hearts={product?._count.fav}
+                    comments={product?._count.chatRooms}
+                    prodcut={product?.image ? product.image : null}
+                  />
+                )
+              ) : null}
             </div>
           ))}
           {page >= 2 ? (

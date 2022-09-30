@@ -49,7 +49,9 @@ export default function Enter() {
 
   useEffect(() => {
     if (tokenData && tokenData.ok) {
-      router.push("/enter/profile");
+      setTimeout(() => {
+        router.push("/enter/profile");
+      }, 1000);
     }
   }, [tokenData, router]);
 

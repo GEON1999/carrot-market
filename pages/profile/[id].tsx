@@ -9,6 +9,7 @@ import useScrollpage from "@libs/client/scrollPage";
 import { useEffect, useState } from "react";
 import timeForToday from "@libs/client/timeForToday";
 import Item from "@components/item";
+import { useRouter } from "next/router";
 
 interface ReviewWithUser extends Review {
   leavedBy: User;
@@ -44,6 +45,7 @@ interface MineResponse {
   ok: boolean;
   products: ProductWithProps[];
   post: PostwithUser[];
+  user: User;
 }
 
 const getKey = (pageIndex: number) => {
@@ -51,9 +53,12 @@ const getKey = (pageIndex: number) => {
 };
 
 const Profile: NextPage = () => {
-  const { data: userData } = useSWR<UserProfile>("/api/users/me");
-  const { data: mineData } = useSWR<MineResponse>("/api/users/mine");
-  const user = userData?.profile;
+  const router = useRouter();
+  const { data: mineData } = useSWR<MineResponse>(
+    `/api/users/${router.query.id}`
+  );
+  console.log(mineData);
+
   const { data, setSize } = useSWRInfinite<ReviewsResponse>(getKey, {
     initialSize: 1,
     revalidateAll: false,
@@ -69,95 +74,13 @@ const Profile: NextPage = () => {
   return (
     <Layout title="나의 당근" hasTabBar>
       <div className="px-4 py-4">
-        <Link href="profile/edit">
-          <a>
-            <ProfileInfo
-              avatar={user?.avatar}
-              big
-              name={user?.name}
-              subtitle="프로필 수정"
-            />
-          </a>
-        </Link>
-        <div className="flex justify-between px-2 my-12">
-          <Link href="profile/sold">
-            <a>
-              <div className="flex flex-col justify-center text-sm">
-                <div className="w-14 h-14 rounded-full bg-orange-400 flex justify-center items-center text-white mb-2 hover:bg-orange-600 shadow-sm  flex-col self-center">
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                    ></path>
-                  </svg>
-                </div>
-                <span className="px-2 py-1 bg-slate-100 rounded-lg">
-                  판매내역
-                </span>
-              </div>
-            </a>
-          </Link>
+        <ProfileInfo
+          avatar={mineData?.user?.avatar}
+          big
+          name={mineData?.user?.name}
+        />
 
-          <Link href="profile/bought">
-            <a>
-              <div className="flex flex-col justify-center text-sm">
-                <div className="w-14 h-14 rounded-full bg-orange-400 flex justify-center items-center text-white mb-2 hover:bg-orange-600 shadow-sm  flex-col self-center">
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                    ></path>
-                  </svg>
-                </div>
-                <span className="px-2 py-1 bg-slate-100 rounded-lg">
-                  구매내역
-                </span>
-              </div>
-            </a>
-          </Link>
-          <Link href="profile/loved">
-            <a>
-              <div className="flex flex-col justify-center text-sm">
-                <div className="w-14 h-14 rounded-full bg-orange-400 flex justify-center items-center text-white mb-2 hover:bg-orange-600 shadow-sm  flex-col self-center">
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    ></path>
-                  </svg>
-                </div>
-                <span className="px-2 py-1 bg-slate-100 rounded-lg">
-                  관심목록
-                </span>
-              </div>
-            </a>
-          </Link>
-        </div>
-        <div className="mb-14">
+        <div className="my-14">
           <div
             className="flex pb-1 border-b w-32 cursor-pointer"
             onClick={() => {
