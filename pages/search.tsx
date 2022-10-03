@@ -1,7 +1,11 @@
 import type { NextPage } from "next";
+import FixedBtn from "@components/fixedBtn";
 import Item from "@components/item";
 import Layout from "@components/layout";
+import Link from "next/link";
+import useSWRInfinite from "swr/infinite";
 import { AD, Product, Review } from "@prisma/client";
+import { useEffect, useState } from "react";
 import useScrollpage from "@libs/client/scrollPage";
 import timeForToday from "@libs/client/timeForToday";
 import Input from "@components/input";
@@ -31,6 +35,7 @@ const Search: NextPage = () => {
   const onValid = (validForm: any) => {
     search(validForm);
   };
+  console.log(data);
   return (
     <div>
       <form

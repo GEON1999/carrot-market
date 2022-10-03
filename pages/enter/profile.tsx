@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Input from "@components/input";
 import Layout from "@components/layout";
 import SubmitBtn from "@components/submitBtn";
+import { cls } from "@libs/client/utils";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import { useRouter } from "next/router";
@@ -19,7 +20,7 @@ interface SetProfileResponse {
   error?: string;
 }
 
-export default function EnterProfile() {
+export default function Enter() {
   const router = useRouter();
   const { data: userData } = useSWR<UserProfile>(`/api/users/me`);
   const [updateForm, { data, loading }] =

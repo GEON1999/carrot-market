@@ -1,36 +1,23 @@
 import type { NextPage } from "next";
+import Input from "@components/input";
 import Layout from "@components/layout";
 import SubmitBtn from "@components/submitBtn";
+import Textarea from "@components/textarea";
 import { useForm } from "react-hook-form";
+import useMutation from "@libs/client/useMutation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import useSWR from "swr";
+import Link from "next/link";
 import ProfileInfo from "@components/profile";
 import timeForToday from "@libs/client/timeForToday";
-import { ChatRoom, Messages, Product, User } from "@prisma/client";
-
-interface ChatRoomsWithProps extends ChatRoom {
-  buyer: User;
-  messages: Messages[];
-}
-
-interface ProductWithChatRooms extends Product {
-  chatRooms: ChatRoomsWithProps[];
-}
-
-interface ProductResponse {
-  ok: boolean;
-  product: ProductWithChatRooms;
-  isLiked: boolean;
-}
 
 const Finish: NextPage = () => {
   const router = useRouter();
   const { handleSubmit } = useForm();
   const productId = router.query.id;
-  const { data } = useSWR<ProductResponse>(
-    productId ? `/api/products/${productId}` : ``
-  );
+  const { data } = useSWR(productId ? `/api/products/${productId}` : ``);
   const { data: userData } = useSWR(`/api/users/me`);
   const [key, setKey] = useState();
   const onClicked = async (e: any) => {
@@ -49,7 +36,7 @@ const Finish: NextPage = () => {
   return (
     <Layout title="판매한 상대를 고르세요" hasTabBar>
       <div className="mx-4">
-        {data?.product?.chatRooms?.map((chatRoom) => (
+        {data?.product?.chatRooms?.map((chatRoom: any) => (
           <div onClick={() => onClicked(chatRoom.buyer.id)} key={chatRoom.id}>
             {chatRoom.messages[0] ? (
               <div

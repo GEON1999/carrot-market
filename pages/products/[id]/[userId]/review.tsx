@@ -3,14 +3,11 @@ import Layout from "@components/layout";
 import SubmitBtn from "@components/submitBtn";
 import Textarea from "@components/textarea";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+
 import useSWR from "swr";
 import useMutation from "@libs/client/useMutation";
-
-interface RreviewForm {
-  review: string;
-}
 
 const Review: NextPage = () => {
   const router = useRouter();
@@ -22,11 +19,11 @@ const Review: NextPage = () => {
       router.replace(`/products/${productId}`);
     }
   }, [router, data, userData, productId]);
-  const { register, handleSubmit } = useForm<RreviewForm>();
+  const { register, handleSubmit } = useForm();
   const [writeRivew, { data: reviewData }] = useMutation(
     `/api/products/${productId}/${router.query.userId}/review`
   );
-  const onValid = (validForm: RreviewForm) => {
+  const onValid = (validForm: any) => {
     writeRivew(validForm);
   };
   useEffect(() => {

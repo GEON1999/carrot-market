@@ -4,7 +4,7 @@ import Layout from "@components/layout";
 import ProfileInfo from "@components/profile";
 import useSWR from "swr";
 import { ChatRoom, Messages, User } from "@prisma/client";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import timeForToday from "@libs/client/timeForToday";
 import useDelete from "@libs/client/useDelete";
 
