@@ -13,25 +13,25 @@ datasource db {
 }
 
 model User {
-  id              Int             @id @default(autoincrement())
-  phone           String?         @unique
-  email           String?         @unique
+  id              Int        @id @default(autoincrement())
+  phone           String?    @unique
+  email           String?    @unique
   name            String
   avatar          String?
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
   tokens          Token[]
   product         Product[]
   fav             Fav[]
   post            Post[]
   comment         Comment[]
   interest        Interest[]
-  receivedReviews Review[]        @relation(name: "receivedReviews")
-  leftReviews     Review[]        @relation(name: "leftReviews")
+  receivedReviews Review[]   @relation(name: "receivedReviews")
+  leftReviews     Review[]   @relation(name: "leftReviews")
   sales           Sale[]
   purchases       Purchase[]
-  sendMessages    ChatRoom[]      @relation(name: "sendMessages")
-  receiveMessages ChatRoom[]      @relation(name: "receiveMessages")
+  sendMessages    ChatRoom[] @relation(name: "sendMessages")
+  receiveMessages ChatRoom[] @relation(name: "receiveMessages")
   messages        Messages[]
   ADs             AD[]
 }
@@ -43,6 +43,8 @@ model Token {
   userId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
 
 model Product {
@@ -62,6 +64,8 @@ model Product {
   chatRooms   ChatRoom[]
   reviews     Review[]
   ADs         AD[]
+
+  @@index([userId])
 }
 
 model Post {
@@ -75,6 +79,8 @@ model Post {
   question  String     @db.MediumText
   longitude Float?
   latitude  Float?
+
+  @@index([userId])
 }
 
 model Interest {
@@ -85,6 +91,9 @@ model Interest {
   userId    Int
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    Int
+
+  @@index([userId])
+  @@index([postId])
 }
 
 model Comment {
@@ -96,6 +105,9 @@ model Comment {
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    Int
   comment   String   @db.MediumText
+
+  @@index([userId])
+  @@index([postId])
 }
 
 model Review {
@@ -107,8 +119,12 @@ model Review {
   leavedById Int
   leaveFor   User     @relation(name: "leftReviews", fields: [leaveForId], references: [id], onDelete: Cascade)
   leaveForId Int
-   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId Int
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId  Int
+
+  @@index([leavedById])
+  @@index([leaveForId])
+  @@index([productId])
 }
 
 model Fav {
@@ -119,6 +135,9 @@ model Fav {
   userId    Int
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
+
+  @@index([userId])
+  @@index([productId])
 }
 
 model Sale {
@@ -129,6 +148,9 @@ model Sale {
   userId    Int
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
+
+  @@index([userId])
+  @@index([productId])
 }
 
 model Purchase {
@@ -139,6 +161,9 @@ model Purchase {
   userId    Int
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
+
+  @@index([userId])
+  @@index([productId])
 }
 
 model ChatRoom {
@@ -153,6 +178,10 @@ model ChatRoom {
   productId     Int
   messages      Messages[]
   notifications Notification[]
+
+  @@index([buyerId])
+  @@index([sellerId])
+  @@index([productId])
 }
 
 model Messages {
@@ -164,6 +193,9 @@ model Messages {
   message    String
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     Int
+
+  @@index([userId])
+  @@index([chatRoomId])
 }
 
 model Notification {
@@ -172,6 +204,8 @@ model Notification {
   updatedAt  DateTime @updatedAt
   chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
   chatRoomId Int
+
+  @@index([chatRoomId])
 }
 
 model AD {
@@ -184,9 +218,12 @@ model AD {
   productId Int
   phone     Int?
   address   String?
-}
-//Advertisement
 
+  @@index([userId])
+  @@index([productId])
+}
+
+//Advertisement
 
 // prisma 에 작성되는 model 은 npx prisma db push 코드를 통해 push 해야지만 planetscale 에 적용됨
 // npx prisma format
