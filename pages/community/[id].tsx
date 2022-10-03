@@ -49,11 +49,14 @@ const CommunityPostDetail: NextPage = () => {
   const { data, mutate } = useSWR<PostFormResponse>(
     id ? `/api/post/${id}` : null
   );
+  console.log(data);
   const [toggleInterested] = useMutation(`/api/post/${id}/interest`);
   const [leaveComment, { data: commentData, loading: commentLoading }] =
     useMutation<LeaveCommentMutation>(`/api/post/${id}/comment`);
   const [deletePost] = useDelete(`/api/post/${id}`);
-  const [deleteComment] = useDelete(`/api/post/${id}/comment`);
+  const [deleteComment, { data: deleteCommentData }] = useDelete(
+    `/api/post/${id}/comment`
+  );
   const onClick = () => {
     if (!data) return;
     mutate(
@@ -84,12 +87,17 @@ const CommunityPostDetail: NextPage = () => {
       mutate();
     }
   }, [commentData, reset, mutate]);
+  useEffect(() => {
+    if (deleteCommentData && deleteCommentData.ok) {
+      mutate();
+    }
+  }, [deleteCommentData, reset, mutate]);
   const onClicked = () => {
     deletePost();
     router.push("/community");
   };
-  const commentClicked = () => {
-    deleteComment();
+  const commentClicked = (commentId: number) => {
+    deleteComment(commentId);
   };
   return (
     <Layout canGoBack hasTabBar>
@@ -178,12 +186,14 @@ const CommunityPostDetail: NextPage = () => {
                   avatar={comment?.user?.avatar}
                   id={comment?.user?.id}
                 />
-                <button
-                  onClick={commentClicked}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block px-2 h-7"
-                >
-                  삭제
-                </button>
+                {comment?.user?.id === userData?.profile?.id ? (
+                  <button
+                    onClick={() => commentClicked(comment.id)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block px-2 h-7"
+                  >
+                    삭제
+                  </button>
+                ) : null}
               </div>
               <p className="text-gray-700 text-center ml-11 mb-4">
                 {comment.comment}

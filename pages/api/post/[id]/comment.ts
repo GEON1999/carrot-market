@@ -31,11 +31,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     });
   }
   if (req.method === "DELETE") {
+    const { body: commentId } = req;
     await client.comment.delete({
-      where: {},
+      where: {
+        id: Number(commentId),
+      },
     });
+    res.json({ ok: true });
   }
-  //comment delete 를 위한 container 를 만들어야함
 }
 
 export default withApiSession(
