@@ -4,7 +4,6 @@ import Layout from "@components/layout";
 import SubmitBtn from "@components/submitBtn";
 import useSWR from "swr";
 import { useForm } from "react-hook-form";
-import { User } from "@prisma/client";
 import { UserProfile } from ".";
 import { useEffect, useState } from "react";
 import useMutation from "@libs/client/useMutation";
