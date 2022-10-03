@@ -52,13 +52,11 @@ const getKey = (pageIndex: number) => {
   return `/api/reviews?page=${pageIndex + 1}`;
 };
 
-const Profile: NextPage = () => {
+const OtherProfile: NextPage = () => {
   const router = useRouter();
   const { data: mineData } = useSWR<MineResponse>(
-    `/api/users/${router.query.id}`
+    router.query.id ? `/api/users/${router.query.id}` : ""
   );
-  console.log(mineData);
-
   const { data, setSize } = useSWRInfinite<ReviewsResponse>(getKey, {
     initialSize: 1,
     revalidateAll: false,
@@ -213,4 +211,4 @@ const Profile: NextPage = () => {
   );
 };
 
-export default Profile;
+export default OtherProfile;

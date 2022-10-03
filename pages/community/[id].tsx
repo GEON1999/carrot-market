@@ -109,7 +109,7 @@ const CommunityPostDetail: NextPage = () => {
           <ProfileInfo
             big
             position={"py-3"}
-            name={data?.post.user.name}
+            name={data?.post?.user.name}
             subtitle=""
             avatar={data?.post?.user?.avatar}
             id={data?.post?.userId}
@@ -126,7 +126,7 @@ const CommunityPostDetail: NextPage = () => {
         <div className="border-t border-b-[2px] py-3 space-y-8">
           <div>
             <span className="text-orange-500 font-bold">Q. </span>
-            {data?.post.question}
+            {data?.post?.question}
           </div>
           <div className="flex space-x-3 text-sm text-gray-700 border-t pt-2">
             <button onClick={onClick}>
@@ -150,7 +150,7 @@ const CommunityPostDetail: NextPage = () => {
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
-                <span>궁금해요 {data?.post._count.interest}</span>
+                <span>궁금해요 {data?.post?._count.interest}</span>
               </span>
             </button>
             <span className="flex items-center space-x-1">
@@ -168,12 +168,12 @@ const CommunityPostDetail: NextPage = () => {
                   d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                 ></path>
               </svg>
-              <span>답변 {data?.post._count.comments}</span>
+              <span>답변 {data?.post?._count.comments}</span>
             </span>
           </div>
         </div>
         <div className="mt-5">
-          {data?.post.comments.map((comment: any) => (
+          {data?.post?.comments.map((comment: any) => (
             <div
               key={comment.id}
               className="flex flex-col items-start justify-center"

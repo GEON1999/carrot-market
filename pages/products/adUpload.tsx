@@ -24,7 +24,7 @@ interface UploadProductMutation {
   id: number;
 }
 
-const Upload: NextPage = () => {
+const AdUpload: NextPage = () => {
   const { register, handleSubmit, watch } = useForm<UploadProductForm>();
   const [upload, { loading, data }] =
     useMutation<UploadProductMutation>("/api/products/ad");
@@ -196,4 +196,4 @@ const Upload: NextPage = () => {
   );
 };
 
-export default Upload;
+export default AdUpload;

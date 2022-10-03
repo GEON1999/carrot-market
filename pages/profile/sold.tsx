@@ -1,8 +1,7 @@
 import type { NextPage } from "next";
 import Item from "@components/item";
 import Layout from "@components/layout";
-import useSWR from "swr";
-import { Product, Sale } from "@prisma/client";
+import { Sale } from "@prisma/client";
 import { ProductWithCount } from "./loved";
 import useSWRInfinite from "swr/infinite";
 import { useEffect } from "react";

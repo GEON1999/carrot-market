@@ -3,27 +3,30 @@ import Layout from "@components/layout";
 import SubmitBtn from "@components/submitBtn";
 import Textarea from "@components/textarea";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
-
 import useSWR from "swr";
 import useMutation from "@libs/client/useMutation";
+
+interface RreviewForm {
+  review: string;
+}
 
 const Review: NextPage = () => {
   const router = useRouter();
   const productId = router.query.id;
-  const { data } = useSWR(`/api/products/${productId}`);
+  const { data } = useSWR(productId ? `/api/products/${productId}` : "");
   const { data: userData } = useSWR(`/api/users/me`);
   useEffect(() => {
     if (data?.product?.userId !== userData?.profile?.id) {
       router.replace(`/products/${productId}`);
     }
   }, [router, data, userData, productId]);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<RreviewForm>();
   const [writeRivew, { data: reviewData }] = useMutation(
     `/api/products/${productId}/${router.query.userId}/review`
   );
-  const onValid = (validForm: any) => {
+  const onValid = (validForm: RreviewForm) => {
     writeRivew(validForm);
   };
   useEffect(() => {
