@@ -60,4 +60,4 @@ async function handler(
   });
 }
 
-export default withHandler({ methods: ["POST"], handler });
+export default withApiSession(withHandler({ methods: ["POST"], handler }));

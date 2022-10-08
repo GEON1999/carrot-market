@@ -54,7 +54,7 @@ const getKey = (pageIndex: number) => {
 
 const OtherProfile: NextPage = () => {
   const router = useRouter();
-  const { data: mineData } = useSWR<MineResponse>(
+  const { data: userData } = useSWR<MineResponse>(
     router.query.id ? `/api/users/${router.query.id}` : ""
   );
   const { data, setSize } = useSWRInfinite<ReviewsResponse>(getKey, {
@@ -70,22 +70,24 @@ const OtherProfile: NextPage = () => {
     setSize(page);
   }, [setSize, page]);
   return (
-    <Layout title="나의 당근" hasTabBar>
+    <Layout title={`${userData?.user?.name}님의 당근`} hasTabBar>
       <div className="px-4 py-4">
         <ProfileInfo
-          avatar={mineData?.user?.avatar}
+          avatar={userData?.user?.avatar}
           big
-          name={mineData?.user?.name}
+          name={userData?.user?.name}
         />
 
         <div className="my-14">
           <div
-            className="flex pb-1 border-b w-32 cursor-pointer"
+            className="flex pb-1 border-b w-52 cursor-pointer"
             onClick={() => {
               setPost((prev) => !prev);
             }}
           >
-            <button className=" text-sm font-bold pr-1">나의 동네생활</button>
+            <button className=" text-sm font-bold pr-1">
+              {userData?.user?.name}님의 동네생활
+            </button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -102,7 +104,7 @@ const OtherProfile: NextPage = () => {
             </svg>
           </div>
           {post
-            ? mineData?.post?.map((post: any) => (
+            ? userData?.post?.map((post: any) => (
                 <div key={post?.id} className="border-b">
                   <Link href={`/community/${post?.id}`}>
                     <a>
@@ -130,9 +132,11 @@ const OtherProfile: NextPage = () => {
         <div>
           <div
             onClick={() => setProduct((prev) => !prev)}
-            className="flex pb-1 border-b w-24 cursor-pointer"
+            className="flex pb-1 border-b w-52 cursor-pointer"
           >
-            <button className=" text-sm font-bold  pr-1">나의 상품</button>
+            <button className=" text-sm font-bold  pr-1">
+              {userData?.user?.name}님의 상품
+            </button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill={`${product ? `orange` : `none`}`}
@@ -149,7 +153,7 @@ const OtherProfile: NextPage = () => {
             </svg>
           </div>
           {product
-            ? mineData?.products?.map((product: any) => (
+            ? userData?.products?.map((product: any) => (
                 <div key={product?.id}>
                   {product?.reviews[0]?.id ? null : (
                     <Item
