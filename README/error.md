@@ -203,6 +203,7 @@ react 는 html 을 pre render 한다.
 </br>
 
 ## 4. 💥비로그인 유저로부터의 페이지 보호가 정상 작동하지 않은 현상💥
+
 `이미지 링크가 호환되지 않아, 당시 커밋된 git history 로 대체`
 [git history](https://www.notion.so/089bada574b940079159e30703da1097#6b07cb55f24949dfbf4bc132cc055d9b)
 
@@ -283,3 +284,53 @@ export default MyApp;
 
 해당 코드는 `swr hook` 에 대한 전역 설정이다. `useUser` 은 `useSwr` 을 통해 `data` 를 얻는다. 즉, 위 코드를 사용해서 `data` 를 얻는다. 그런데 `useUser` 을 `SWRCoing` 외부에서 실행했으니, 해당 `hook` 이 적용되지 않은 것이고 정상적인 `data` 를 얻지 못한 것이다.
 이를 해결하기 위해 `ValidateUser` 함수를 선언하고 `SWRCoifig` 내부에서 호출하도록 하였다.
+
+</br>
+
+# 5. vercel 배포
+
+배포시 planet scale 과의 연결은 성공적으로 되었으며, data 가 정상적으로 노출 되었다.
+get method 의 fetch 또한(SWR) 정상적으로 작동했다.
+그러나 post method 의 fetch 를 해주는 mutation function 이 정상 작동하지 않았다.
+iron session 의 issue 인지 post method 의 issue 인지 명확한 확인이 필요하다.
+
+이를 위해 iron session이 필요로하지 않은 page 에서 post fetch 를 해보았으나 동일한 error 가 노출되는 것으로
+보아 post memthod 의 fetch 를 해주는 mutation function 의 문제일듯 하다.
+
+```
+import { useState } from "react";
+
+interface UseMutationState<T> {
+  loading: boolean;
+  data?: T;
+  error?: object;
+}
+type UseMutationResult<T> = [(data?: any) => void, UseMutationState<T>];
+
+export default function useMutation<T = any>(
+  url: string
+): UseMutationResult<T> {
+  const [state, setSate] = useState<UseMutationState<T>>({
+    loading: false,
+    data: undefined,
+    error: undefined,
+  });
+  function mutation(data: any) {
+    setSate((prev) => ({ ...prev, loading: true }));
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json().catch(() => {}))
+      .then((data) => setSate((prev) => ({ ...prev, data, loading: false })))
+      .catch((error) =>
+        setSate((prev) => ({ ...prev, error, loading: false }))
+      );
+  }
+  return [mutation, { ...state }];
+}
+
+```
