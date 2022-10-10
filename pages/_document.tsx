@@ -1,0 +1,26 @@
+import Document, { Head, Html, Main, NextScript } from "next/document";
+
+class CustomDocument extends Document {
+  render(): JSX.Element {
+    console.log("DOCUMENT IS RUNNING");
+    return (
+      <Html lang="ko">
+        <Head>
+          <meta property="og:description" content="편리한 중고거래" />
+          <meta property="author" content="Geon" />
+          <meta property="og:title" content="당근마켓" />
+          <meta
+            property="og:image"
+            content="data:image/png;base64,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"
+          />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
+}
+
+export default CustomDocument;

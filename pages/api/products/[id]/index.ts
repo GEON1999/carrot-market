@@ -43,7 +43,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         contains: word,
       },
     }));
-    console.log(product?.title?.split(" "));
     const relatedProducts = await client.product.findMany({
       where: {
         OR: filter,
@@ -54,7 +53,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         },
       },
     });
-    console.log(relatedProducts);
     const isLiked = await client.fav.findFirst({
       where: {
         productId: Number(id),
