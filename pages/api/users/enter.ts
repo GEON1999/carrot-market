@@ -44,10 +44,10 @@ async function handler(
     const mailOptions = {
       from: process.env.MAIL_ID,
       to: email,
-      subject: "Verification Code From Carrot Market",
-      text: `Verification Code : ${payload}`,
+      subject: "당근마켓 인증 코드 입니다.",
+      text: `인증 코드 : ${payload}`,
     };
-    const result = await smtpTransport.sendMail(mailOptions, (error) => {
+    await smtpTransport.sendMail(mailOptions, (error) => {
       if (error) {
         console.log(error);
         return null;
