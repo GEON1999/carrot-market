@@ -5,8 +5,8 @@ const smtpTransport = nodemailer.createTransport({
   host: "smtp.naver.com",
   port: 587,
   auth: {
-    user: process.env.MAIL_ID,
-    pass: process.env.MAIL_PASSWORD,
+    user: `${process.env.MAIL_ID}`,
+    pass: `${process.env.MAIL_PASSWORD}`,
   },
   tls: {
     rejectUnauthorized: false,

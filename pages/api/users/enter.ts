@@ -41,8 +41,8 @@ async function handler(
       body: `your token is ${payload}`,
     });
   } else if (email) {
-    const mailOptions = {
-      from: process.env.MAIL_ID,
+    const mailOptions = await {
+      from: `${process.env.MAIL_ID}`,
       to: email,
       subject: "당근마켓 인증 코드 입니다.",
       text: `인증 코드 : ${payload}`,
@@ -53,7 +53,7 @@ async function handler(
         return null;
       }
     });
-    smtpTransport.close();
+    await smtpTransport.close();
   }
   return res.json({
     ok: true,
