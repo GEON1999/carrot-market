@@ -51,7 +51,9 @@ const AD: NextPage = () => {
                 subtitle={`${product?.subTitle} · ${timeForToday(
                   Number(new Date(product?.createdAt))
                 )}`}
-                price={product?.price}
+                price={product?.price
+                  ?.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 hearts={product?._count.fav}
                 comments={product?._count.chatRooms}
                 prodcut={product?.image ? product.image : null}

@@ -222,7 +222,12 @@ const ItemDetail: NextPage = () => {
             <h1 className="font-bold text-xl ">{data?.product?.title}</h1>
 
             {!data?.product?.ADs[0]?.id ? (
-              <p className=" mt-1">{data?.product?.price}원</p>
+              <p className=" mt-1">
+                {data?.product?.price
+                  ?.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                원
+              </p>
             ) : null}
 
             <p className="my-8">{data?.product?.description}</p>
