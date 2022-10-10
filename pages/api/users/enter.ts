@@ -47,14 +47,11 @@ async function handler(
       subject: "당근마켓 인증 코드 입니다.",
       text: `인증 코드 : ${payload}`,
     };
-    await new Promise((resolve, reject) => {
-      smtpTransport.sendMail(mailOptions, (error) => {
-        if (error) {
-          console.log(error);
-          return null;
-        }
-      });
-      smtpTransport.close();
+    await smtpTransport.sendMail(mailOptions, (error) => {
+      if (error) {
+        console.log(error);
+        return null;
+      }
     });
   }
   return res.json({
