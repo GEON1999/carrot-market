@@ -296,10 +296,13 @@ const ItemDetail: NextPage = () => {
                     ) : (
                       <div className="h-96 bg-gray-400" />
                     )}
-                    <h3 className="text-gray-700 mt-2 -mb-1">
-                      {product?.title}
-                    </h3>
-                    <p className="text-gray-900 text-sm">{product?.price}원</p>
+                    <h3 className="text-gray-700 mt-2 ">{product?.title}</h3>
+                    <p className="text-gray-900 text-sm">
+                      {product?.price
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      원
+                    </p>
                   </a>
                 </Link>
               </div>

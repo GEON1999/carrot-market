@@ -5,7 +5,7 @@ import React from "react";
 interface ItemProps {
   title: string;
   subtitle: string;
-  price?: number;
+  price?: number | string;
   id: number;
   comments?: number;
   hearts?: number;
@@ -59,7 +59,9 @@ export default function Item({
               <span className="text-xs text-gray-400 mt-1 mb-2">
                 {subtitle}
               </span>
-              <span className="font-bold">{price} 원</span>
+              <span className="font-bold">
+                {price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원
+              </span>
             </div>
           </div>
 
