@@ -195,19 +195,23 @@ const OtherProfile: NextPage = () => {
 
         {review
           ? reviews?.map((review) => (
-              <div key={review?.id} className="space-y-6 mt-4">
-                <ProfileInfo
-                  big={false}
-                  name={review?.leavedBy.name}
-                  subtitle={timeForToday(review?.createdAt)}
-                  avatar={review?.leavedBy.avatar}
-                />
-                <div className="border-b border-gray-100">
-                  <p className="text-gray-700 text-sm  -mt-5 ml-12 mb-4">
-                    {review?.review}
-                  </p>
-                </div>
-              </div>
+              <>
+                {review?.leaveForId === userData?.user?.id ? (
+                  <div key={review?.id} className="space-y-6 mt-4">
+                    <ProfileInfo
+                      big={false}
+                      name={review?.leavedBy.name}
+                      subtitle={timeForToday(review?.createdAt)}
+                      avatar={review?.leavedBy.avatar}
+                    />
+                    <div className="border-b border-gray-100">
+                      <p className="text-gray-700 text-sm  -mt-5 ml-12 mb-4">
+                        {review?.review}
+                      </p>
+                    </div>
+                  </div>
+                ) : null}
+              </>
             ))
           : null}
       </div>
