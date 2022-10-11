@@ -152,10 +152,9 @@ export default function Enter() {
                       ? loading
                         ? "로딩...."
                         : "로그인"
-                      : loading
-                      ? "로딩...."
-                      : "로그인"
+                      : "이메일을 통해 로그인 해주세요."
                   }
+                  mine={method === "email" ? false : true}
                   position={"mt-4"}
                 />
               </form>

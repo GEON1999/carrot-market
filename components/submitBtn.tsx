@@ -20,7 +20,7 @@ export default function SubmitBtn({
           : "bg-orange-500 rounded-md w-full py-2 px-3 text-white shadow-sm hover:bg-orange-600 outline-none"
       } `}
     >
-      {mine ? "자신의 상품 입니다" : title}
+      {mine ? "불가능 합니다" : title}
     </button>
   );
 }
