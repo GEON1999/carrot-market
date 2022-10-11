@@ -30,7 +30,11 @@ export default function Message({ text, mine, avatar }: MessageProps) {
           <div className="rounded-full bg-gray-300 w-10 h-10" />
         )}
 
-        <div className="border p-2 w-1/2 shadow-sm rounded-md">
+        <div
+          className={` px-4 py-2 w-1/2 shadow-sm rounded-3xl text-sm ${
+            mine ? "bg-orange-400 text-white" : "bg-gray-100"
+          }`}
+        >
           <p>{text}</p>
         </div>
       </div>

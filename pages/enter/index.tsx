@@ -96,6 +96,9 @@ export default function Enter() {
                   register={tokenRegister("token", { required: true })}
                   kind="text"
                 />
+                <span className="text-xs text-orange-400">
+                  인증 코드의 유효시간은 10분 입니다.
+                </span>
                 <SubmitBtn
                   title={tokenLoading ? "로딩" : "인증"}
                   position={"mt-4"}

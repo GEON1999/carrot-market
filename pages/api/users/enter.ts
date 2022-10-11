@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
-import twilio from "twilio";
+//import twilio from "twilio";
 import { withApiSession } from "@libs/server/withSession";
 
 // const twilioClient = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
@@ -15,9 +15,8 @@ async function handler(
   if (!user) {
     return res.status(400).json({ ok: false });
   }
-  //
 
-  await client.token.create({
+  const token = await client.token.create({
     data: {
       token: payload,
       user: {
@@ -33,6 +32,17 @@ async function handler(
       },
     },
   });
+
+  setTimeout(
+    async () =>
+      await client.token.deleteMany({
+        where: {
+          id: token?.id,
+        },
+      }),
+    600000
+  );
+
   /* if (phone) {
     const message = await twilioClient.messages.create({
       messagingServiceSid: process.env.TWILIO_MSID,

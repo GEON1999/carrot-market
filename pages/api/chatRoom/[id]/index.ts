@@ -28,10 +28,16 @@ async function handler(
       },
     },
   });
+  const product = await client.product.findUnique({
+    where: {
+      id: chatRoom?.productId,
+    },
+  });
   if (chatRoom?.buyer?.id === user?.id || chatRoom?.seller?.id === user?.id) {
     res.json({
       ok: true,
       chatRoom,
+      product,
     });
   } else {
     res.json({ ok: false });

@@ -5,10 +5,11 @@ import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { ChatRoom, Messages, User } from "@prisma/client";
+import { ChatRoom, Messages, Product, User } from "@prisma/client";
 import Message from "@components/message";
 import { useEffect, useRef } from "react";
 import useDelete from "@libs/client/useDelete";
+import Image from "next/image";
 
 interface MessageForm {
   message: string;
@@ -32,12 +33,12 @@ interface ChatRoomWith extends ChatRoom {
 interface ChatRoomResponse {
   ok: boolean;
   chatRoom: ChatRoomWith;
+  product: Product;
 }
 
 const ChatDetail: NextPage = () => {
   const router = useRouter();
   const chatRoomId = router.query.id;
-
   const scrollRef = useRef<HTMLDivElement>(null);
   const { register, handleSubmit, reset } = useForm<MessageForm>();
   const [send] = useMutation<MessageResponse>(
@@ -61,6 +62,7 @@ const ChatDetail: NextPage = () => {
   };
   useEffect(() => {
     if (chatRoomId && lastMessage) {
+      console.log("i'm running");
       setInterval(deleteNotification, 3000);
     }
   }, [chatRoomId, lastMessage]);
@@ -101,28 +103,53 @@ const ChatDetail: NextPage = () => {
   return (
     <>
       <Layout canGoBack hasTabBar>
-        <div className="px-4 py-2 space-y-5">
-          <div className="">
-            <div className="space-y-7 mb-6 ">
-              {data?.chatRoom?.messages?.map((message) => (
-                <div key={message.id}>
-                  <Message
-                    avatar={message.user.avatar}
-                    text={message.message}
-                    mine={
-                      message.user.id === userData?.profile?.id ? true : false
-                    }
-                  />
-                </div>
-              ))}
-            </div>
-            <form className="mb-4" onSubmit={handleSubmit(onValid)}>
-              <Input
-                position={"relative"}
-                kind="chat"
-                register={register("message", { required: true })}
+        <div>
+          <div className="relative pb-4 border-b w-full opacity-80 flex items-center space-x-3">
+            <div className="ml-5">
+              <Image
+                alt="product"
+                width={70}
+                height={70}
+                src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${data?.product?.image}/public`}
+                className="object-cover rounded-lg"
+                quality={100}
               />
-            </form>
+            </div>
+            <div className="flex flex-col space-y-2">
+              <span className="text-sm text-gray-700">
+                {data?.product?.title}
+              </span>
+              <span className="text-sm font-semibold">
+                {data?.product?.price
+                  ?.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                원
+              </span>
+            </div>
+          </div>
+          <div className="px-4 py-2 space-y-5">
+            <div className="">
+              <div className="space-y-7 mb-6 ">
+                {data?.chatRoom?.messages?.map((message) => (
+                  <div key={message.id}>
+                    <Message
+                      avatar={message.user.avatar}
+                      text={message.message}
+                      mine={
+                        message.user.id === userData?.profile?.id ? true : false
+                      }
+                    />
+                  </div>
+                ))}
+              </div>
+              <form className="mb-4" onSubmit={handleSubmit(onValid)}>
+                <Input
+                  position={"relative"}
+                  kind="chat"
+                  register={register("message", { required: true })}
+                />
+              </form>
+            </div>
           </div>
         </div>
       </Layout>
