@@ -2,11 +2,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import twilio from "twilio";
-import smtpTransport from "@libs/server/email";
 import { withApiSession } from "@libs/server/withSession";
-import emailjs from "@emailjs/browser";
 
-const twilioClient = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
+// const twilioClient = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 
 async function handler(
   req: NextApiRequest,
@@ -19,7 +17,7 @@ async function handler(
   }
   //
 
-  const token = await client.token.create({
+  await client.token.create({
     data: {
       token: payload,
       user: {
