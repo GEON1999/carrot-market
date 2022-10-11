@@ -235,7 +235,7 @@ const ItemDetail: NextPage = () => {
               <form className="w-full" onSubmit={handleSubmit(onVaild)}>
                 <SubmitBtn
                   position={`py-2`}
-                  title={loading ? "Loading...." : "채팅하기"}
+                  title={loading ? "로딩...." : "채팅하기"}
                   mine={
                     userData?.profile?.id === data?.product?.userId
                       ? true
@@ -283,7 +283,7 @@ const ItemDetail: NextPage = () => {
           </div>
         </div>
         <div className="mt-8">
-          <h2 className="mb-3 font-semibold text-base">비슷한 상품</h2>
+          <h2 className="mb-3 font-semibold text-base">추천 상품</h2>
           <div className="grid grid-cols-2 gap-10">
             {data?.relatedProducts?.map((product) => (
               <div key={product?.id} className="flex flex-col mb-8">

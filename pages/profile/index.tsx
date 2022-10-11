@@ -190,14 +190,16 @@ const Profile: NextPage = () => {
                           동네질문
                         </span>
 
-                        <div className="my-2 flex justify-between w-full text-gray-500 text-sm">
+                        <div className="my-2 flex justify-between w-full text-gray-500 text-sm space-x-2">
                           <span>
-                            <span className="text-orange-500 font-bold">
+                            <span className="text-orange-500 font-bold w-full">
                               Q.{" "}
                             </span>
                             {post?.question}
                           </span>
-                          <span>{timeForToday(post?.createdAt)}</span>
+                          <span className="w-20">
+                            {timeForToday(post?.createdAt)}
+                          </span>
                         </div>
                       </div>
                     </a>
