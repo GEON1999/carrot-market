@@ -8,6 +8,7 @@ import { UserProfile } from ".";
 import { useEffect, useState } from "react";
 import useMutation from "@libs/client/useMutation";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 interface EditProfileForm {
   email?: string;
@@ -24,6 +25,7 @@ interface EditProfileResponse {
 }
 
 const EditProfile: NextPage = () => {
+  const router = useRouter();
   const { data } = useSWR<UserProfile>(`/api/users/me`);
   const user = data?.profile;
   const [updateForm, { data: responseData, loading }] =
@@ -91,6 +93,11 @@ const EditProfile: NextPage = () => {
       setError("formErrors", { message: responseData.error });
     }
   }, [responseData, setError]);
+  useEffect(() => {
+    if (responseData && responseData.ok) {
+      router.push("/profile");
+    }
+  }, [responseData, router]);
 
   return (
     <Layout canGoBack hasTabBar>
