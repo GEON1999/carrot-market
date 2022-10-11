@@ -6,6 +6,7 @@ import { cls } from "@libs/client/utils";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import { useRouter } from "next/router";
+import emailjs from "@emailjs/browser";
 
 interface EnterForm {
   email?: string;
@@ -38,9 +39,29 @@ export default function Enter() {
     reset();
     setMethod("phone");
   };
-  const onVaild = (validForm: EnterForm) => {
+  const payload = Math.floor(100000 + Math.random() * 9000000) + "";
+  const onVaild = async ({ email, phone }: EnterForm) => {
     if (loading) return;
-    enter(validForm);
+    await enter({ email, phone, payload });
+    const templateParams = {
+      token: payload,
+      email,
+    };
+    await emailjs
+      .send(
+        "service_i1nswgp",
+        "template_6zriuy5",
+        templateParams,
+        "j2jfTWumVG_TEDCNH"
+      )
+      .then(
+        function (response) {
+          console.log("SUCCESS!", response.status, response.text);
+        },
+        function (error) {
+          console.log("FAILED...", error);
+        }
+      );
   };
   const onTokenValid = async (validForm: TokenForm) => {
     if (tokenLoading) return;
