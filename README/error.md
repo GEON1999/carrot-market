@@ -334,3 +334,13 @@ export default function useMutation<T = any>(
 }
 
 ```
+
+</br>
+
+=>
+
+### Solution
+- error 의 원인은 vercel 내 Environment Variables 의 값들이 ""로 감싸진 형태였고, vercel 이 정상적으로 값을 인식하지 못했다.
+  - 이로 인해 cloudflare, nodemailerm planetScale 등 외부 api를 사용하거나 연결이 필요로한 기능들이 정상작동하지 않았다.
+- Environment Variables 의 값에서 ""를 제거하고 모두 정상 작동했다.
+
