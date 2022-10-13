@@ -149,6 +149,9 @@ export default function Enter() {
                   }
                   register={register(method, { required: true })}
                 />
+                <span className="text-xs text-orange-400 mt-1">
+                  최초 로그인시 회원가입이 이루어집니다.
+                </span>
                 <SubmitBtn
                   title={
                     method === "email"
