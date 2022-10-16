@@ -29,8 +29,11 @@
 
  #### 2. 상품 업로드
 - 상품 정보를 입력 
+  - useForm 에 입력된 데이터를 post fetch 를 해주는 useMutaion 에 전달. 
+  
 - 상품 등록 버튼 클릭시 상품 생성
-
+  - 서버에 전달된 데이터를 req.body 를 통해 수신하고 prisma 를 통해 만들어진 model 에 required 된 data 를 기입
+  
  <div align="center">
   <img height="800" src="./preview/2.gif" />
  </div>
