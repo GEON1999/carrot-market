@@ -34,14 +34,17 @@ const Chats: NextPage = () => {
   return (
     <Layout title="채팅" hasTabBar>
       <div className="flex justify-end my-1 mr-2">
-        <button onClick={activeDeleteBtn} className="mr-2">
+        <button
+          onClick={activeDeleteBtn}
+          className="mr-2 md:fixed md:top-6 right-36 z-20"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-6 h-6 md:w-7 md:h-7"
           >
             <path
               strokeLinecap="round"
@@ -51,7 +54,7 @@ const Chats: NextPage = () => {
           </svg>
         </button>
       </div>
-      <div className="divide-y-[1px] py-2">
+      <div className="divide-y-[1px] sm:py-2 md:max-w-4xl md:mx-auto">
         {data?.chatRooms?.map((chatRoom: any) => (
           <Link href={active ? "" : `chats/${chatRoom.id}`} key={chatRoom.id}>
             <a>

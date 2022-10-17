@@ -10,6 +10,7 @@ import Message from "@components/message";
 import { useEffect, useRef } from "react";
 import useDelete from "@libs/client/useDelete";
 import Image from "next/image";
+import Link from "next/link";
 
 interface MessageForm {
   message: string;
@@ -103,17 +104,21 @@ const ChatDetail: NextPage = () => {
   return (
     <>
       <Layout canGoBack hasTabBar>
-        <div>
-          <div className="relative pb-4 border-b w-full opacity-80 flex items-center space-x-3">
+        <div className="md:mx-auto md:max-w-4xl mt-10">
+          <div className="relative pb-4 border-b w-full opacity-80 flex items-center space-x-3 ">
             <div className="ml-5">
-              <Image
-                alt="product"
-                width={70}
-                height={70}
-                src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${data?.product?.image}/public`}
-                className="object-cover rounded-lg"
-                quality={100}
-              />
+              <Link href={`/products/${data?.product?.id}`}>
+                <a>
+                  <Image
+                    alt="product"
+                    width={70}
+                    height={70}
+                    src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${data?.product?.image}/public`}
+                    className="object-cover rounded-lg"
+                    quality={100}
+                  />
+                </a>
+              </Link>
             </div>
             <div className="flex flex-col space-y-2">
               <span className="text-sm text-gray-700">
