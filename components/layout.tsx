@@ -43,10 +43,121 @@ export default function Layout({
     });
   }, [data, state, router, userData]);
   return (
-    <div>
+    <div className="md:my-5">
+      <div className="sm:hidden w-full h-20 fixed top-0 left-0 flex  px-24 items-center justify-between bg-slate-50 z-10">
+        <div className="flex justify-center  items-center space-x-4 ">
+          <Link href={"/"}>
+            <a className="flex justify-center  items-center">
+              <img
+                alt="logo"
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FS0wSJ%2FbtqDogzoUNX%2FkZBkpKPGjdGKJSvKKs35D0%2Fimg.png"
+                className="w-8.5 h-8 self-center"
+              />
+              <h1 className="font-extrabold text-xl text-orange-400 -ml-0.5">
+                당근마켓
+              </h1>
+            </a>
+          </Link>
+          <div
+            className={cls(
+              "flex space-x-4",
+              router.asPath === "/search" ? "nav:hidden" : ""
+            )}
+          >
+            <Link href={"/community"}>
+              <a>
+                <h1
+                  className={cls(
+                    "font-semibold text-lg",
+                    router.asPath === "/community"
+                      ? "text-orange-500"
+                      : "hover:text-gray-500 transition-colors"
+                  )}
+                >
+                  동네생활
+                </h1>
+              </a>
+            </Link>
+            <Link href={"/ad"}>
+              <a>
+                <h1
+                  className={cls(
+                    "font-semibold text-lg",
+                    router.asPath === "/ad"
+                      ? "text-orange-500"
+                      : "hover:text-gray-500 transition-colors"
+                  )}
+                >
+                  광고
+                </h1>
+              </a>
+            </Link>
+            <Link href={"/chats"}>
+              <a>
+                <h1
+                  className={cls(
+                    "font-semibold text-lg",
+                    router.asPath === "/chats"
+                      ? "text-orange-500"
+                      : "hover:text-gray-500 transition-colors"
+                  )}
+                >
+                  채팅
+                </h1>
+              </a>
+            </Link>
+          </div>
+        </div>
+        <div className="flex items-center">
+          {hasSearch ? (
+            <Link href="/search">
+              <a className="mr-8">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.8}
+                  stroke="currentColor"
+                  className="w-7 h-7 hover:text-gray-500 transition-colors"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                  />
+                </svg>
+              </a>
+            </Link>
+          ) : null}
+          <Link href="/profile">
+            <a
+              className={cls(
+                router.asPath === "/profile"
+                  ? "text-orange-500"
+                  : "hover:text-gray-500 transition-colors"
+              )}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.8}
+                stroke="currentColor"
+                className="w-7 h-7"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                />
+              </svg>
+            </a>
+          </Link>
+        </div>
+      </div>
       <div
         className={cls(
-          "max-w-lg bg-white text-lg text-gray-700 font-semibold py-3 border-b border-gray-100 flex items-center fixed top-0 w-full cursor-pointer",
+          "max-w-lg bg-white text-lg text-gray-700 font-semibold py-3 border-b border-gray-100 flex items-center fixed top-0 w-full cursor-pointer md:hidden",
           canGoBack ? "justify-start px-4" : "justify-center"
         )}
       >
@@ -93,7 +204,7 @@ export default function Layout({
       </div>
       <div className={cls("pt-16", hasTabBar ? "pb-16" : "")}>{children}</div>
       {hasTabBar ? (
-        <nav className="max-w-lg bg-white py-3 px-5 border-t flex justify-between items-center fixed bottom-0 w-full cursor-pointer">
+        <nav className="max-w-lg bg-white py-3 px-5 border-t flex justify-between items-center fixed bottom-0 w-full cursor-pointer md:hidden">
           <Link href="/">
             <a
               className={cls(
