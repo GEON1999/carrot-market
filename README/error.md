@@ -344,3 +344,17 @@ export default function useMutation<T = any>(
   - 이로 인해 cloudflare, nodemailerm planetScale 등 외부 api를 사용하거나 연결이 필요로한 기능들이 정상작동하지 않았다.
 - Environment Variables 의 값에서 ""를 제거하고 모두 정상 작동했다.
 
+
+<br/>
+
+# 6. Hydration Error
+react 는 기본적으로 root 라는 id 를 가진 div 에 감싸져있다.    
+이를 망각하고 nextPage 에서 body 태그를 사용 하였는데, hydration error 가 발생했다.
+
+<br/>
+
+# 7. nodemailer error
+- vercel 에서 smtp 를 차단한 이유로 nodemailer 가 정상 작동하지 않음
+- 예외적으로 nodemailer 의 smtp 를 허용 했다고 하지만, 검색시 동일한 현상을 격는 유저 다수
+- emailJs 로 변경하여 
+
