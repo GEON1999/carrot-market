@@ -5,12 +5,13 @@ import { useRouter } from "next/router";
 import React from "react";
 
 interface ProfileProps {
-  big: boolean;
+  big?: boolean;
   name?: string;
   subtitle?: string;
   avatar?: string | null;
   id?: number;
   [key: string]: any;
+  profile?: boolean;
 }
 
 export default function ProfileInfo({
@@ -20,6 +21,7 @@ export default function ProfileInfo({
   id,
   position,
   avatar,
+  profile = false,
 }: ProfileProps) {
   return big ? (
     <div className={`flex space-x-3 items-start ${position}`}>
@@ -43,6 +45,30 @@ export default function ProfileInfo({
         <p className="font-semibold">{name}</p>
 
         <p className="text-gray-400 text-sm">{subtitle}</p>
+      </div>
+    </div>
+  ) : profile ? (
+    <div
+      className={`flex space-x-3 items-start ${position} md:px-20 md:w-full md:space-x-10 md:items-center`}
+    >
+      <Link href={id ? `/profile/${id}` : "#"}>
+        <a>
+          {avatar ? (
+            <img
+              alt="profile"
+              src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${avatar}/profile`}
+              className="w-16 h-16 md:w-32 md:h-32 rounded-full"
+            />
+          ) : (
+            <div className="w-16 h-16 bg-slate-500 rounded-full" />
+          )}
+        </a>
+      </Link>
+      <div className="mt-2 md:space-y-3">
+        <p className="font-semibold md:text-lg">{name}</p>
+        <p className="text-gray-400 text-sm md:text-black md:text-base md:px-3 md:py-2 md:border md:rounded-md">
+          {subtitle}
+        </p>
       </div>
     </div>
   ) : (
