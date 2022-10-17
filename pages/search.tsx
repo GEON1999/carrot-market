@@ -35,7 +35,7 @@ const Search: NextPage = () => {
     <div>
       <form
         onSubmit={handleSubmit(onValid)}
-        className=" relative w-64  py-1  z-50 ml-32"
+        className=" relative w-64 py-1  z-50 mx-auto md:mt-4"
       >
         <Input
           kind="text"
