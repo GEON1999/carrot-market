@@ -9,6 +9,7 @@ import useScrollpage from "@libs/client/scrollPage";
 import { useEffect, useState } from "react";
 import timeForToday from "@libs/client/timeForToday";
 import Item from "@components/item";
+import { useRouter } from "next/router";
 
 interface ReviewWithUser extends Review {
   leavedBy: User;
@@ -51,6 +52,7 @@ const getKey = (pageIndex: number) => {
 };
 
 const Profile: NextPage = () => {
+  const router = useRouter();
   const { data: userData } = useSWR<UserProfile>("/api/users/me");
   const { data: mineData } = useSWR<MineResponse>("/api/users/mine");
   const user = userData?.profile;
@@ -67,17 +69,16 @@ const Profile: NextPage = () => {
   return (
     <Layout title="나의 당근" hasTabBar>
       <div className="px-4 py-4 md:mx-auto md:max-w-4xl">
-        <Link href="profile/edit">
-          <a>
-            <ProfileInfo
-              avatar={user?.avatar}
-              profile={true}
-              name={user?.name}
-              subtitle="프로필 수정"
-            />
-          </a>
-        </Link>
-        <div className="flex justify-between px-2 my-12">
+        <div onClick={() => router.push("/profile/edit")}>
+          <ProfileInfo
+            avatar={user?.avatar}
+            profile={true}
+            name={user?.name}
+            subtitle="프로필 수정"
+          />
+        </div>
+
+        <div className="flex justify-between px-2 my-12 md:px-14">
           <Link href="profile/sold">
             <a>
               <div className="flex flex-col justify-center text-sm">
@@ -155,7 +156,7 @@ const Profile: NextPage = () => {
             </a>
           </Link>
         </div>
-        <div className="md:flex sm:space-y-14 md:justify-center md:space-x-20 md:mt-20">
+        <div className="md:flex sm:space-y-14 md:justify-center md:space-x-32 md:mt-20">
           <div>
             <div
               className="flex pb-1 border-b md:border-none w-32 cursor-pointer"
