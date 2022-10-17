@@ -80,8 +80,8 @@ const ItemDetail: NextPage = () => {
   }, [chatRoomData, router]);
   return (
     <Layout canGoBack hasTabBar>
-      <div className="mx-4">
-        <div className="mt-4">
+      <div className="mx-4 md:mx-auto md:max-w-2xl ">
+        <div className="mt-4 md:flex md:flex-col ">
           {data?.product?.image ? (
             <Image
               alt="product"
