@@ -61,7 +61,7 @@ export default function EnterProfile() {
 
   return (
     <Layout hasTabBar title="프로필">
-      <div className="mx-4">
+      <div className="mx-4 md:mx-auto md:max-w-lg">
         <form onSubmit={handleSubmit(onVaild)}>
           <div className="flex justify-center mt-32 mb-6">
             {avatarPreview ? (
