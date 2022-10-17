@@ -49,12 +49,23 @@ const Home: NextPage = () => {
               : `-z-50`
           } `}
         ></div>
-        <div className="mx-4 z-0 pt-2">
+        <div className="mx-4 z-0 pt-2 md:grid md:grid-cols-2">
           {products?.map((product) => (
-            <div key={product?.id}>
+            <div key={product?.id} className="md:mx-3 md:my-2">
               {product ? (
                 product?.reviews[0]?.review ? (
-                  ""
+                  <Item
+                    sold={true}
+                    id={product?.id}
+                    title={product?.title}
+                    subtitle={`${product?.subTitle} · ${timeForToday(
+                      Number(new Date(product?.createdAt))
+                    )}`}
+                    price={product?.price}
+                    hearts={product?._count.fav}
+                    comments={product?._count.chatRooms}
+                    prodcut={product?.image ? product.image : null}
+                  />
                 ) : product?.ADs[0]?.id ? (
                   <Item
                     ad={true}

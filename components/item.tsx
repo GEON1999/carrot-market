@@ -11,6 +11,7 @@ interface ItemProps {
   hearts?: number;
   prodcut?: string | null;
   ad?: boolean;
+  sold?: boolean;
 }
 
 export default function Item({
@@ -22,6 +23,7 @@ export default function Item({
   hearts = 0,
   prodcut,
   ad = false,
+  sold = false,
 }: ItemProps) {
   return (
     <Link href={`/products/${id}`}>
@@ -59,9 +61,16 @@ export default function Item({
               <span className="text-xs text-gray-400 mt-1 mb-2">
                 {subtitle}
               </span>
-              <span className="font-bold">
-                {price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원
-              </span>
+              <div className="space-x-2">
+                {sold ? (
+                  <span className="text-xs text-white py-1 px-2 bg-gray-700 rounded-md">
+                    거래완료
+                  </span>
+                ) : null}
+                <span className="font-bold">
+                  {price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원
+                </span>
+              </div>
             </div>
           </div>
 
