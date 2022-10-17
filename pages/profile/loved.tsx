@@ -36,9 +36,9 @@ const Loved: NextPage = () => {
   }, [setSize, page]);
   return (
     <Layout canGoBack hasTabBar>
-      <div className="mx-4">
+      <div className="mx-4 md:grid md:grid-cols-2">
         {favs?.map((product) => (
-          <div key={product.id}>
+          <div key={product.id} className="md:mx-3 md:my-2">
             <Item
               id={product.productId}
               title={product.product.title}
