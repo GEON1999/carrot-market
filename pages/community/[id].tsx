@@ -101,7 +101,7 @@ const CommunityPostDetail: NextPage = () => {
   };
   return (
     <Layout canGoBack hasTabBar>
-      <div className="px-4 py-2">
+      <div className="px-4 py-2 md:mx-auto md:max-w-4xl">
         <span className="bg-gray-100 text-gray-700 px-2.5 py-0.5 rounded-full text-sm">
           동네질문
         </span>

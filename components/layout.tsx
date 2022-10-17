@@ -43,7 +43,7 @@ export default function Layout({
     });
   }, [data, state, router, userData]);
   return (
-    <div className="md:my-5">
+    <div className="md:my-12">
       <div className="sm:hidden w-full h-20 fixed top-0 left-0 flex  px-24 items-center justify-between bg-slate-50 z-10">
         <div className="flex justify-center  items-center space-x-4 ">
           <Link href={"/"}>

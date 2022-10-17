@@ -49,7 +49,7 @@ export default function ProfileInfo({
     </div>
   ) : profile ? (
     <div
-      className={`flex space-x-3 items-start ${position} md:px-20 md:w-full md:space-x-10 md:items-center`}
+      className={`flex space-x-3 items-start ${position} md:px-20 md:w-full md:space-x-10 `}
     >
       <Link href={id ? `/profile/${id}` : "#"}>
         <a>
@@ -66,9 +66,11 @@ export default function ProfileInfo({
       </Link>
       <div className="mt-2 md:space-y-3">
         <p className="font-semibold md:text-lg">{name}</p>
-        <p className="text-gray-400 text-sm md:text-black md:text-base md:px-3 md:py-2 md:border md:rounded-md">
-          {subtitle}
-        </p>
+        {subtitle ? (
+          <p className="text-gray-400 text-sm md:text-black md:text-base md:px-3 md:py-2 md:border md:rounded-md">
+            {subtitle}
+          </p>
+        ) : null}
       </div>
     </div>
   ) : (
