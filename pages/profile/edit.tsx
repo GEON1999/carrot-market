@@ -109,7 +109,7 @@ const EditProfile: NextPage = () => {
         }}
         onSubmit={handleSubmit(onVaild)}
       >
-        <div className="px-4 py-2">
+        <div className="px-4 py-2 md:max-w-2xl md:mx-auto">
           <div className="flex justify-center mt-4 mb-4">
             {avatarPreview ? (
               <Image

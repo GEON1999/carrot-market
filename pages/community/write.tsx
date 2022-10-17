@@ -34,7 +34,10 @@ const Write: NextPage = () => {
   }, [data, router]);
   return (
     <Layout canGoBack hasTabBar>
-      <form onSubmit={handleSubmit(onValid)} className="px-4 py-2">
+      <form
+        onSubmit={handleSubmit(onValid)}
+        className="px-4 py-2 md:mx-auto md:max-w-2xl md:mt-32"
+      >
         <Textarea
           register={register("question", { required: true })}
           placeholder="궁금한 것을 물어보세요!"

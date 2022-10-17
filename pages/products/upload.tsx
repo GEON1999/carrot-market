@@ -67,7 +67,7 @@ const Upload: NextPage = () => {
   }, [photo]);
   return (
     <Layout canGoBack hasTabBar>
-      <div className="px-4 py-2">
+      <div className="px-4 py-2 md:mx-auto md:max-w-2xl">
         {productPreview ? (
           <Image
             alt="product"

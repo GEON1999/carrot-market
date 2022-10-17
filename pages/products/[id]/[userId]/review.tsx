@@ -36,7 +36,7 @@ const Review: NextPage = () => {
   }, [reviewData, router]);
   return (
     <Layout title="리뷰 작성" hasTabBar>
-      <div className="mx-4 flex flex-col">
+      <div className="mx-4 flex flex-col md:mx-auto md:max-w-2xl ">
         <h1 className="text-center mt-[10vh] mb-8">
           구매자에 대한 리뷰를 작성해주세요.
         </h1>

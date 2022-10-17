@@ -48,7 +48,7 @@ const Finish: NextPage = () => {
   }, [router, data, userData, productId]);
   return (
     <Layout title="판매한 상대를 고르세요" hasTabBar>
-      <div className="mx-4">
+      <div className="mx-4 md:mx-auto md:max-w-2xl">
         {data?.product?.chatRooms?.map((chatRoom) => (
           <div onClick={() => onClicked(chatRoom.buyer.id)} key={chatRoom.id}>
             {chatRoom.messages[0] ? (
