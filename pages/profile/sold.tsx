@@ -11,7 +11,7 @@ interface SaleWithProduct extends Sale {
   product: ProductWithCount;
 }
 
-interface SaleResponse {
+export interface SaleResponse {
   ok: boolean;
   sales: SaleWithProduct[];
 }
@@ -24,6 +24,7 @@ const Sold: NextPage = () => {
     initialSize: 1,
     revalidateAll: false,
   });
+  console.log(data);
   const sales = data?.map((i) => i.sales).flat();
   const page = useScrollpage();
   useEffect(() => {
@@ -41,6 +42,7 @@ const Sold: NextPage = () => {
               price={product?.product?.price}
               hearts={product?.product?._count.fav}
               prodcut={product?.product?.image}
+              comments={product?.product?._count.chatRooms}
             />
           </div>
         ))}

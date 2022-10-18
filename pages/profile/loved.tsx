@@ -9,6 +9,7 @@ import useScrollpage from "@libs/client/scrollPage";
 export interface ProductWithCount extends Product {
   _count: {
     fav: number;
+    chatRooms: number;
   };
 }
 
@@ -16,7 +17,7 @@ interface FavWithProduct extends Fav {
   product: ProductWithCount;
 }
 
-interface FavResponse {
+export interface FavResponse {
   ok: boolean;
   favs: FavWithProduct[];
 }
@@ -46,6 +47,7 @@ const Loved: NextPage = () => {
               price={product.product.price}
               hearts={product.product._count.fav}
               prodcut={product.product.image}
+              comments={product.product._count.chatRooms}
             />
           </div>
         ))}

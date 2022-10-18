@@ -1,21 +1,19 @@
 import type { NextPage } from "next";
 import Item from "@components/item";
 import Layout from "@components/layout";
-
-import { Purchase } from "@prisma/client";
-import { ProductWithCount } from "../loved";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import { PurchaseResponse } from "../bought";
 
 const Bought: NextPage = () => {
   const router = useRouter();
-  const { data } = useSWR(`/api/users/${router.query.id}/purchase`);
-  console.log(data);
-
+  const { data } = useSWR<PurchaseResponse>(
+    `/api/users/${router.query.id}/purchase`
+  );
   return (
     <Layout canGoBack hasTabBar>
       <div className="mx-4 md:grid md:grid-cols-2">
-        {data?.purchases?.map((purchase: any) => (
+        {data?.purchases?.map((purchase) => (
           <div key={purchase.product.id} className="md:mx-3 md:my-2">
             <Item
               id={purchase.product.id}
@@ -24,6 +22,7 @@ const Bought: NextPage = () => {
               price={purchase.product.price}
               hearts={purchase.product._count.fav}
               prodcut={purchase.product.image}
+              comments={purchase.product._count.chatRooms}
             />
           </div>
         ))}

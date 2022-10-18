@@ -12,7 +12,7 @@ interface PurchaseWithProduct extends Purchase {
   product: ProductWithCount;
 }
 
-interface PurchaseResponse {
+export interface PurchaseResponse {
   ok: boolean;
   purchases: PurchaseWithProduct[];
 }
@@ -43,6 +43,7 @@ const Bought: NextPage = () => {
               price={product.product.price}
               hearts={product.product._count.fav}
               prodcut={product.product.image}
+              comments={product.product._count.chatRooms}
             />
           </div>
         ))}
