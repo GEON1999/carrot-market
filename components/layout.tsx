@@ -44,7 +44,7 @@ export default function Layout({
   }, [data, state, router, userData]);
   return (
     <div className="md:my-12">
-      <div className="sm:hidden w-full h-20 fixed top-0 left-0 flex  px-24 items-center justify-between bg-slate-50 z-10">
+      <div className="sm:hidden w-full h-20 fixed top-0 left-0 flex  px-24 items-center justify-between bg-slate-50 z-10 dark:bg-gray-900 ">
         <div className="flex justify-center  items-center space-x-4 ">
           <Link href={"/"}>
             <a className="flex justify-center  items-center">
@@ -70,7 +70,7 @@ export default function Layout({
                   className={cls(
                     "font-semibold text-lg",
                     router.asPath === "/community"
-                      ? "text-orange-500"
+                      ? "text-orange-400"
                       : "hover:text-gray-500 transition-colors"
                   )}
                 >
@@ -84,7 +84,7 @@ export default function Layout({
                   className={cls(
                     "font-semibold text-lg",
                     router.asPath === "/ad"
-                      ? "text-orange-500"
+                      ? "text-orange-400"
                       : "hover:text-gray-500 transition-colors"
                   )}
                 >
@@ -98,7 +98,7 @@ export default function Layout({
                   className={cls(
                     "font-semibold text-lg",
                     router.asPath === "/chats"
-                      ? "text-orange-500"
+                      ? "text-orange-400"
                       : "hover:text-gray-500 transition-colors"
                   )}
                 >
@@ -133,7 +133,7 @@ export default function Layout({
             <a
               className={cls(
                 router.asPath === "/profile"
-                  ? "text-orange-500"
+                  ? "text-orange-400"
                   : "hover:text-gray-500 transition-colors"
               )}
             >
@@ -157,7 +157,7 @@ export default function Layout({
       </div>
       <div
         className={cls(
-          "max-w-lg bg-white text-lg text-gray-700 font-semibold py-3 border-b border-gray-100 flex items-center fixed top-0 w-full cursor-pointer md:hidden",
+          "max-w-lg bg-white text-lg text-gray-700 font-semibold py-3 border-b border-gray-100 flex items-center fixed top-0 w-full cursor-pointer md:hidden dark:bg-slate-800 dark:text-white dark:border-gray-500",
           canGoBack ? "justify-start px-4" : "justify-center"
         )}
       >
@@ -190,7 +190,7 @@ export default function Layout({
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6 text-black"
+                className="w-6 h-6 text-black dark:text-white"
               >
                 <path
                   strokeLinecap="round"
@@ -204,13 +204,13 @@ export default function Layout({
       </div>
       <div className={cls("pt-16", hasTabBar ? "pb-16" : "")}>{children}</div>
       {hasTabBar ? (
-        <nav className="max-w-lg bg-white py-3 px-5 border-t flex justify-between items-center fixed bottom-0 w-full cursor-pointer md:hidden">
+        <nav className="max-w-lg bg-white py-3 px-5 border-t flex justify-between items-center fixed bottom-0 w-full cursor-pointer md:hidden dark:bg-slate-800 dark:text-white dark:border-gray-500">
           <Link href="/">
             <a
               className={cls(
                 "flex flex-col items-center  text-sm",
                 router.asPath === "/"
-                  ? "text-orange-500"
+                  ? "text-orange-400"
                   : "hover:text-gray-500 transition-colors"
               )}
             >
