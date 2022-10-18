@@ -75,7 +75,7 @@ const OtherProfile: NextPage = () => {
           profile
           name={userData?.user?.name}
         />
-        <div className="flex justify-between px-2 my-12 md:px-14">
+        <div className="flex justify-between px-2 my-12 md:px-14 dark:text-black">
           <Link href={`${router.query.id}/sold`}>
             <a>
               <div className="flex flex-col justify-center text-sm">
@@ -190,7 +190,7 @@ const OtherProfile: NextPage = () => {
                               동네질문
                             </span>
 
-                            <div className="my-2 flex justify-between w-full text-gray-500 text-sm">
+                            <div className="my-2 flex justify-between w-full text-gray-500 text-sm dark:text-gray-200">
                               <span>
                                 <span className="text-orange-500 font-bold">
                                   Q.{" "}
@@ -312,7 +312,7 @@ const OtherProfile: NextPage = () => {
                           동네질문
                         </span>
 
-                        <div className="my-2 flex justify-between w-full text-gray-500 text-sm space-x-2">
+                        <div className="my-2 flex justify-between w-full text-gray-500 text-sm space-x-2 dark:text-gray-200">
                           <span>
                             <span className="text-orange-500 font-bold w-full">
                               Q.{" "}

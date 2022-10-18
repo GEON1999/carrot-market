@@ -7,15 +7,6 @@ import { ProductWithCount } from "../loved";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
-interface PurchaseWithProduct extends Purchase {
-  product: ProductWithCount;
-}
-
-interface PurchaseResponse {
-  ok: boolean;
-  purchases: PurchaseWithProduct[];
-}
-
 const Bought: NextPage = () => {
   const router = useRouter();
   const { data } = useSWR(`/api/users/${router.query.id}/purchase`);
