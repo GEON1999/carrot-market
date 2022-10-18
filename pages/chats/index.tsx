@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import Link from "next/link";
 import Layout from "@components/layout";
 import ProfileInfo from "@components/profile";
 import useSWR from "swr";
@@ -62,7 +61,7 @@ const Chats: NextPage = () => {
           chatRoom.buyerId === userData?.profile?.id ? (
             chatRoom.messages[0] ? (
               <div
-                className="flex justify-between items-center border-none"
+                className="flex justify-between items-center border-none cursor-pointer"
                 key={chatRoom.id}
                 onClick={() =>
                   router.push(active ? "" : `chats/${chatRoom.id}`)
