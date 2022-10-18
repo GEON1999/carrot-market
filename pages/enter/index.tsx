@@ -78,7 +78,7 @@ export default function Enter() {
 
   return (
     <Layout hasTabBar title="로그인">
-      <div className="md:max-w-lg md:mx-auto">
+      <div className="px-4 md:max-w-lg md:mx-auto">
         <h3 className="text-center mt-12 font-bold text-2xl">회원가입</h3>
         <div>
           {data?.ok ? (

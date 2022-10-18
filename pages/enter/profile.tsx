@@ -74,7 +74,7 @@ export default function EnterProfile() {
                 quality={100}
               />
             ) : (
-              <label className="mb-6 w-40 h-40 cursor-pointer text-gray-600 hover:border-orange-500 hover:text-orange-500 flex items-center justify-center border-2 border-gray-300 rounded-full">
+              <label className="mb-6 w-40 h-40 cursor-pointer text-gray-600 hover:border-orange-500 hover:text-orange-500 flex items-center justify-center border-2 border-gray-300 rounded-full dark:text-gray-300">
                 <svg
                   className="h-12 w-12"
                   stroke="currentColor"
