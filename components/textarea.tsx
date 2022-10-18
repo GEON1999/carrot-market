@@ -19,7 +19,10 @@ export default function Textarea({
   return (
     <>
       {label ? (
-        <label className="text-gray-500 text-sm" htmlFor={id}>
+        <label
+          className="text-gray-500 text-sm dark:text-gray-300"
+          htmlFor={id}
+        >
           {title}
         </label>
       ) : null}
@@ -30,7 +33,7 @@ export default function Textarea({
           rows={4}
           placeholder={placeholder}
           {...register}
-          className="w-full rounded-md border-2 border-gray-300 hover:border-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
+          className="w-full rounded-md border-2 border-gray-300 hover:border-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500 dark:text-black"
         />
       </div>
     </>

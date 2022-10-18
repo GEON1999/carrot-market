@@ -21,8 +21,8 @@ export default function Input({
   position,
 }: InputProps) {
   return (
-    <>
-      <label className="text-sm text-gray-500" htmlFor={id}>
+    <div className="dark:text-black">
+      <label className="text-sm text-gray-500 dark:text-gray-300" htmlFor={id}>
         {title}
       </label>
       {kind === "phone" ? (
@@ -95,6 +95,6 @@ export default function Input({
           </div>
         </div>
       ) : null}
-    </>
+    </div>
   );
 }
