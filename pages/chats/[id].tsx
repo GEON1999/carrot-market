@@ -121,7 +121,7 @@ const ChatDetail: NextPage = () => {
               </Link>
             </div>
             <div className="flex flex-col space-y-2">
-              <span className="text-sm text-gray-700">
+              <span className="text-sm text-gray-700 dark:text-white">
                 {data?.product?.title}
               </span>
               <span className="text-sm font-semibold">

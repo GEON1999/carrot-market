@@ -32,7 +32,9 @@ export default function Message({ text, mine, avatar }: MessageProps) {
 
         <div
           className={` px-4 py-2 w-1/2 shadow-sm rounded-3xl text-sm ${
-            mine ? "bg-orange-400 text-white" : "bg-gray-100"
+            mine
+              ? "bg-orange-400 text-white"
+              : "bg-gray-100  dark:text-gray-800"
           }`}
         >
           <p>{text}</p>
