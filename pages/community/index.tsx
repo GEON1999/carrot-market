@@ -50,14 +50,14 @@ const Community: NextPage = () => {
                     <span className="text-orange-500 font-bold">Q. </span>
                     {post?.question}
                   </span>
-                  <div className="my-4 flex justify-between w-full text-gray-500 text-sm">
+                  <div className="my-4 flex justify-between w-full text-gray-500 text-sm dark:text-gray-400">
                     <span>{post?.user.name}</span>
                     <span>{timeForToday(post?.createdAt)}</span>
                   </div>
                 </div>
               </a>
             </Link>
-            <div className="flex space-x-3 border-t border-b-[2px] w-full py-2 text-sm text-gray-700">
+            <div className="flex space-x-3 border-t border-b-[2px] w-full py-2 text-sm text-gray-700 dark:text-gray-300 dark:border-gray-600">
               <button>
                 <span className="flex items-center space-x-1">
                   <svg

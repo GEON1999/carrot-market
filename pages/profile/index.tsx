@@ -78,7 +78,7 @@ const Profile: NextPage = () => {
           />
         </div>
 
-        <div className="flex justify-between px-2 my-12 md:px-14">
+        <div className="flex justify-between px-2 my-12 md:px-14 dark:text-black">
           <Link href="profile/sold">
             <a>
               <div className="flex flex-col justify-center text-sm">
@@ -191,7 +191,7 @@ const Profile: NextPage = () => {
                               동네질문
                             </span>
 
-                            <div className="my-2 flex justify-between w-full text-gray-500 text-sm space-x-2">
+                            <div className="my-2 flex justify-between w-full text-gray-500 text-sm space-x-2 dark:text-gray-200">
                               <span>
                                 <span className="text-orange-500 font-bold w-full">
                                   Q.{" "}
@@ -287,7 +287,7 @@ const Profile: NextPage = () => {
                         avatar={review?.leavedBy.avatar}
                       />
                       <div className="border-b md:border-none border-gray-100">
-                        <p className="text-gray-700 text-sm  -mt-5 ml-12 mb-4">
+                        <p className="text-gray-700 text-sm  -mt-5 ml-12 mb-4 dark:text-gray-200">
                           {review?.review}
                         </p>
                       </div>
@@ -309,7 +309,7 @@ const Profile: NextPage = () => {
                           동네질문
                         </span>
 
-                        <div className="my-2 flex justify-between w-full text-gray-500 text-sm space-x-2">
+                        <div className="my-2 flex justify-between w-full text-gray-500 text-sm space-x-2 dark:text-gray-200">
                           <span>
                             <span className="text-orange-500 font-bold w-full">
                               Q.{" "}
@@ -357,7 +357,7 @@ const Profile: NextPage = () => {
                     avatar={review?.leavedBy.avatar}
                   />
                   <div className="border-b md:border-none border-gray-100">
-                    <p className="text-gray-700 text-sm  -mt-5 ml-12 mb-4">
+                    <p className="text-gray-700 text-sm  -mt-5 ml-12 mb-4 dark:text-gray-200">
                       {review?.review}
                     </p>
                   </div>

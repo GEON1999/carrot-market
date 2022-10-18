@@ -101,7 +101,7 @@ const CommunityPostDetail: NextPage = () => {
   };
   return (
     <Layout canGoBack hasTabBar>
-      <div className="px-4 py-2 md:mx-auto md:max-w-4xl">
+      <div className="px-4 py-2 md:mx-auto md:max-w-4xl ">
         <span className="bg-gray-100 text-gray-700 px-2.5 py-0.5 rounded-full text-sm">
           동네질문
         </span>
@@ -117,18 +117,18 @@ const CommunityPostDetail: NextPage = () => {
           {userData?.profile?.id === data?.post?.userId ? (
             <button
               onClick={onClicked}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block px-2 h-7"
+              className="bg-gray-50 border border-gray-300  text-gray-900 text-xs rounded-lg focus:ring-orange-500 focus:border-orange-500 block px-2 h-7"
             >
               삭제
             </button>
           ) : null}
         </div>
-        <div className="border-t border-b-[2px] py-3 space-y-8">
+        <div className="border-t border-b-[2px] py-3 space-y-8 dark:border-gray-400">
           <div>
             <span className="text-orange-500 font-bold">Q. </span>
             {data?.post?.question}
           </div>
-          <div className="flex space-x-3 text-sm text-gray-700 border-t pt-2">
+          <div className="flex space-x-3 text-sm text-gray-700 border-t pt-2 dark:text-gray-300 dark:border-gray-400">
             <button onClick={onClick}>
               <span
                 className={cls(
@@ -195,7 +195,7 @@ const CommunityPostDetail: NextPage = () => {
                   </button>
                 ) : null}
               </div>
-              <p className="text-gray-700 text-center ml-11 mb-4">
+              <p className="text-gray-700 text-center ml-11 mb-4 dark:text-gray-300">
                 {comment.comment}
               </p>
             </div>
