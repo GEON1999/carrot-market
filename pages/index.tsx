@@ -49,7 +49,7 @@ const Home: NextPage = () => {
               : `-z-50`
           } `}
         ></div>
-        <div className="mx-4 z-0 pt-2 md:grid md:grid-cols-2">
+        <div className="mx-4 z-0 pt-2 md:grid md:grid-cols-2 items-end">
           {products?.map((product) => (
             <div key={product?.id} className="md:mx-3 md:my-2">
               {product ? (
