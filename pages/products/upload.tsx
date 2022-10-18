@@ -67,7 +67,7 @@ const Upload: NextPage = () => {
   }, [photo]);
   return (
     <Layout canGoBack hasTabBar>
-      <div className="px-4 py-2 md:mx-auto md:max-w-2xl">
+      <div className="px-4 py-2 md:mx-auto md:max-w-2xl md:flex md:flex-col">
         {productPreview ? (
           <Image
             alt="product"
@@ -78,7 +78,7 @@ const Upload: NextPage = () => {
             quality={100}
           />
         ) : (
-          <label className="mb-6 w-full cursor-pointer text-gray-600 hover:border-orange-500 hover:text-orange-500 flex items-center justify-center border-2 border-dashed border-gray-300 h-48 rounded-md">
+          <label className="mb-6 w-full cursor-pointer text-gray-600 hover:border-orange-500 hover:text-orange-500 flex items-center justify-center border-2 border-dashed border-gray-300 h-48 rounded-md dark:text-gray-300">
             <svg
               className="h-12 w-12"
               stroke="currentColor"

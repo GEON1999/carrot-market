@@ -40,27 +40,25 @@ const AD: NextPage = () => {
   return (
     <Layout title="광고" hasTabBar>
       <div className="mx-4 md:grid md:grid-cols-2">
-        {products?.map((product) => (
-          <>
-            {product?.reviews[0]?.review ? null : product?.ADs[0]?.id ? (
-              <div key={product?.id} className="md:mx-3 md:my-2">
-                <Item
-                  id={product?.id}
-                  title={product?.title}
-                  subtitle={`${product?.subTitle} · ${timeForToday(
-                    Number(new Date(product?.createdAt))
-                  )}`}
-                  price={product?.price
-                    ?.toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  hearts={product?._count.fav}
-                  comments={product?._count.chatRooms}
-                  prodcut={product?.image ? product.image : null}
-                />
-              </div>
-            ) : null}
-          </>
-        ))}
+        {products?.map((product) =>
+          product?.reviews[0]?.review ? null : product?.ADs[0]?.id ? (
+            <div key={product?.id} className="md:mx-3 md:my-2">
+              <Item
+                id={product?.id}
+                title={product?.title}
+                subtitle={`${product?.subTitle} · ${timeForToday(
+                  Number(new Date(product?.createdAt))
+                )}`}
+                price={product?.price
+                  ?.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                hearts={product?._count.fav}
+                comments={product?._count.chatRooms}
+                prodcut={product?.image ? product.image : null}
+              />
+            </div>
+          ) : null
+        )}
         {page >= 2 ? (
           <div className="p-10 text-center text-xl text-gray-500">
             no more content

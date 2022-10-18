@@ -29,8 +29,8 @@ export default function Item({
     <Link href={`/products/${id}`}>
       <a>
         <div
-          className={`py-4 border-b border-gray-100 flex justify-between ${
-            ad ? `bg-orange-50 rounded-lg` : ``
+          className={`py-4 border-b border-gray-100 dark:border-gray-600 flex justify-between ${
+            ad ? `bg-orange-50 rounded-lg dark:bg-gray-700` : ``
           }`}
         >
           <div className={`space-x-3 flex justify-center items-center ml-2`}>
@@ -48,9 +48,9 @@ export default function Item({
             )}
             <div className="flex flex-col">
               {ad ? (
-                <div className="flex items-center">
+                <div className="flex items-center ">
                   <h3>{title} </h3>
-                  <div className="px-2 py-1 ml-1 bg-orange-200 rounded-lg text-xs text-center ">
+                  <div className="px-2 py-1 ml-1 bg-orange-400 rounded-lg text-xs text-center text-white">
                     AD
                   </div>
                 </div>
@@ -63,7 +63,7 @@ export default function Item({
               </span>
               <div className="space-x-2">
                 {sold ? (
-                  <span className="text-xs text-white py-1 px-2 bg-gray-700 rounded-md">
+                  <span className="text-xs text-white py-1 px-2 bg-gray-600 rounded-md">
                     거래완료
                   </span>
                 ) : null}

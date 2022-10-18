@@ -230,7 +230,9 @@ const ItemDetail: NextPage = () => {
               </p>
             ) : null}
 
-            <p className="my-8">{data?.product?.description}</p>
+            <p className="my-8 dark:text-slate-100">
+              {data?.product?.description}
+            </p>
             <div className="mt-3 flex space-x-1">
               <form className="w-full" onSubmit={handleSubmit(onVaild)}>
                 <SubmitBtn

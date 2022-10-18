@@ -54,7 +54,9 @@ const Finish: NextPage = () => {
             {chatRoom.messages[0] ? (
               <div
                 className={`flex justify-between items-center ${
-                  chatRoom.buyer.id === key ? "bg-gray-200 rounded-md" : ""
+                  chatRoom.buyer.id === key
+                    ? "bg-gray-200 rounded-md dark:bg-gray-600"
+                    : ""
                 }`}
               >
                 <ProfileInfo
