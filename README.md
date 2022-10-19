@@ -110,6 +110,22 @@
  
 <hr />
 
+#### 10. 반응형 웹 (10/18 업데이트)
+
+ <div align="center">
+  <img height="800" src="./preview/10.gif" />
+ </div>
+ 
+<hr />
+
+#### 11. 다크 모드 (10/18 업데이트)
+
+ <div align="center">
+  <img height="800" src="./preview/11.gif" />
+ </div>
+ 
+<hr />
+
 ## Built with
 
 > Front-end
@@ -138,3 +154,4 @@
 - `Vercel`
 - <a href="./README/Prisma & PlanetScale.md">`PlanetScale`</a>
 - <a href="./README/Cloudflare.md">`Cloudflare`</a>   
+   
