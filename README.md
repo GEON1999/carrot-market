@@ -111,6 +111,7 @@
 <hr />
 
 #### 10. 반응형 웹 (10/18 업데이트)
+<a href="./README/Responsive Web.md">`반응형 웹으로 이동`</a>
 
  <div align="center">
   <img height="800" src="./preview/10.gif" />
@@ -119,6 +120,8 @@
 <hr />
 
 #### 11. 다크 모드 (10/18 업데이트)
+<a href="./README/Dark Mode">`다크 모드로 이동`</a>
+
 
  <div align="center">
   <img height="800" src="./preview/11.gif" />
