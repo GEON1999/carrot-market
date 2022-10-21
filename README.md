@@ -120,7 +120,7 @@
 <hr />
 
 #### 11. 다크 모드 (10/18 업데이트)
-<a href="./README/Dark Mode">`다크 모드로 이동`</a>
+<a href="./README/DarkMode.md">`다크 모드로 이동`</a>
 
 
  <div align="center">
