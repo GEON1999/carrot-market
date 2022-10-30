@@ -358,3 +358,29 @@ react 는 기본적으로 root 라는 id 를 가진 div 에 감싸져있다.
 - 예외적으로 nodemailer 의 smtp 를 허용 했다고 하지만, 검색시 동일한 현상을 격는 유저 다수
 - emailJs 로 변경하여 
 
+## 8. Hydration error2
+
+- 이상하게 특정 `page` 에서만 hydration error 가 지속됐다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7d205a52-36e9-4cac-9da4-55c8c01a3839/Untitled.png)
+
+- `<a>` 태그 내 에서 `validateDOMNesting` 을 사용할 수 없다는 error 였다.
+
+```jsx
+<Link href="/">
+	<a>
+		<Profile/>
+	</a>
+</Link>
+```
+
+- 위와 같은 구조의 코드들에서 발생하는 error 였는데 `Profile` component 에서 사용한 삼항연산자 때문에 발생하는 error 였다.
+
+```jsx
+<button onClick={()=>router.push("/")}>
+	<Profile/>
+</button>
+```
+
+- 위와 같이 변경 후 error 가 해결 되었다.
+
