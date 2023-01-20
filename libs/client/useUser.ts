@@ -4,6 +4,7 @@ import useSWR from "swr";
 
 export default function useUser() {
   const { data, error } = useSWR("/api/users/me");
+  console.log(data);
   const router = useRouter();
   useEffect(() => {
     if (

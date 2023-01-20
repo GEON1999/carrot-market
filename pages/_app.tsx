@@ -4,6 +4,7 @@ import { SWRConfig } from "swr";
 import useUser from "@libs/client/useUser";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Script from "next/script";
 
 function ValidateUser() {
   useUser();
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         fetcher: (url: string) => fetch(url).then((res) => res.json()),
       }}
     >
+      <Script src="https://developers.kakao.com/sdk/js/kakao.js"></Script>
       <div className={`${darkMode === true ? `dark` : `light`}`}>
         <div className="w-full max-w-lg md:max-w-full mx-auto md:px-10 h-screen dark:bg-slate-800 dark:text-white dark:border-gray-400">
           {router.pathname === "/profile" ? (

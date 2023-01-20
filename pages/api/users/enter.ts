@@ -10,8 +10,22 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const { email, phone, payload } = req.body;
+  console.log("name", req.body.kakao);
+  const { email, phone, payload, kakao, kakaoId } = req.body;
+  console.log(req.body);
   const user = phone ? { phone } : email ? { email } : null;
+  if (kakao) {
+    const user = await client.user.create({
+      data: {
+        name: kakao,
+        id: kakaoId,
+      },
+    });
+    console.log("유저임", user);
+    return res.json({
+      ok: true,
+    });
+  }
   if (!user) {
     return res.status(400).json({ ok: false });
   }

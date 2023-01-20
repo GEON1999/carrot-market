@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import { useRouter } from "next/router";
 import emailjs from "@emailjs/browser";
+import { kakaoInit } from "@libs/utils";
+import Image from "next/image";
 
 interface EnterForm {
   email?: string;
@@ -75,6 +77,33 @@ export default function Enter() {
       }, 1000);
     }
   }, [tokenData, router]);
+
+  const kakaoLogin = async () => {
+    // 카카오 초기화
+    const kakao = kakaoInit();
+    // 카카오 로그인 구현
+    kakao.Auth.login({
+      success: () => {
+        kakao.API.request({
+          url: "/v2/user/me",
+          success: async (res: any) => {
+            await enter({ kakao: res.properties.nickname, kakaoId: res.id });
+            await tokenEnter({
+              kakao: res.properties.nickname,
+              kakaoId: res.id,
+            });
+            router.push("/");
+          },
+          fail: (error: any) => {
+            console.log(error);
+          },
+        });
+      },
+      fail: (error: any) => {
+        console.log(error);
+      },
+    });
+  };
 
   return (
     <Layout hasTabBar title="로그인">
@@ -166,6 +195,30 @@ export default function Enter() {
               </form>
             </>
           )}
+          <div className="mt-8">
+            <div className="relative">
+              <div className="absolute border-b border-gray-300 w-full" />
+              <div className="relative -top-3 text-center ">
+                <span className=" text-sm text-gray-500 bg-white px-3">
+                  소셜 로그인
+                </span>
+              </div>
+            </div>
+            <span className="text-xs text-gray-500 flex text-center justify-center mb-3">
+              소셜 로그인은 현재 웹사이트 구경만 가능 합니다.
+            </span>
+            <div className="grid grid-cols-2 gap-10">
+              <button onClick={kakaoLogin}>
+                <img
+                  alt="Kakao"
+                  src="https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/785cd3e0-32c0-444a-9b37-2e0c15533700/profile"
+                />
+              </button>
+              <button className="text-sm text-gray-500 bg-gray-50 flex items-center justify-center border border-gray-200 py-3 rounded-md hover:bg-gray-100 shadow-sm  hover:text-gray-700">
+                <p>추가 예정</p>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </Layout>
