@@ -87,12 +87,14 @@ export default function Enter() {
         kakao.API.request({
           url: "/v2/user/me",
           success: async (res: any) => {
-            await enter({ kakao: res.properties.nickname, kakaoId: res.id });
+            await enter({
+              kakaoName: res.properties.nickname,
+              kakaoId: res.id,
+            });
             await tokenEnter({
               kakao: res.properties.nickname,
               kakaoId: res.id,
             });
-            router.push("/");
           },
           fail: (error: any) => {
             console.log(error);
@@ -104,6 +106,13 @@ export default function Enter() {
       },
     });
   };
+  useEffect(() => {
+    if (data && data.ok) {
+      setTimeout(() => {
+        router.push("/enter/profile");
+      }, 1000);
+    }
+  }, [data, router]);
 
   return (
     <Layout hasTabBar title="로그인">

@@ -10,22 +10,30 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  console.log("name", req.body.kakao);
-  const { email, phone, payload, kakao, kakaoId } = req.body;
-  console.log(req.body);
-  const user = phone ? { phone } : email ? { email } : null;
-  if (kakao) {
-    const user = await client.user.create({
-      data: {
-        name: kakao,
-        id: kakaoId,
+  const { email, phone, payload, kakaoName, kakaoId } = req.body;
+  if (kakaoName) {
+    const alreadyUser = await client.user.findUnique({
+      where: {
+        kakao: String(kakaoId),
       },
     });
-    console.log("유저임", user);
+    if (alreadyUser) {
+      return res.json({
+        ok: true,
+      });
+    }
+    const user = await client.user.create({
+      data: {
+        name: kakaoName,
+        kakao: String(kakaoId),
+      },
+    });
     return res.json({
       ok: true,
+      user,
     });
   }
+  const user = phone ? { phone } : email ? { email } : null;
   if (!user) {
     return res.status(400).json({ ok: false });
   }
