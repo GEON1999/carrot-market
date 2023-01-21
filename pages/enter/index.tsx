@@ -213,9 +213,6 @@ export default function Enter() {
                 </span>
               </div>
             </div>
-            <span className="text-xs text-gray-500 flex text-center justify-center mb-3">
-              소셜 로그인은 현재 웹사이트 구경만 가능 합니다.
-            </span>
             <div className="grid grid-cols-2 gap-10">
               <button onClick={kakaoLogin}>
                 <img
