@@ -31,7 +31,7 @@ async function handler(
   }
 
   if (kakao) {
-    const kakaoUser = await client.user.findFirst({
+    const kakaoUser = await client.user.findUnique({
       where: {
         kakao: String(kakaoId),
       },
