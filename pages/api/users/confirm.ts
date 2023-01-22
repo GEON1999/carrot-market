@@ -33,7 +33,7 @@ async function handler(
   if (kakaoName) {
     const kakaoUser = await client.user.findFirst({
       where: {
-        kakaoId: kakaoId,
+        phone: kakaoId,
       },
     });
     if (!kakaoUser) return res.status(404).end();
