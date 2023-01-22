@@ -92,7 +92,7 @@ export default function Enter() {
               kakaoId: res.id,
             });
             await tokenEnter({
-              kakao: res.properties.nickname,
+              kakaoName: res.properties.nickname,
               kakaoId: res.id,
             });
           },
