@@ -33,7 +33,7 @@ async function handler(
   if (kakaoName) {
     const kakaoUser = await client.user.findUnique({
       where: {
-        phone: kakaoId + "",
+        kakaoId: kakaoId + "",
       },
     });
     if (!kakaoUser) return res.status(404).end();

@@ -13,13 +13,14 @@ datasource db {
 
 model User {
   id              Int        @id @default(autoincrement())
-  kakao           String?    @unique
   phone           String?    @unique
   email           String?    @unique
   name            String
   avatar          String?
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
+  kakao           String?    @unique
+  kakaoId         String?    @unique
   tokens          Token[]
   product         Product[]
   fav             Fav[]
