@@ -89,11 +89,11 @@ export default function Enter() {
           success: async (res: any) => {
             await enter({
               kakaoName: res.properties.nickname,
-              kakaoId: res.id,
+              kakaoId: String(res.id),
             });
             await tokenEnter({
               kakaoName: res.properties.nickname,
-              kakaoId: res.id,
+              kakaoId: String(res.id),
             });
           },
           fail: (error: any) => {
