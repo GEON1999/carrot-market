@@ -14,7 +14,7 @@ async function handler(
   if (kakaoName) {
     const alreadyUser = await client.user.findUnique({
       where: {
-        kakao: String(kakaoId),
+        kakaoId: String(kakaoId),
       },
     });
     if (alreadyUser) {
@@ -25,7 +25,7 @@ async function handler(
     const user = await client.user.create({
       data: {
         name: kakaoName,
-        kakao: String(kakaoId),
+        kakaoId: String(kakaoId),
       },
     });
     return res.json({
