@@ -7,7 +7,7 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const { token, kakao, kakaoId } = req.body;
+  const { token, kakaoName, kakaoId } = req.body;
   if (token) {
     const foundToken = await client.token.findUnique({
       where: {
@@ -30,10 +30,10 @@ async function handler(
     res.json({ ok: true });
   }
 
-  if (kakao) {
+  if (kakaoName) {
     const kakaoUser = await client.user.findUnique({
       where: {
-        kakao: String(kakaoId),
+        kakao: kakaoId + "",
       },
     });
     if (!kakaoUser) return res.status(404).end();
