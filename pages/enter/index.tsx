@@ -106,13 +106,6 @@ export default function Enter() {
       },
     });
   };
-  useEffect(() => {
-    if (data && data.ok) {
-      setTimeout(() => {
-        router.push("/enter/profile");
-      }, 1000);
-    }
-  }, [data, router]);
 
   return (
     <Layout hasTabBar title="로그인">
