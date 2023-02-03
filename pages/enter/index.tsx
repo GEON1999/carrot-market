@@ -51,10 +51,10 @@ export default function Enter() {
     };
     await emailjs
       .send(
-        String(process.env.EMAILJS_SID),
-        String(process.env.EMAILJS_TEMPID),
+        String(process.env.NEXT_PUBLIC_EMAILJS_SID),
+        String(process.env.NEXT_PUBLIC_EMAILJS_TEMPID),
         templateParams,
-        String(process.env.EMAILJS_KEY)
+        String(process.env.NEXT_PUBLIC_EMAILJS_KEY)
       )
       .then(
         function (response) {
