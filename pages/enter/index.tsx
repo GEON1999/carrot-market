@@ -207,13 +207,16 @@ export default function Enter() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-10">
-              <button onClick={kakaoLogin}>
-                <img
-                  alt="Kakao"
-                  src="https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/785cd3e0-32c0-444a-9b37-2e0c15533700/profile"
-                />
+              <button onClick={kakaoLogin}
+                      className="space-x-3 text-sm text-gray-500 bg-[#FEE500] flex items-center justify-center border border-[#FEE500] py-3 rounded-md hover:bg-[#f5de02] shadow-sm  hover:text-gray-700">
+                <svg viewBox="0 0 21 20" width="21" height="20" fill="none" >
+                  <path d="M10.5 2.62891C6.16282 2.62891 2.64282 5.36319 2.64282 8.72605C2.64282 10.8239 4.00211 12.6546 6.07639 13.7703L5.20425 16.9682C5.1878 17.0318 5.19118 17.0989 5.21396 17.1605C5.23673 17.2222 5.27781 17.2754 5.33167 17.313C5.38554 17.3506 5.44962 17.3709 5.51532 17.371C5.58102 17.3712 5.6452 17.3513 5.69925 17.3139L9.51782 14.776C9.83997 14.776 10.17 14.8311 10.5 14.8311C14.8371 14.8311 18.3571 12.0968 18.3571 8.72605C18.3571 5.35534 14.8371 2.62891 10.5 2.62891Z"
+                        fill="#181600"></path>
+                </svg>
+                <p>카카오 로그인</p>
               </button>
-              <button className="text-sm text-gray-500 bg-gray-50 flex items-center justify-center border border-gray-200 py-3 rounded-md hover:bg-gray-100 shadow-sm  hover:text-gray-700">
+              <button
+                  className="text-sm text-gray-500 bg-gray-50 flex items-center justify-center border border-gray-200 py-3 rounded-md hover:bg-gray-100 shadow-sm  hover:text-gray-700">
                 <p>추가 예정</p>
               </button>
             </div>
