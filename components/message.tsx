@@ -18,13 +18,10 @@ export default function Message({ text, mine, avatar }: MessageProps) {
         }
       >
         {mine ? null : avatar ? (
-          <Image
-            width={40}
-            height={40}
+          <img
             alt="profile"
-            src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${avatar}/profile`}
-            className="rounded-full bg-gray-300 z-0"
-            quality={100}
+            src={avatar}
+            className="rounded-full bg-gray-300 z-0 w-10 h-10"
           />
         ) : (
           <div className="rounded-full bg-gray-300 w-10 h-10" />

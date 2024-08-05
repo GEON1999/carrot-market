@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -35,13 +34,10 @@ export default function Item({
         >
           <div className={`space-x-3 flex justify-center items-center ml-2`}>
             {prodcut ? (
-              <Image
-                alt="prodcut"
-                width={80}
-                height={80}
-                src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${prodcut}/profile`}
+              <img
+                alt="img"
+                src={prodcut}
                 className=" w-20 h-20 rounded-md"
-                quality={100}
               />
             ) : (
               <div className="bg-gray-600 w-20 h-20 rounded-md" />

@@ -29,86 +29,45 @@ const AdUpload: NextPage = () => {
   const [upload, { loading, data }] =
     useMutation<UploadProductMutation>("/api/products/ad");
   const router = useRouter();
+
+  const [image, setImage] = useState( "");
+
+  const handleImage = async (e : any) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    await formData.append("file", file);
+    const result = await fetch(`/api/files`, {
+      method: "POST",
+      body: formData,
+    }).then((res) => res.json());
+    setImage(result.id);
+  }
   const onVaild = async ({
     price,
     description,
     title,
     subTitle,
-    photo,
   }: UploadProductForm) => {
     if (loading) return;
-    if (photo && photo.length > 0) {
-      const { uploadURL } = await (await fetch("/api/files")).json();
-      const formData = new FormData();
-      formData.append("file", photo[0], title);
-      const {
-        result: { id },
-      } = await (
-        await fetch(uploadURL, {
-          method: "POST",
-          body: formData,
-        })
-      ).json();
-      if (!phone && !address) {
-        upload({
-          price,
-          description,
-          title,
-          subTitle,
-          photoId: id,
-        });
-      } else if (!address) {
-        upload({ price, description, title, subTitle, photoId: id, phone });
-      } else if (!phone) {
-        upload({
-          price,
-          description,
-          title,
-          subTitle,
-          photoId: id,
-          address,
-        });
-      } else if (phone && address) {
-        upload({
-          price,
-          description,
-          title,
-          subTitle,
-          photoId: id,
-          phone,
-          address,
-        });
-      }
-    } else {
-      upload({ price, description, title, subTitle });
-    }
+    upload({ price, description, title, subTitle, photoId: image ?? "", phone: phone?? "" , address: address?? "" });
+
   };
   useEffect(() => {
     if (data?.ok) {
       router.push(`/products/${data.id}`);
     }
   }, [data, router]);
-  const [productPreview, setProductPreview] = useState("");
-  const photo = watch("photo");
   const phone = watch("phone");
   const address = watch("address");
-  useEffect(() => {
-    if (photo && photo.length > 0) {
-      const file = photo[0];
-      setProductPreview(URL.createObjectURL(file));
-    }
-  }, [photo]);
+
   return (
     <Layout canGoBack hasTabBar>
       <div className="px-4 py-1 md:mx-auto md:max-w-2xl md:flex md:flex-col">
-        {productPreview ? (
-          <Image
+        {image ? (
+          <img
             alt="product"
-            width={480}
-            height={384}
-            src={productPreview}
-            className="object-contain"
-            quality={100}
+            src={image}
+            className="object-contain w-full h-48"
           />
         ) : (
           <label className="mb-3 w-full cursor-pointer text-gray-600 dark:text-gray-300 hover:border-orange-500 hover:text-orange-500 flex items-center justify-center border-2 border-dashed border-gray-300 h-48 rounded-md">
@@ -127,6 +86,7 @@ const AdUpload: NextPage = () => {
               />
             </svg>
             <input
+              onInput={handleImage}
               {...register("photo")}
               accept="image/*"
               className="hidden"

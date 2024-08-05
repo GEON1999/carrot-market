@@ -63,7 +63,6 @@ const ChatDetail: NextPage = () => {
   };
   useEffect(() => {
     if (chatRoomId && lastMessage) {
-      console.log("i'm running");
       setInterval(deleteNotification, 3000);
     }
   }, [chatRoomId, lastMessage]);
@@ -109,13 +108,10 @@ const ChatDetail: NextPage = () => {
             <div className="ml-5">
               <Link href={`/products/${data?.product?.id}`}>
                 <a>
-                  <Image
+                  <img
                     alt="product"
-                    width={70}
-                    height={70}
-                    src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${data?.product?.image}/public`}
-                    className="object-cover rounded-lg"
-                    quality={100}
+                    src={data?.product?.image}
+                    className="object-cover rounded-lg w-20 h-20"
                   />
                 </a>
               </Link>

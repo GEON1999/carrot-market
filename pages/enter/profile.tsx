@@ -26,33 +26,24 @@ export default function EnterProfile() {
     useMutation<SetProfileResponse>(`/api/users/me`);
   const { register, handleSubmit, watch } = useForm<ProfileForm>();
 
-  const onVaild = async ({ avatar, name }: ProfileForm) => {
+  const [image, setImage] = useState(userData?.profile?.avatar ?? "");
+
+  const handleImage = async (e : any) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    await formData.append("file", file);
+    const result = await fetch(`/api/files`, {
+      method: "POST",
+      body: formData,
+    }).then((res) => res.json());
+    setImage(result.id);
+  }
+
+  const onVaild = async ({ name }: ProfileForm) => {
     if (loading) return;
-    if (avatar && avatar.length > 0) {
-      const { uploadURL } = await (await fetch("/api/files")).json();
-      const formData = new FormData();
-      formData.append("file", avatar[0], userData?.profile?.id + "");
-      const {
-        result: { id },
-      } = await (
-        await fetch(uploadURL, {
-          method: "POST",
-          body: formData,
-        })
-      ).json();
-      updateForm({ avatarId: id, name });
-    } else {
-      updateForm({ name });
-    }
+    updateForm({ avatarId: image ?? "", name });
   };
-  const avatar = watch("avatar");
-  const [avatarPreview, setAvatarPreview] = useState("");
-  useEffect(() => {
-    if (avatar && avatar.length > 0) {
-      const file = avatar[0];
-      setAvatarPreview(URL.createObjectURL(file));
-    }
-  }, [setAvatarPreview, avatar]);
+
   useEffect(() => {
     if (data?.ok) {
       router.push("/");
@@ -64,14 +55,11 @@ export default function EnterProfile() {
       <div className="mx-4 md:mx-auto md:max-w-lg">
         <form onSubmit={handleSubmit(onVaild)}>
           <div className="flex justify-center mt-32 mb-6">
-            {avatarPreview ? (
-              <Image
+            {image ? (
+              <img
                 alt="profile"
-                width={160}
-                height={160}
-                src={avatarPreview}
-                className="object-cover rounded-full"
-                quality={100}
+                className="object-cover rounded-full w-40 h-40"
+                src={image}
               />
             ) : (
               <label className="mb-6 w-40 h-40 cursor-pointer text-gray-600 hover:border-orange-500 hover:text-orange-500 flex items-center justify-center border-2 border-gray-300 rounded-full dark:text-gray-300">
@@ -90,6 +78,7 @@ export default function EnterProfile() {
                   />
                 </svg>
                 <input
+                  onInput={handleImage}
                   {...register("avatar")}
                   accept="image/*"
                   className="hidden"

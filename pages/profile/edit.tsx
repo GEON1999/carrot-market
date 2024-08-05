@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { UserProfile } from ".";
 import { useEffect, useState } from "react";
 import useMutation from "@libs/client/useMutation";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 interface EditProfileForm {
@@ -42,7 +41,6 @@ const EditProfile: NextPage = () => {
 
 
   const [image, setImage] = useState(user?.avatar ?? "");
-  console.log(image);
 
   const handleImage = async (e : any) => {
     const file = e.target.files[0];

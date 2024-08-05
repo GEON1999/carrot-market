@@ -83,16 +83,15 @@ const ItemDetail: NextPage = () => {
       <div className="mx-4 md:mx-auto md:max-w-2xl ">
         <div className="mt-4 md:flex md:flex-col ">
           {data?.product?.image ? (
-            <Image
-              alt="product"
-              width={480}
-              height={384}
-              src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${data?.product?.image}/public`}
-              className="object-contain"
-              quality={100}
-            />
+              <div className={"flex content-center justify-center"}>
+                <img
+                    alt="product"
+                    className="object-cover rounded-full w-40 h-40 "
+                    src={data?.product?.image}
+                />
+              </div>
           ) : (
-            <div className="h-96 bg-gray-400" />
+              <div className="h-96 bg-gray-400"/>
           )}
           <div className="pb-2 border-b">
             <div className="flex justify-between items-center content-center">
@@ -292,13 +291,10 @@ const ItemDetail: NextPage = () => {
                 <Link href={`/products/${product?.id}`}>
                   <a>
                     {product?.image ? (
-                      <Image
+                      <img
                         alt="product"
-                        width={480}
-                        height={384}
-                        src={`https://imagedelivery.net/xE6X7mlbIExkQau-XHoj-A/${product?.image}/public`}
-                        className="object-contain"
-                        quality={100}
+                        src={product?.image}
+                        className="object-contain w-full h-48"
                       />
                     ) : (
                       <div className="h-96 bg-gray-400" />
