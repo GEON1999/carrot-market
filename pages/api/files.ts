@@ -32,7 +32,7 @@ async function handler(req: any, res: NextApiResponse) {
 export default withApiSession(
     withHandler({
         methods: ["POST"],
-        handler: async (req: NextApiRequest, res: NextApiResponse) => {
+        handler: async (req: any, res: NextApiResponse) => {
             await new Promise((resolve, reject) => {
                 upload.single("file")(req, res, (err: any) => {
                     console.log("upload.single", req.file);
