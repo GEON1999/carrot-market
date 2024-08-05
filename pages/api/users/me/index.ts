@@ -20,12 +20,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       session: { user },
       body: { email, phone, name, avatarId },
     } = req;
-    const currentUser = await client.user.findUnique({
-      where: {
-        id: user?.id,
-      },
-    });
-    if (email && email !== currentUser?.email) {
+
+    /*if (email && email !== currentUser?.email) {
       const alreadyExist = await client.user.findUnique({
         where: {
           email,
@@ -78,21 +74,22 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       res.json({
         ok: true,
       });
-    }
-    if (name && name !== currentUser?.name) {
+    }*/
+    if (name && avatarId !== undefined) {
       await client.user.update({
         where: { id: user?.id },
-        data: { name },
+        data: { avatar: avatarId, name:name },
       });
       res.json({ ok: true });
+    } else if(name){
+        await client.user.update({
+            where: { id: user?.id },
+            data: { name },
+        });
+      res.json({ ok: true });
     }
-    if (avatarId) {
-      await client.user.update({
-        where: { id: user?.id },
-        data: { avatar: avatarId },
-      });
-    }
-    res.json({ ok: true });
+
+
   }
 }
 

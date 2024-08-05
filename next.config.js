@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["imagedelivery.net"],
+    domains: ['geon.com.s3.ap-northeast-2.amazonaws.com'],
   },
 };
 module.exports = nextConfig;
