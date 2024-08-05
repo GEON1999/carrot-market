@@ -14,24 +14,38 @@ async function handler(
   if (kakaoName) {
     const alreadyUser = await client.user.findUnique({
       where: {
-        phone: kakaoId,
+        kakaoId: kakaoId,
       },
     });
+
     if (alreadyUser) {
+      req.session.user = {
+        id: alreadyUser?.id,
+      };
+      await req.session.save();
+
       return res.json({
         ok: true,
       });
+    } else {
+      const user = await client.user.create({
+        data: {
+          name: kakaoName,
+          kakaoId: kakaoId,
+        },
+      });
+
+      req.session.user = {
+        id: user?.id,
+      };
+      await req.session.save();
+
+      return res.json({
+        ok: true,
+        user,
+      });
     }
-    const user = await client.user.create({
-      data: {
-        name: kakaoName,
-        phone: kakaoId,
-      },
-    });
-    return res.json({
-      ok: true,
-      user,
-    });
+
   }
   const user = phone ? { phone } : email ? { email } : null;
   if (!user) {

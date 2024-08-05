@@ -4,6 +4,7 @@ interface UseMutationState<T> {
   loading: boolean;
   data?: T;
   error?: object;
+  isSuccess?: boolean;
 }
 type UseMutationResult<T> = [(data?: any) => void, UseMutationState<T>];
 
@@ -25,9 +26,9 @@ export default function useMutation<T = any>(
       body: JSON.stringify(data),
     })
       .then((response) => response.json().catch(() => {}))
-      .then((data) => setSate((prev) => ({ ...prev, data, loading: false })))
+      .then((data) => setSate((prev) => ({ ...prev, data, loading: false, isSuccess: true })))
       .catch((error) =>
-        setSate((prev) => ({ ...prev, error, loading: false }))
+        setSate((prev) => ({ ...prev, error, loading: false, isSuccess: false }))
       );
   }
   return [mutation, { ...state }];

@@ -65,9 +65,9 @@ export default function ProfileInfo({
         </a>
       </Link>
       <div className="mt-2 md:space-y-3">
-        <p className="font-semibold md:text-lg">{name}</p>
+        <p className="font-semibold md:text-lg cursor-pointer">{name}</p>
         {subtitle ? (
-          <p className="text-gray-400 text-sm md:text-black md:text-base md:px-3 md:py-2 md:border md:rounded-md dark:text-white">
+          <p className="text-gray-400 text-sm md:text-black md:text-base md:px-3 md:py-2 md:border md:rounded-md dark:text-white cursor-pointer">
             {subtitle}
           </p>
         ) : null}

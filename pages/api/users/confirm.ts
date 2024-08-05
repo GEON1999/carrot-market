@@ -33,15 +33,17 @@ async function handler(
   if (kakaoName) {
     const kakaoUser = await client.user.findFirst({
       where: {
-        phone: kakaoId,
+        kakaoId: kakaoId,
       },
     });
-    if (!kakaoUser) return res.status(404).end();
-    req.session.user = {
-      id: kakaoUser?.id,
-    };
-    await req.session.save();
-    res.json({ ok: true });
+    if (!kakaoUser) return res.status(404).end(); else {
+      req.session.user = {
+        id: kakaoUser?.id,
+      };
+      await req.session.save();
+      res.json({ ok: true });
+    }
+
   }
 }
 

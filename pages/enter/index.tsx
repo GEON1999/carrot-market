@@ -25,10 +25,11 @@ interface MutationResult {
 
 export default function Enter() {
   const router = useRouter();
-  const [enter, { loading, data, error }] =
+  const [enter, { loading, data, error, isSuccess }] =
     useMutation<MutationResult>("/api/users/enter");
-  const [tokenEnter, { loading: tokenLoading, data: tokenData }] =
+  const [tokenEnter, { loading: tokenLoading, data: tokenData, isSuccess:tokenSuccess}] =
     useMutation<MutationResult>("/api/users/confirm");
+  const [isKakaoOk, setIsKakaoOk] = useState(false);
   const { register, handleSubmit, reset } = useForm<EnterForm>();
   const { register: tokenRegister, handleSubmit: tokenHandleSubmit } =
     useForm<TokenForm>();
@@ -61,6 +62,7 @@ export default function Enter() {
           console.log("SUCCESS!", response.status, response.text);
         },
         function (error) {
+          alert("이메일 전송에 실패했습니다.");
           console.log("FAILED...", error);
         }
       );
@@ -71,12 +73,17 @@ export default function Enter() {
   };
 
   useEffect(() => {
+    if(isKakaoOk){
+        setTimeout(() => {
+            router.push("/enter/profile");
+        }, 1000);
+    }
     if (tokenData && tokenData.ok) {
       setTimeout(() => {
         router.push("/enter/profile");
       }, 1000);
     }
-  }, [tokenData, router]);
+  }, [tokenData, router,isKakaoOk]);
 
   const kakaoLogin = async () => {
     // 카카오 초기화
@@ -91,10 +98,7 @@ export default function Enter() {
               kakaoName: res.properties.nickname,
               kakaoId: String(res.id),
             });
-            await tokenEnter({
-              kakaoName: res.properties.nickname,
-              kakaoId: String(res.id),
-            });
+           setIsKakaoOk(true);
           },
           fail: (error: any) => {
             console.log(error);
