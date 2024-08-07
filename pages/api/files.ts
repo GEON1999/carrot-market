@@ -12,6 +12,7 @@ export const config = {
 async function handler(req: any, res: NextApiResponse) {
     try {
         const file = req.file;
+        const location =process.env.S3_DOMAIN + file.key;
         if (!file) {
             return res.status(400).json({ ok: false, error: "No file uploaded" });
         }
@@ -19,7 +20,7 @@ async function handler(req: any, res: NextApiResponse) {
         // 업로드된 파일 정보 응답
         res.json({
             ok: true,
-            id: file.location,
+            id: location,
             key: file.key,
         });
     } catch (error) {
